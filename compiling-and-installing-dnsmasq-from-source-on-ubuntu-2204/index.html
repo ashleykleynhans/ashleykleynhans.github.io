@@ -206,14 +206,23 @@ which is currently under active  development at the time of writing,
 is the only Ubuntu version that has a version of dnsmasq that
 supports the <code>filter-AAAA</code> feature, so I decided to compile
 and install dnsmasq from the <a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz">source used by Ubuntu 23.04</a>.</p>
-<h2 id="compile-and-install-dnsmasq-from-source">Compile and Install dnsmasq from Source</h2>
-<h3 id="compile-dnsmasq">Compile dnsmasq</h3>
+<h2 id="download-compile-and-install-dnsmasq-from-source">Download, Compile and Install dnsmasq from Source</h2>
+<h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site">Download source for dnsmasq version 2.88 from Ubuntu Launchpad site</h3>
 <div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #268bd2">cd</span><span style="color: #839496"> </span>/tmp
 wget<span style="color: #839496"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
-tar<span style="color: #839496"> </span>zxvf<span style="color: #839496"> </span>dnsmasq_2.88.orig.tar.gz
-<span style="color: #268bd2">cd</span><span style="color: #839496"> </span>dnsmasq-2.88.orig
-sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>update
+</code></pre></div>
+
+<h3 id="extract-dnsmasq-288-source">Extract dnsmasq 2.88 source</h3>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>tar<span style="color: #839496"> </span>zxvf<span style="color: #839496"> </span>dnsmasq_2.88.orig.tar.gz
+</code></pre></div>
+
+<h3 id="install-dependency-packages">Install dependency packages</h3>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>update
 sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>install<span style="color: #839496"> </span>dnsmasq<span style="color: #839496"> </span>gettext
+</code></pre></div>
+
+<h3 id="compile-dnsmasq">Compile dnsmasq</h3>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #268bd2">cd</span><span style="color: #839496"> </span>dnsmasq-2.88.orig
 make<span style="color: #839496"> </span>all-i18n
 </code></pre></div>
 
