@@ -160,7 +160,13 @@
     </p>
   </header>
   <div>
-      <div><p>In this post, I will walk you through the process of compiling and installing the latest version of dnsmasq from source on Ubuntu 22.04.</p></div>
+      <div><p>This post walks you through the process of compiling and
+installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you
+can benefit from the <code>filter-AAAA</code> feature that was introduced
+in dnsmasq version 2.87 in order to resolve issues with nginx
+servers that only have IPv4 addresses attached to them getting
+network unreachable errors when resolving upstream DNS entries
+to IPv6 addresses.</p></div>
         <br>
         <a class="btn"
            href="/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/">
