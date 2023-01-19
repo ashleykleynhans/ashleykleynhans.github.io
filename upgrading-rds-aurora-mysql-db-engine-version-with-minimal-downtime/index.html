@@ -260,9 +260,12 @@ CALL<span style="color: #839496"> </span>mysql.rds_start_replication<span style=
 <li>Edit parameter group and change <code>read_only</code> from <code>{TrueIfReplica}</code> to 1 to prevent writes
    to the old cluster (no reboot required).</li>
 <li>Update DNS CNAME to point to the new RDS Cluster endpoint.</li>
-<li>Reset the new master/writer in the new Aurora cluster:
-    <code>bash
-    CALL mysql.rds_reset_external_master;</code></li>
+<li>Reset the new master/writer in the new Aurora cluster:</li>
+</ul>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #839496"> </span>mysql.rds_reset_external_master<span style="color: #839496">;</span>
+</code></pre></div>
+
+<ul>
 <li>Take application out of maintenance mode.</li>
 <li>Stop the old Aurora Cluster.</li>
 <li>Test.</li>
