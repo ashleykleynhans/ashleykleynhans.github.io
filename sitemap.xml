@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2023-01-19T10:20:28-00:00</lastmod>
+<lastmod>2023-01-19T11:22:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2023-01-19T10:20:28-00:00</lastmod>
+<lastmod>2023-01-19T11:22:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2023-01-19T10:20:28-00:00</lastmod>
+<lastmod>2023-01-19T11:22:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2023-01-19T10:20:28-00:00</lastmod>
+<lastmod>2023-01-19T11:22:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2023-01-19T10:20:28-00:00</lastmod>
+<lastmod>2023-01-19T11:22:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -67,7 +67,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>/tag/test.html</loc>
+<loc>/tag/devops.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/aws.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/rds.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/aurora.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/mysql.html</loc>
 <lastmod>2023-01-19T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
@@ -82,13 +110,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/ubuntu.html</loc>
-<lastmod>2023-01-18T00:00:00+01:52</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.6</priority>
-</url>
-
-<url>
-<loc>/tag/devops.html</loc>
 <lastmod>2023-01-18T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
