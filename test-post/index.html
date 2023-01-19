@@ -55,17 +55,25 @@
 
  
 
-    <meta name="author" content="Ashley Kleynhans" />
-    <meta name="description" content="" />
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="This is just a test." />
+<meta name="keywords" content="test">
+
+
   <meta property="og:site_name" content="Ashley's Blog"/>
-  <meta property="og:type" content="blog"/>
-  <meta property="og:title" content="Ashley's Blog"/>
-  <meta property="og:description" content=""/>
+  <meta property="og:title" content="Test Post"/>
+  <meta property="og:description" content="This is just a test."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:url" content=""/>
+  <meta property="og:url" content="/test-post/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-01-19 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2023-01-19 00:00:00+02:00"/>
+  <meta property="article:author" content="/author/ashley-kleynhans.html">
+  <meta property="article:section" content="DevOps"/>
+  <meta property="article:tag" content="test"/>
   <meta property="og:image" content="/images/profile.jpeg">
 
-  <title>Ashley's Blog &ndash; Archives</title>
+  <title>Ashley's Blog &ndash; Test Post</title>
 
 
 </head>
@@ -134,23 +142,49 @@
 
 <article class="single">
   <header>
-    <h1 id="archives">Archives</h1>
+      
+    <h1 id="test-post">Test Post</h1>
+    <p>
+      Posted on Thu 19 January 2023 in <a href="/category/devops.html">DevOps</a>
+
+        &#8226; 1 min read
+    </p>
   </header>
+
+
   <div>
-    <dl>
-
-          <dt>Thu 19 January 2023</dt>
-
-        <dd>
-          <a href="/test-post/">Test Post</a>
-        </dd>
-          <dt>Wed 18 January 2023</dt>
-
-        <dd>
-          <a href="/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/">Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</a>
-        </dd>
-    </dl>
+    <h1 id="coolio-my-brothers">Coolio My Brothers</h1>
   </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/test.html">test</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/" title="Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
 <footer>

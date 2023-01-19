@@ -19,10 +19,10 @@
 
     <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: dark)"
-          href="/theme/pygments/solarized-dark.min.css">
+          href="/theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-          href="/theme/pygments/solarized-dark.min.css">
+          href="/theme/pygments/github.min.css">
 
 
 
@@ -155,102 +155,102 @@
 
 
   <div>
-    <h2>Update apt repo from version 7.x to version 8.x</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>mv<span class="w"> </span>/etc/apt/sources.list.d/elastic-7.x.list<span class="w"> </span>/etc/apt/sources.list.d/elastic-8.x.list
-sudo<span class="w"> </span>vim<span class="w"> </span>/etc/apt/sources.list.d/elastic-8.x.list
+    <h2 id="update-apt-repo-from-version-7x-to-version-8x">Update apt repo from version 7.x to version 8.x</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>mv<span style="color: #839496"> </span>/etc/apt/sources.list.d/elastic-7.x.list<span style="color: #839496"> </span>/etc/apt/sources.list.d/elastic-8.x.list
+sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/apt/sources.list.d/elastic-8.x.list
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight"><pre><span></span><code><span class="k">deb</span><span class="w"> </span><span class="sx">[signed-by=/usr/share/keyrings/elastic.gpg]</span><span class="w"> </span><span class="kp">https://artifacts.elastic.co/packages/8.x/apt</span><span class="w"> </span><span class="kp">stable</span><span class="w"> </span><span class="kp">main</span>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #859900">deb</span><span style="color: #839496"> </span><span style="color: #2aa198">[signed-by=/usr/share/keyrings/elastic.gpg]</span><span style="color: #839496"> </span><span style="color: #859900">https://artifacts.elastic.co/packages/8.x/apt</span><span style="color: #839496"> </span><span style="color: #859900">stable</span><span style="color: #839496"> </span><span style="color: #859900">main</span>
 </code></pre></div>
 
-<h2>Upgrade packages</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>--only-upgrade<span class="w"> </span>install<span class="w"> </span>elasticsearch<span class="w"> </span>filebeat<span class="w"> </span>kibana<span class="w"> </span>logstash
+<h2 id="upgrade-packages">Upgrade packages</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>update
+sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>--only-upgrade<span style="color: #839496"> </span>install<span style="color: #839496"> </span>elasticsearch<span style="color: #839496"> </span>filebeat<span style="color: #839496"> </span>kibana<span style="color: #839496"> </span>logstash
 </code></pre></div>
 
-<h2>Update Elasticsearch config</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
+<h2 id="update-elasticsearch-config">Update Elasticsearch config</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 
 <p>Paste the following content, updating the cluster name as appropriate:</p>
-<div class="highlight"><pre><span></span><code><span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">your</span><span class="o">-</span><span class="n">cluster</span><span class="o">-</span><span class="n">name</span>
-<span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">node</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">path</span><span class="o">.</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">elasticsearch</span>
-<span class="n">path</span><span class="o">.</span><span class="n">logs</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">elasticsearch</span>
-<span class="n">network</span><span class="o">.</span><span class="n">host</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
-<span class="n">discovery</span><span class="o">.</span><span class="n">type</span><span class="p">:</span><span class="w"> </span><span class="n">single</span><span class="o">-</span><span class="n">node</span>
-<span class="n">xpack</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span><span class="w"> </span><span class="bp">false</span>
-<span class="n">xpack</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">enrollment</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span><span class="w"> </span><span class="bp">false</span>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #839496">cluster</span><span style="color: #586e75">.</span><span style="color: #839496">name: your</span><span style="color: #586e75">-</span><span style="color: #839496">cluster</span><span style="color: #586e75">-</span><span style="color: #839496">name</span>
+<span style="color: #839496">node</span><span style="color: #586e75">.</span><span style="color: #839496">name: node</span><span style="color: #586e75">-</span><span style="color: #2aa198">1</span>
+<span style="color: #839496">path</span><span style="color: #586e75">.</span><span style="color: #839496">data: </span><span style="color: #586e75">/</span><span style="color: #859900">var</span><span style="color: #586e75">/</span><span style="color: #839496">lib</span><span style="color: #586e75">/</span><span style="color: #839496">elasticsearch</span>
+<span style="color: #839496">path</span><span style="color: #586e75">.</span><span style="color: #839496">logs: </span><span style="color: #586e75">/</span><span style="color: #859900">var</span><span style="color: #586e75">/</span><span style="color: #268bd2">log</span><span style="color: #586e75">/</span><span style="color: #839496">elasticsearch</span>
+<span style="color: #839496">network</span><span style="color: #586e75">.</span><span style="color: #839496">host: </span><span style="color: #2aa198">0.0</span><span style="color: #586e75">.</span><span style="color: #2aa198">0.0</span>
+<span style="color: #839496">discovery</span><span style="color: #586e75">.</span><span style="color: #839496">type: single</span><span style="color: #586e75">-</span><span style="color: #839496">node</span>
+<span style="color: #839496">xpack</span><span style="color: #586e75">.</span><span style="color: #839496">security</span><span style="color: #586e75">.</span><span style="color: #839496">enabled: </span><span style="color: #268bd2">false</span>
+<span style="color: #839496">xpack</span><span style="color: #586e75">.</span><span style="color: #839496">security</span><span style="color: #586e75">.</span><span style="color: #839496">enrollment</span><span style="color: #586e75">.</span><span style="color: #839496">enabled: </span><span style="color: #268bd2">false</span>
 
-<span class="c1"># Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents</span>
-<span class="n">xpack</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">ssl</span><span class="p">:</span>
-<span class="w">  </span><span class="n">enabled</span><span class="p">:</span><span class="w"> </span><span class="bp">false</span>
+<span style="color: #586e75; font-style: italic"># Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents</span>
+<span style="color: #839496">xpack</span><span style="color: #586e75">.</span><span style="color: #839496">security</span><span style="color: #586e75">.</span><span style="color: #839496">http</span><span style="color: #586e75">.</span><span style="color: #839496">ssl:</span>
+<span style="color: #839496">  enabled: </span><span style="color: #268bd2">false</span>
 
-<span class="c1"># Enable encryption and mutual authentication between cluster nodes</span>
-<span class="n">xpack</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">ssl</span><span class="p">:</span>
-<span class="w">  </span><span class="n">enabled</span><span class="p">:</span><span class="w"> </span><span class="bp">false</span>
+<span style="color: #586e75; font-style: italic"># Enable encryption and mutual authentication between cluster nodes</span>
+<span style="color: #839496">xpack</span><span style="color: #586e75">.</span><span style="color: #839496">security</span><span style="color: #586e75">.</span><span style="color: #839496">transport</span><span style="color: #586e75">.</span><span style="color: #839496">ssl:</span>
+<span style="color: #839496">  enabled: </span><span style="color: #268bd2">false</span>
 
-<span class="c1"># Allow HTTP API connections from anywhere</span>
-<span class="c1"># Connections are encrypted and require user authentication</span>
-<span class="n">http</span><span class="o">.</span><span class="n">host</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span style="color: #586e75; font-style: italic"># Allow HTTP API connections from anywhere</span>
+<span style="color: #586e75; font-style: italic"># Connections are encrypted and require user authentication</span>
+<span style="color: #839496">http</span><span style="color: #586e75">.</span><span style="color: #839496">host: </span><span style="color: #2aa198">0.0</span><span style="color: #586e75">.</span><span style="color: #2aa198">0.0</span>
 </code></pre></div>
 
-<h2>Restart Elasticsearch</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>elasticsearch
+<h2 id="restart-elasticsearch">Restart Elasticsearch</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>restart<span style="color: #839496"> </span>elasticsearch
 </code></pre></div>
 
-<h2>Remove incompatible logging from Kibana systemd service</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/systemd/system/kibana.service
+<h2 id="remove-incompatible-logging-from-kibana-systemd-service">Remove incompatible logging from Kibana systemd service</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/systemd/system/kibana.service
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Kibana</span>
-<span class="na">Documentation</span><span class="o">=</span><span class="s">https://www.elastic.co</span>
-<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
-<span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #859900">[Unit]</span>
+<span style="color: #839496">Description</span><span style="color: #586e75">=</span><span style="color: #2aa198">Kibana</span>
+<span style="color: #839496">Documentation</span><span style="color: #586e75">=</span><span style="color: #2aa198">https://www.elastic.co</span>
+<span style="color: #839496">Wants</span><span style="color: #586e75">=</span><span style="color: #2aa198">network-online.target</span>
+<span style="color: #839496">After</span><span style="color: #586e75">=</span><span style="color: #2aa198">network-online.target</span>
 
-<span class="k">[Service]</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">User</span><span class="o">=</span><span class="s">kibana</span>
-<span class="na">Group</span><span class="o">=</span><span class="s">kibana</span>
+<span style="color: #859900">[Service]</span>
+<span style="color: #839496">Type</span><span style="color: #586e75">=</span><span style="color: #2aa198">simple</span>
+<span style="color: #839496">User</span><span style="color: #586e75">=</span><span style="color: #2aa198">kibana</span>
+<span style="color: #839496">Group</span><span style="color: #586e75">=</span><span style="color: #2aa198">kibana</span>
 
-<span class="na">Environment</span><span class="o">=</span><span class="s">KBN_HOME=/usr/share/kibana</span>
-<span class="na">Environment</span><span class="o">=</span><span class="s">KBN_PATH_CONF=/etc/kibana</span>
+<span style="color: #839496">Environment</span><span style="color: #586e75">=</span><span style="color: #2aa198">KBN_HOME=/usr/share/kibana</span>
+<span style="color: #839496">Environment</span><span style="color: #586e75">=</span><span style="color: #2aa198">KBN_PATH_CONF=/etc/kibana</span>
 
-<span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">-/etc/default/kibana</span>
-<span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">-/etc/sysconfig/kibana</span>
+<span style="color: #839496">EnvironmentFile</span><span style="color: #586e75">=</span><span style="color: #2aa198">-/etc/default/kibana</span>
+<span style="color: #839496">EnvironmentFile</span><span style="color: #586e75">=</span><span style="color: #2aa198">-/etc/sysconfig/kibana</span>
 
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/share/kibana/bin/kibana --pid.file=&quot;/run/kibana/kibana.pid&quot;</span>
+<span style="color: #839496">ExecStart</span><span style="color: #586e75">=</span><span style="color: #2aa198">/usr/share/kibana/bin/kibana --pid.file=&quot;/run/kibana/kibana.pid&quot;</span>
 
-<span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
-<span class="na">RestartSec</span><span class="o">=</span><span class="s">3</span>
+<span style="color: #839496">Restart</span><span style="color: #586e75">=</span><span style="color: #2aa198">on-failure</span>
+<span style="color: #839496">RestartSec</span><span style="color: #586e75">=</span><span style="color: #2aa198">3</span>
 
-<span class="na">StartLimitBurst</span><span class="o">=</span><span class="s">3</span>
-<span class="na">StartLimitInterval</span><span class="o">=</span><span class="s">60</span>
+<span style="color: #839496">StartLimitBurst</span><span style="color: #586e75">=</span><span style="color: #2aa198">3</span>
+<span style="color: #839496">StartLimitInterval</span><span style="color: #586e75">=</span><span style="color: #2aa198">60</span>
 
-<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/usr/share/kibana</span>
+<span style="color: #839496">WorkingDirectory</span><span style="color: #586e75">=</span><span style="color: #2aa198">/usr/share/kibana</span>
 
-<span class="na">StandardOutput</span><span class="o">=</span><span class="s">journal</span>
-<span class="na">StandardError</span><span class="o">=</span><span class="s">inherit</span>
+<span style="color: #839496">StandardOutput</span><span style="color: #586e75">=</span><span style="color: #2aa198">journal</span>
+<span style="color: #839496">StandardError</span><span style="color: #586e75">=</span><span style="color: #2aa198">inherit</span>
 
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+<span style="color: #859900">[Install]</span>
+<span style="color: #839496">WantedBy</span><span style="color: #586e75">=</span><span style="color: #2aa198">multi-user.target</span>
 </code></pre></div>
 
-<h2>Restart Kibana</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>kibana
+<h2 id="restart-kibana">Restart Kibana</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>restart<span style="color: #839496"> </span>kibana
 </code></pre></div>
 
-<h2>Verify all services are running</h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>elasticsearch
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>logstash
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>kibana
+<h2 id="verify-all-services-are-running">Verify all services are running</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>status<span style="color: #839496"> </span>elasticsearch
+sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>status<span style="color: #839496"> </span>logstash
+sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>status<span style="color: #839496"> </span>kibana
 </code></pre></div>
 
-<h2>Verify version of Elasticsearch</h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9200
+<h2 id="verify-version-of-elasticsearch">Verify version of Elasticsearch</h2>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>curl<span style="color: #839496"> </span>http://127.0.0.1:9200
 </code></pre></div>
   </div>
   <div class="tag-cloud">
@@ -262,10 +262,29 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
   </div>
 
 
+  <div class="neighbors">
+    <a class="btn float-right" href="/test-post/" title="Test Post">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
 
 
 
 
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
 <footer>
