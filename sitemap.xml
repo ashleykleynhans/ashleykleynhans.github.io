@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2023-01-19T12:49:35-00:00</lastmod>
+<lastmod>2023-01-19T16:25:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2023-01-19T12:49:35-00:00</lastmod>
+<lastmod>2023-01-19T16:25:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2023-01-19T12:49:35-00:00</lastmod>
+<lastmod>2023-01-19T16:25:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2023-01-19T12:49:35-00:00</lastmod>
+<lastmod>2023-01-19T16:25:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2023-01-19T12:49:35-00:00</lastmod>
+<lastmod>2023-01-19T16:25:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2023-01-18T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</loc>
+<lastmod>2023-01-19T00:00:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -68,6 +75,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/devops.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/dns.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/dnsmasq.html</loc>
+<lastmod>2023-01-19T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>/tag/nginx.html</loc>
 <lastmod>2023-01-19T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
