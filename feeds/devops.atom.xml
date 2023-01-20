@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-01-19T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title><link href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;This post walks you through the process of compiling and
+installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you
+can benefit from the &lt;code&gt;filter-AAAA&lt;/code&gt; feature that was introduced
+in dnsmasq version 2.87 in order to resolve issues with nginx
+servers that only have IPv4 addresses attached to them getting
+network unreachable errors when resolving upstream DNS entries
+to IPv6 addresses.&lt;/p&gt;</summary><content type="html">&lt;h2 id="background"&gt;Background&lt;/h2&gt;
+&lt;p&gt;I was monitoring my nginx logs, when I stumbled across a
+peculiar error where nginx was trying to connect to a
+Firebase backend with a DNS entry that resolves to an
+IPv6 address.&lt;/p&gt;
+&lt;pre&gt;
+[nginx][] 2023/01/06 07:32:38 [error] 61125#61125: *4683 connect() to
+[fe80::cf4d:cab8:b943]:443 failed (101: Network is unreachable) while
+connecting to upstream, client: 1.1.1.1, server: , request: 
+"GET /file.json?v=3 HTTP/2.0", upstream: 
+"https://[fe80::cf4d:cab8:b943]:443/file.json?v=3", host: "example.com", 
+referrer: "https://example.com/worker.js"
+&lt;/pre&gt;
+
+&lt;p&gt;This was rather perplexing, since none of my nginx servers
+have any IPv6 addresses attached to them, but discovered that
+the DNS lookup for my Firebase application was returning the
+same IPv6 address that I noticed in my nginx log file.&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #839496"&gt; &lt;/span&gt;host&lt;span style="color: #839496"&gt; &lt;/span&gt;example-app.firebaseapp.com
+example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;192&lt;/span&gt;.168.1.1
+example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;IPv6&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;fe80::cf4d:cab8:b943
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I then determined that the best way to solve this problem would
+be to set up dnsmasq as a DNS cache, and use the &lt;code&gt;filter-AAAA&lt;/code&gt;
+option to prevent it from performing IPv6 lookups.&lt;/p&gt;
+&lt;p&gt;The problem with this, however, is that the latest version of
+the dnsmasq package in the Ubuntu 22.04 repositories is
+version &lt;strong&gt;2.86&lt;/strong&gt; and the &lt;code&gt;filter-AAAA&lt;/code&gt; feature was only
+introduced in dnsmasq version &lt;strong&gt;2.87&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://launchpad.net/ubuntu/lunar/+source/dnsmasq"&gt;Ubuntu 23.04 (Lunar Lobster)&lt;/a&gt;,
+which is currently under active  development at the time of writing,
+is the only Ubuntu version that has a version of dnsmasq that
+supports the &lt;code&gt;filter-AAAA&lt;/code&gt; feature, so I decided to compile
+and install dnsmasq from the &lt;a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz"&gt;source used by Ubuntu 23.04&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="download-compile-and-install-dnsmasq-from-source"&gt;Download, Compile and Install dnsmasq from Source&lt;/h2&gt;
+&lt;h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site"&gt;Download source for dnsmasq version 2.88 from Ubuntu Launchpad site&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/tmp
+wget&lt;span style="color: #839496"&gt; &lt;/span&gt;https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="extract-dnsmasq-288-source"&gt;Extract dnsmasq 2.88 source&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar&lt;span style="color: #839496"&gt; &lt;/span&gt;zxvf&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq_2.88.orig.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="install-dependency-packages"&gt;Install dependency packages&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;update
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;gettext
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="compile-dnsmasq"&gt;Compile dnsmasq&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq-2.88.orig
+make&lt;span style="color: #839496"&gt; &lt;/span&gt;all-i18n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="confirm-the-version-of-the-compiled-dnsmasq-binary"&gt;Confirm the version of the compiled dnsmasq binary&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;src/dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;-v
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="stop-the-dnsmasq-service"&gt;Stop the dnsmasq service&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;stop&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="copy-the-newly-compiled-binary-over-the-old-one"&gt;Copy the newly compiled binary over the old one&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;src/dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/sbin/dnsmasq
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="remove-file-that-is-no-longer-supported-by-the-new-binary"&gt;Remove file that is no longer supported by the new binary&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;rm&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/share/dns/root.ds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="edit-the-dnsmasq-config-file-and-configure-it-to-exclude-ipv6-lookups"&gt;Edit the dnsmasq config file and configure it to exclude IPv6 lookups&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/dnsmasq.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;listen&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;address&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;127.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.53&lt;/span&gt;
+&lt;span style="color: #839496"&gt;port&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;53&lt;/span&gt;
+&lt;span style="color: #839496"&gt;bind&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;interfaces&lt;/span&gt;
+&lt;span style="color: #839496"&gt;user&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;
+&lt;span style="color: #839496"&gt;group&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt;nogroup&lt;/span&gt;
+&lt;span style="color: #839496"&gt;pid&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;file&lt;/span&gt;&lt;span style="color: #586e75"&gt;=/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;run&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;pid&lt;/span&gt;
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Name resolution options&lt;/span&gt;
+&lt;span style="color: #839496"&gt;resolv&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;file&lt;/span&gt;&lt;span style="color: #586e75"&gt;=/&lt;/span&gt;&lt;span style="color: #839496"&gt;etc&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;resolv&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;
+&lt;span style="color: #839496"&gt;cache&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;size&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;500&lt;/span&gt;
+&lt;span style="color: #839496"&gt;neg&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;ttl&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;60&lt;/span&gt;
+&lt;span style="color: #839496"&gt;domain&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;needed&lt;/span&gt;
+&lt;span style="color: #839496"&gt;bogus&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;priv&lt;/span&gt;
+&lt;span style="color: #839496"&gt;filter&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;AAAA&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And save the file.&lt;/p&gt;
+&lt;h3 id="configure-the-dns-resolver-for-the-dnsmasq-service"&gt;Configure the DNS resolver for the dnsmasq service&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;bash&lt;span style="color: #839496"&gt; &lt;/span&gt;-c&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;echo &amp;#39;nameserver 1.1.1.1&amp;#39; &amp;gt; /etc/resolv.dnsmasq&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="configure-dns-resolver-for-consul-optional"&gt;Configure DNS resolver for Consul (OPTIONAL)&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/dnsmasq.d/10-consul
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;server=/consul/127.0.0.1#8600
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And save the file.&lt;/p&gt;
+&lt;h3 id="disable-systemd-resolved"&gt;Disable systemd resolved&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/systemd/resolved.conf.d/noresolved.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;[Resolve]&lt;/span&gt;
+&lt;span style="color: #839496"&gt;DNSStubListener&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;no&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And save the file.&lt;/p&gt;
+&lt;h3 id="restart-the-systemd-resolved-and-dnsmasq-services"&gt;Restart the systemd-resolved and dnsmasq services&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;systemd-resolved
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="edit-etcresolvconf-to-use-dnsmasq-as-the-dns-resolver"&gt;Edit /etc/resolv.conf to use dnsmasq as the DNS resolver&lt;/h3&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;nameserver 127.0.0.53
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And save the file.&lt;/p&gt;
+&lt;h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore"&gt;Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #839496"&gt; &lt;/span&gt;host&lt;span style="color: #839496"&gt; &lt;/span&gt;example-app.firebaseapp.com
+example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;192&lt;/span&gt;.168.1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="dns"></category><category term="dnsmasq"></category><category term="nginx"></category></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
+Aurora MySQL RDS cluster running a specific engine version to a
+new Aurora MySQL RDS cluster running a new engine version
+(eg. Upgrading the engine version of Aurora MySQL from 5.6 to
+Aurora MySQL 5.7).&lt;/p&gt;
+&lt;h2 id="prepare-for-upgrade"&gt;Prepare for Upgrade&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;It is important to create a new parameter group for each cluster
+that you are upgrading so that you don't accidentally put another
+production cluster into read only mode.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add a DNS CNAME to point to the RDS load balancer for the current Aurora cluster
+   with a TTL of &lt;strong&gt;60 seconds&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Copy the existing parameter groups for the cluster as well as for the instances to
+   new parameter groups in point (2) above and change &lt;code&gt;binlog_format&lt;/code&gt; from
+   &lt;code&gt;OFF&lt;/code&gt; to &lt;code&gt;MIXED&lt;/code&gt; in each.&lt;/li&gt;
+&lt;li&gt;Add a new Reader instance to the cluster and configure it to use the new parameter group. &lt;/li&gt;
+&lt;li&gt;Failover the new Reader instance so that it becomes the Master/Writer so that
+   the cluster does not need to be rebooted for the parameter group changes to take effect.&lt;/li&gt;
+&lt;li&gt;Confirm that &lt;code&gt;binlog_format&lt;/code&gt; is enabled on the new Writer instance that you
+   failed over to in point (4) above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;VARIABLES&lt;span style="color: #839496"&gt; &lt;/span&gt;LIKE&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;binlog_format&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The output should look like this:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;+---------------+-------+
+&lt;span style="color: #839496"&gt;| &lt;/span&gt;Variable_name&lt;span style="color: #839496"&gt; | &lt;/span&gt;Value&lt;span style="color: #839496"&gt; |&lt;/span&gt;
++---------------+-------+
+&lt;span style="color: #839496"&gt;| &lt;/span&gt;binlog_format&lt;span style="color: #839496"&gt; | &lt;/span&gt;MIXED&lt;span style="color: #839496"&gt; |&lt;/span&gt;
++---------------+-------+
+&lt;span style="color: #2aa198"&gt;1&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;row&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;in&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;set&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0&lt;/span&gt;.00&lt;span style="color: #839496"&gt; &lt;/span&gt;sec&lt;span style="color: #586e75"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Confirm that the new Writer is able to replicate to a new cluster:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;MASTER&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;If nothing is returned, replication is not enabled and you need to investigate
+before proceeding.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Check binlog rotation time, increase to 24 hours minimum:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_show_configuration&lt;span style="color: #586e75"&gt;()&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_configuration&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;binlog retention hours&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;24&lt;/span&gt;&lt;span style="color: #586e75"&gt;)&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a user to set up replication:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;GRANT&lt;span style="color: #839496"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #839496"&gt; &lt;/span&gt;SLAVE,&lt;span style="color: #839496"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #839496"&gt; &lt;/span&gt;CLIENT&lt;span style="color: #839496"&gt; &lt;/span&gt;ON&lt;span style="color: #839496"&gt; &lt;/span&gt;*.*&lt;span style="color: #839496"&gt; &lt;/span&gt;to&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;@&lt;span style="color: #2aa198"&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;IDENTIFIED&lt;span style="color: #839496"&gt; &lt;/span&gt;BY&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="start-the-upgrade"&gt;Start the Upgrade&lt;/h2&gt;
+&lt;h3 id="restore-snapshot-to-the-new-aurora-db-engine-version"&gt;Restore Snapshot to the new Aurora DB Engine Version&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Check binlog positions:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;MASTER&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Take a snapshot of the read replica.&lt;/li&gt;
+&lt;li&gt;Restore the snapshot into a new Aurora cluster using the new DB engine version.&lt;/li&gt;
+&lt;li&gt;Configure the Writer in the new Aurora cluster to replicate from the Aurora
+   cluster running the old engine version:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_external_master&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;MASTER_ENDPOINT&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;3306&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;BINLOG_FILE&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;BINLOG_POSITION&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0&lt;/span&gt;&lt;span style="color: #586e75"&gt;)&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_start_replication&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Check that there is no replication lag, and wait for the slave to catch up
+   to master (ensure that &lt;code&gt;Seconds_Behind_Master&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;SLAVE&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #2aa198"&gt;\G&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a read replica in the new Aurora cluster running the new DB engine version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="swing-over-to-new-aurora-cluster"&gt;Swing over to new Aurora Cluster&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Put application into maintenance mode.&lt;/li&gt;
+&lt;li&gt;Edit parameter group and change &lt;code&gt;read_only&lt;/code&gt; from &lt;code&gt;{TrueIfReplica}&lt;/code&gt; to 1 to prevent writes
+   to the old cluster (no reboot required).&lt;/li&gt;
+&lt;li&gt;Update DNS CNAME to point to the new RDS Cluster endpoint.&lt;/li&gt;
+&lt;li&gt;Reset the new master/writer in the new Aurora cluster:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_reset_external_master&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Take application out of maintenance mode.&lt;/li&gt;
+&lt;li&gt;Stop the old Aurora Cluster.&lt;/li&gt;
+&lt;li&gt;Test.&lt;/li&gt;
+&lt;li&gt;Start and delete the old Cluster after a few days (it cannot be deleted
+   when it is stopped).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://blogs.halodoc.io/upgrading-to-rds-mysql-8-0-with-minimum-downtime/"&gt;Upgrading to RDS MySQL 8.0 with minimum downtime&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/enable-binary-logging-aurora/"&gt;How do I turn on binary logging for my Amazon Aurora MySQL cluster?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="aws"></category><category term="rds"></category><category term="aurora"></category><category term="mysql"></category></entry><entry><title>Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-18T00:00:00+02:00</published><updated>2023-01-18T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-18:/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 7.x to 8.x on Ubuntu 22.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="update-apt-repo-from-version-7x-to-version-8x"&gt;Update apt repo from version 7.x to version 8.x&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mv&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-7.x.list&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;deb&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;[signed-by=/usr/share/keyrings/elastic.gpg]&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;https://artifacts.elastic.co/packages/8.x/apt&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;stable&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;main&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="upgrade-packages"&gt;Upgrade packages&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;update
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch&lt;span style="color: #839496"&gt; &lt;/span&gt;filebeat&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana&lt;span style="color: #839496"&gt; &lt;/span&gt;logstash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="update-elasticsearch-config"&gt;Update Elasticsearch config&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/elasticsearch/elasticsearch.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content, updating the cluster name as appropriate:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;cluster&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;name: your&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;cluster&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;name&lt;/span&gt;
+&lt;span style="color: #839496"&gt;node&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;name: node&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #2aa198"&gt;1&lt;/span&gt;
+&lt;span style="color: #839496"&gt;path&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;data: &lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;lib&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;elasticsearch&lt;/span&gt;
+&lt;span style="color: #839496"&gt;path&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;logs: &lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #268bd2"&gt;log&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;elasticsearch&lt;/span&gt;
+&lt;span style="color: #839496"&gt;network&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;host: &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;
+&lt;span style="color: #839496"&gt;discovery&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;type: single&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;node&lt;/span&gt;
+&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enrollment&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents&lt;/span&gt;
+&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;http&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;ssl:&lt;/span&gt;
+&lt;span style="color: #839496"&gt;  enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Enable encryption and mutual authentication between cluster nodes&lt;/span&gt;
+&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;transport&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;ssl:&lt;/span&gt;
+&lt;span style="color: #839496"&gt;  enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Allow HTTP API connections from anywhere&lt;/span&gt;
+&lt;span style="color: #586e75; font-style: italic"&gt;# Connections are encrypted and require user authentication&lt;/span&gt;
+&lt;span style="color: #839496"&gt;http&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;host: &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="restart-elasticsearch"&gt;Restart Elasticsearch&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="remove-incompatible-logging-from-kibana-systemd-service"&gt;Remove incompatible logging from Kibana systemd service&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/systemd/system/kibana.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Paste the following content:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;[Unit]&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Description&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;Kibana&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Documentation&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;https://www.elastic.co&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Wants&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;network-online.target&lt;/span&gt;
+&lt;span style="color: #839496"&gt;After&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;network-online.target&lt;/span&gt;
+
+&lt;span style="color: #859900"&gt;[Service]&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Type&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;simple&lt;/span&gt;
+&lt;span style="color: #839496"&gt;User&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;kibana&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Group&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;kibana&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;Environment&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;KBN_HOME=/usr/share/kibana&lt;/span&gt;
+&lt;span style="color: #839496"&gt;Environment&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;KBN_PATH_CONF=/etc/kibana&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;-/etc/default/kibana&lt;/span&gt;
+&lt;span style="color: #839496"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;-/etc/sysconfig/kibana&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;ExecStart&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;/usr/share/kibana/bin/kibana --pid.file=&amp;quot;/run/kibana/kibana.pid&amp;quot;&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;Restart&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;on-failure&lt;/span&gt;
+&lt;span style="color: #839496"&gt;RestartSec&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;3&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;StartLimitBurst&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;3&lt;/span&gt;
+&lt;span style="color: #839496"&gt;StartLimitInterval&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;60&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;WorkingDirectory&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;/usr/share/kibana&lt;/span&gt;
+
+&lt;span style="color: #839496"&gt;StandardOutput&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;journal&lt;/span&gt;
+&lt;span style="color: #839496"&gt;StandardError&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;inherit&lt;/span&gt;
+
+&lt;span style="color: #859900"&gt;[Install]&lt;/span&gt;
+&lt;span style="color: #839496"&gt;WantedBy&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;multi-user.target&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="restart-kibana"&gt;Restart Kibana&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="verify-all-services-are-running"&gt;Verify all services are running&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;logstash
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="verify-version-of-elasticsearch"&gt;Verify version of Elasticsearch&lt;/h2&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span style="color: #839496"&gt; &lt;/span&gt;http://127.0.0.1:9200
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="elastic"></category><category term="ubuntu"></category><category term="devops"></category></entry></feed>
