@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-01-19T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title><link href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;This post walks you through the process of compiling and
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-02-03T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
+agent on macOS servers so that they can be monitored by your
+CheckMK server.&lt;/p&gt;</summary><content type="html">&lt;h2 id="installation-procedure"&gt;Installation Procedure&lt;/h2&gt;
+&lt;p&gt;You can install CheckMK agent on your macOS servers as follows:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #586e75; font-style: italic"&gt;# Clone Repo&lt;/span&gt;
+git&lt;span style="color: #839496"&gt; &lt;/span&gt;clone&lt;span style="color: #839496"&gt; &lt;/span&gt;https://github.com/ThomasKaiser/Check_MK.git
+&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;Check_MK
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Remove less common plugins&lt;/span&gt;
+rm&lt;span style="color: #839496"&gt; &lt;/span&gt;-f&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/monitor-jss-and-macos-updates&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/city-temperatures&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/monitor-kerio&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/smart*
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Install dependencies&lt;/span&gt;
+brew&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;smartmontools&lt;span style="color: #839496"&gt; &lt;/span&gt;osx-cpu-temp
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Modify the plist file (remove cwd)&lt;/span&gt;
+sed&lt;span style="color: #839496"&gt; &lt;/span&gt;-i&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;/&amp;lt;key&amp;gt;WorkingDirectory/{N;d;}&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Create directories needed and copy files to required location&lt;/span&gt;
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;-p&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/local
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/check_mk_agent.macosx&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;-r&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;-p&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/bin
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;ln&lt;span style="color: #839496"&gt; &lt;/span&gt;-s&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/bin/check_mk_agent
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/check_mk
+
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;touch&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;touch&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/log/check_mk.err
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Permissions&lt;/span&gt;
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;+x&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;o+rw&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;666&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/log/check_mk.err
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chown&lt;span style="color: #839496"&gt; &lt;/span&gt;-R&lt;span style="color: #839496"&gt; &lt;/span&gt;root:admin&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;644&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Install LaunchDaemon&lt;/span&gt;
+sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;launchctl&lt;span style="color: #839496"&gt; &lt;/span&gt;load&lt;span style="color: #839496"&gt; &lt;/span&gt;-w&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
+
+&lt;span style="color: #586e75; font-style: italic"&gt;# Once lnx_if fix is merged into the agent, the below is required (see: https://github.com/ThomasKaiser/Check_MK/pull/2)&lt;/span&gt;
+brew&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;iproute2mac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gist.github.com/catchdave/44c45e31951fcc9ee4fb8768f4d95f21"&gt;Install check_mk agent on OSX&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="checkmk"></category><category term="monitoring"></category><category term="macos"></category></entry><entry><title>Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title><link href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;This post walks you through the process of compiling and
 installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you
 can benefit from the &lt;code&gt;filter-AAAA&lt;/code&gt; feature that was introduced
 in dnsmasq version 2.87 in order to resolve issues with nginx
