@@ -211,20 +211,21 @@ that you are upgrading so that you don't accidentally put another
 production cluster into read only mode.&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Add a DNS CNAME to point to the RDS load balancer for the current Aurora cluster
-   with a TTL of &lt;strong&gt;60 seconds&lt;/strong&gt;.&lt;/li&gt;
+  with a TTL of &lt;strong&gt;60 seconds&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;Create a new DB Cluster parameter group with the same settings as the
   default parameter group.&lt;/li&gt;
 &lt;li&gt;Change &lt;code&gt;binlog_format&lt;/code&gt; from either &lt;code&gt;OFF&lt;/code&gt; (this was the default in 5.6)
   or &lt;code&gt;ROW&lt;/code&gt; (this was the default in 5.7) to &lt;code&gt;MIXED&lt;/code&gt; in the new
   Parameter group.&lt;/li&gt;
-&lt;li&gt;Add a new Reader instance to the cluster and configure it to use the new parameter group. &lt;/li&gt;
+&lt;li&gt;Add a new Reader instance to the cluster.&lt;/li&gt;
+&lt;li&gt;Modify the new Reader instance to use the new DB Cluster Parameter Group.&lt;/li&gt;
 &lt;li&gt;Apply the changes immediately.&lt;/li&gt;
-&lt;li&gt;Reboot the reader instance for the &lt;code&gt;binlog_format&lt;/code&gt; change in the parameter group
-  to take effect.&lt;/li&gt;
+&lt;li&gt;Reboot the new Reader instance for the Parameter Group changes to
+  take effect.&lt;/li&gt;
 &lt;li&gt;Failover the new Reader instance so that it becomes the Master/Writer so that
-   the cluster does not need to be rebooted for the parameter group changes to take effect.&lt;/li&gt;
+  the cluster does not need to be rebooted for the parameter group changes to take effect.&lt;/li&gt;
 &lt;li&gt;Confirm that &lt;code&gt;binlog_format&lt;/code&gt; is enabled on the new Writer instance that you
-   failed over to in point (4) above.&lt;/li&gt;
+  failed over to in point (4) above.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;VARIABLES&lt;span style="color: #839496"&gt; &lt;/span&gt;LIKE&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;binlog_format&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;

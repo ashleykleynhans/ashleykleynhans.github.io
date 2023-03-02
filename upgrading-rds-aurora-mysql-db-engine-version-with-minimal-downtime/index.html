@@ -200,20 +200,21 @@ that you are upgrading so that you don't accidentally put another
 production cluster into read only mode.</strong></p>
 <ul>
 <li>Add a DNS CNAME to point to the RDS load balancer for the current Aurora cluster
-   with a TTL of <strong>60 seconds</strong>.</li>
+  with a TTL of <strong>60 seconds</strong>.</li>
 <li>Create a new DB Cluster parameter group with the same settings as the
   default parameter group.</li>
 <li>Change <code>binlog_format</code> from either <code>OFF</code> (this was the default in 5.6)
   or <code>ROW</code> (this was the default in 5.7) to <code>MIXED</code> in the new
   Parameter group.</li>
-<li>Add a new Reader instance to the cluster and configure it to use the new parameter group. </li>
+<li>Add a new Reader instance to the cluster.</li>
+<li>Modify the new Reader instance to use the new DB Cluster Parameter Group.</li>
 <li>Apply the changes immediately.</li>
-<li>Reboot the reader instance for the <code>binlog_format</code> change in the parameter group
-  to take effect.</li>
+<li>Reboot the new Reader instance for the Parameter Group changes to
+  take effect.</li>
 <li>Failover the new Reader instance so that it becomes the Master/Writer so that
-   the cluster does not need to be rebooted for the parameter group changes to take effect.</li>
+  the cluster does not need to be rebooted for the parameter group changes to take effect.</li>
 <li>Confirm that <code>binlog_format</code> is enabled on the new Writer instance that you
-   failed over to in point (4) above.</li>
+  failed over to in point (4) above.</li>
 </ul>
 <div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #839496"> </span>VARIABLES<span style="color: #839496"> </span>LIKE<span style="color: #839496"> </span><span style="color: #2aa198">&#39;binlog_format&#39;</span><span style="color: #839496">;</span>
 </code></pre></div>
