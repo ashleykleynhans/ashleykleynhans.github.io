@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-02-03T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-03-02T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
 agent on macOS servers so that they can be monitored by your
 CheckMK server.&lt;/p&gt;</summary><content type="html">&lt;h2 id="installation-procedure"&gt;Installation Procedure&lt;/h2&gt;
 &lt;p&gt;You can install CheckMK agent on your macOS servers as follows:&lt;/p&gt;
@@ -185,11 +185,26 @@ sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="co
 &lt;h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore"&gt;Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore&lt;/h2&gt;
 &lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #839496"&gt; &lt;/span&gt;host&lt;span style="color: #839496"&gt; &lt;/span&gt;example-app.firebaseapp.com
 example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;192&lt;/span&gt;.168.1.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="dns"></category><category term="dnsmasq"></category><category term="nginx"></category></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="dns"></category><category term="dnsmasq"></category><category term="nginx"></category></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-03-02T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
 Aurora MySQL RDS cluster running a specific engine version to a
 new Aurora MySQL RDS cluster running a new engine version
 (eg. Upgrading the engine version of Aurora MySQL from 5.6 to
-Aurora MySQL 5.7).&lt;/p&gt;
+Aurora MySQL 5.7).  It has been tested successfully in upgrading
+an Aurora MySQL from 5.6 to Aurora MySQL 5.7 and also upgrading
+an Aurora MySQL from 5.7 to Aurora MySQL 8.&lt;/p&gt;
+&lt;h2 id="considerations-before-upgrading-from-mysql-57-to-mysql-8"&gt;Considerations before Upgrading from MySQL 5.7 to MySQL 8&lt;/h2&gt;
+&lt;p&gt;If you are using ISO date formats when querying &lt;code&gt;DATETIME&lt;/code&gt; fields,
+your queries will no longer work in MySQL 8, so you will either need
+to update your queries to use the correct &lt;code&gt;DATETIME&lt;/code&gt; format, ie
+&lt;code&gt;YYYY-MM-DD HH:MM:SS&lt;/code&gt;, or to use the &lt;code&gt;STR_TO_DATE&lt;/code&gt; function, eg:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;SELECT&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;STR_TO_DATE&lt;/span&gt;&lt;span style="color: #839496"&gt;( &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2019-02-20T10:00:00.000Z&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;, &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;%Y-%m-%dT%T.%fZ&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Otherwise you will run into errors that look like this:&lt;/p&gt;
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;mysql&lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;gt;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;SELECT&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;*&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;FROM&lt;/span&gt;&lt;span style="color: #839496"&gt;  example_table &lt;/span&gt;&lt;span style="color: #859900"&gt;WHERE&lt;/span&gt;&lt;span style="color: #839496"&gt; example_field &lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;span style="color: #859900"&gt;ERROR&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;1525&lt;/span&gt;&lt;span style="color: #839496"&gt; (HY000)&lt;/span&gt;&lt;span style="color: #586e75"&gt;:&lt;/span&gt;&lt;span style="color: #839496"&gt; Incorrect &lt;/span&gt;&lt;span style="color: #b58900"&gt;DATETIME&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;value&lt;/span&gt;&lt;span style="color: #586e75"&gt;:&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;h2 id="prepare-for-upgrade"&gt;Prepare for Upgrade&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;It is important to create a new parameter group for each cluster
 that you are upgrading so that you don't accidentally put another
@@ -197,10 +212,15 @@ production cluster into read only mode.&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Add a DNS CNAME to point to the RDS load balancer for the current Aurora cluster
    with a TTL of &lt;strong&gt;60 seconds&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Copy the existing parameter groups for the cluster as well as for the instances to
-   new parameter groups in point (2) above and change &lt;code&gt;binlog_format&lt;/code&gt; from
-   &lt;code&gt;OFF&lt;/code&gt; to &lt;code&gt;MIXED&lt;/code&gt; in each.&lt;/li&gt;
+&lt;li&gt;Create a new DB Cluster parameter group with the same settings as the
+  default parameter group.&lt;/li&gt;
+&lt;li&gt;Change &lt;code&gt;binlog_format&lt;/code&gt; from either &lt;code&gt;OFF&lt;/code&gt; (this was the default in 5.6)
+  or &lt;code&gt;ROW&lt;/code&gt; (this was the default in 5.7) to &lt;code&gt;MIXED&lt;/code&gt; in the new
+  Parameter group.&lt;/li&gt;
 &lt;li&gt;Add a new Reader instance to the cluster and configure it to use the new parameter group. &lt;/li&gt;
+&lt;li&gt;Apply the changes immediately.&lt;/li&gt;
+&lt;li&gt;Reboot the reader instance for the &lt;code&gt;binlog_format&lt;/code&gt; change in the parameter group
+  to take effect.&lt;/li&gt;
 &lt;li&gt;Failover the new Reader instance so that it becomes the Master/Writer so that
    the cluster does not need to be rebooted for the parameter group changes to take effect.&lt;/li&gt;
 &lt;li&gt;Confirm that &lt;code&gt;binlog_format&lt;/code&gt; is enabled on the new Writer instance that you
@@ -284,6 +304,16 @@ CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_start_replication
 &lt;li&gt;Test.&lt;/li&gt;
 &lt;li&gt;Start and delete the old Cluster after a few days (it cannot be deleted
    when it is stopped).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="rolling-back"&gt;Rolling back&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Start the old Aurora Cluster.&lt;/li&gt;
+&lt;li&gt;Once the old cluster is up, put application into maintenance mode.&lt;/li&gt;
+&lt;li&gt;Update DNS CNAME to point back to the old RDS Cluster endpoint.&lt;/li&gt;
+&lt;li&gt;Edit parameter group and change &lt;code&gt;read_only&lt;/code&gt; back from &lt;code&gt;1&lt;/code&gt; to
+  &lt;code&gt;{TrueIfReplica}&lt;/code&gt; to enable writes the cluster (no reboot required).&lt;/li&gt;
+&lt;li&gt;Take application out of maintenance mode.&lt;/li&gt;
+&lt;li&gt;Test.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="references"&gt;References&lt;/h2&gt;
 &lt;ul&gt;
