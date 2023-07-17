@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-07-16T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2023-07-16T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="vhttps://runpod.io?ref=w18gds2n"&gt;RunPod&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-07-17T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2023-07-17T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="vhttps://runpod.io?ref=w18gds2n"&gt;RunPod&lt;/a&gt;
 Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is RunPod?&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://runpod.io?ref=w18gds2n"&gt;RunPod&lt;/a&gt; is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
@@ -136,6 +136,8 @@ docker&lt;span style="color: #839496"&gt; &lt;/span&gt;push&lt;span style="color
 &lt;p&gt;Once your image is pushed to Docker Hub, you are ready to create
 a Serverless Template for your image.&lt;/p&gt;
 &lt;h3 id="templates"&gt;Templates&lt;/h3&gt;
+&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/templates"&gt;RunPod Serverless Templates&lt;/a&gt; and click
+the &lt;code&gt;New Template&lt;/code&gt; button.&lt;/p&gt;
 &lt;p&gt;A template is  a specification for the &lt;a href="https://www.docker.com/"&gt;Docker&lt;/a&gt;
 containers that will run your Serverless application.&lt;/p&gt;
 &lt;p&gt;The template specifies the Docker image that will be used, the container
@@ -145,6 +147,22 @@ but you can also use other Docker container registries.  If you choose to
 use a private Docker registry rather than the public Docker Hub registry,
 you will also need to provide &lt;code&gt;Container Registry Credentials&lt;/code&gt;.  The
 credentials are not required if you use a Public registry.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="RunPod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Enter a name for your template.&lt;/li&gt;
+&lt;li&gt;Enter the Docker image name for the Docker image that you want to use
+   for your Serverless Endpoint.&lt;/li&gt;
+&lt;li&gt;Leave &lt;code&gt;Container Registry Credentials&lt;/code&gt; empty, unless you specifically
+   require credentials for the Docker container registry that you are using.&lt;/li&gt;
+&lt;li&gt;Leave &lt;code&gt;Docker Command&lt;/code&gt; empty, unless you specifically need to provide
+   a Docker command for whatever reason, but this should not usually be
+   required.&lt;/li&gt;
+&lt;li&gt;Set your Container Disk size.  5GB is usually sufficient and I have
+   not yet found a specific use-case where it needs to be increased.&lt;/li&gt;
+&lt;li&gt;If your application requires environment variables to be set,
+   click the dropdown arrow next to &lt;code&gt;Environment Variables&lt;/code&gt; and enter
+   your environment variables as Key =&amp;gt; Value pairs.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;Once your Serverless Template is created, you are ready to create a
 Serverless Endpoint.&lt;/p&gt;
 &lt;h4 id="important-note"&gt;Important Note&lt;/h4&gt;
@@ -154,9 +172,12 @@ A GPU Cloud template will not work in Serverless without the
 Serverless handler, so it is not recommended to use Docker images
 designed for GPU Cloud within Serverless.&lt;/p&gt;
 &lt;h3 id="endpoints"&gt;Endpoints&lt;/h3&gt;
+&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/endpoints"&gt;RunPod Serverless Endpoints&lt;/a&gt; and click
+the &lt;code&gt;New Endpoint&lt;/code&gt; button.&lt;/p&gt;
 &lt;p&gt;An endpoint is your actual Serverless Endpoint that will provide a
 &lt;a href="https://en.wikipedia.org/wiki/Representational_state_transfer"&gt;REST&lt;/a&gt;
 API endpoint for serving your application.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="RunPod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"&gt;&lt;/p&gt;
 &lt;p&gt;When adding a new Endpoint, you will need to configure a few things:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Endpoint Name&lt;/li&gt;
@@ -171,6 +192,7 @@ API endpoint for serving your application.&lt;/p&gt;
 &lt;li&gt;FlashBoot&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;And additional Advanced options:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="RunPod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Deployment Region&lt;/li&gt;
 &lt;li&gt;Scale Type&lt;/li&gt;
@@ -263,10 +285,11 @@ queue.&lt;/p&gt;
 &lt;h2 id="resources"&gt;Resources&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.youtube.com/@generativelabs/videos"&gt;YouTube Tutorials by Generative Labs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/runpod-workers"&gt;RunPod's Own Endpoints&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-inswapper"&gt;My Face Swap Endpoint&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan"&gt;My Upscaling Endpoint&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga"&gt;My Oobabooga Text Generation Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.runpod.io/serverless-create-a-basic-api/"&gt;RunPod's Blog Post on Creating a Custom Basic API Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/runpod-workers"&gt;Source Code to RunPod's Own Endpoints&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-inswapper"&gt;Source Code to My Face Swap Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan"&gt;Source Code to My Upscaling Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga"&gt;Source Code to My Oobabooga Text Generation Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="runpod"></category><category term="serverless"></category><category term="ai"></category><category term="gpu"></category><category term="cloud"></category><category term="docker"></category></entry><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
 agent on macOS servers so that they can be monitored by your
 CheckMK server.&lt;/p&gt;</summary><content type="html">&lt;h2 id="installation-procedure"&gt;Installation Procedure&lt;/h2&gt;

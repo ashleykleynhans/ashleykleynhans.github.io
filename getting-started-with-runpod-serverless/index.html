@@ -76,7 +76,7 @@
   <meta property="og:url" content="https://trapdoor.cloud/getting-started-with-runpod-serverless/"/>
   <meta property="og:type" content="article"/>
   <meta property="article:published_time" content="2023-07-16 00:00:00+02:00"/>
-  <meta property="article:modified_time" content="2023-07-16 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2023-07-17 00:00:00+02:00"/>
   <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
   <meta property="article:section" content="DevOps"/>
   <meta property="article:tag" content="devops"/>
@@ -170,7 +170,7 @@
     <p>
       Posted on Sun 16 July 2023 in <a href="https://trapdoor.cloud/category/devops.html">DevOps</a>
 
-        &#8226; 6 min read
+        &#8226; 7 min read
     </p>
   </header>
 
@@ -312,6 +312,8 @@ docker<span style="color: #839496"> </span>push<span style="color: #839496"> </s
 <p>Once your image is pushed to Docker Hub, you are ready to create
 a Serverless Template for your image.</p>
 <h3 id="templates">Templates</h3>
+<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/templates">RunPod Serverless Templates</a> and click
+the <code>New Template</code> button.</p>
 <p>A template is  a specification for the <a href="https://www.docker.com/">Docker</a>
 containers that will run your Serverless application.</p>
 <p>The template specifies the Docker image that will be used, the container
@@ -321,6 +323,22 @@ but you can also use other Docker container registries.  If you choose to
 use a private Docker registry rather than the public Docker Hub registry,
 you will also need to provide <code>Container Registry Credentials</code>.  The
 credentials are not required if you use a Public registry.</p>
+<p><img alt="RunPod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"></p>
+<ol>
+<li>Enter a name for your template.</li>
+<li>Enter the Docker image name for the Docker image that you want to use
+   for your Serverless Endpoint.</li>
+<li>Leave <code>Container Registry Credentials</code> empty, unless you specifically
+   require credentials for the Docker container registry that you are using.</li>
+<li>Leave <code>Docker Command</code> empty, unless you specifically need to provide
+   a Docker command for whatever reason, but this should not usually be
+   required.</li>
+<li>Set your Container Disk size.  5GB is usually sufficient and I have
+   not yet found a specific use-case where it needs to be increased.</li>
+<li>If your application requires environment variables to be set,
+   click the dropdown arrow next to <code>Environment Variables</code> and enter
+   your environment variables as Key =&gt; Value pairs.</li>
+</ol>
 <p>Once your Serverless Template is created, you are ready to create a
 Serverless Endpoint.</p>
 <h4 id="important-note">Important Note</h4>
@@ -330,9 +348,12 @@ A GPU Cloud template will not work in Serverless without the
 Serverless handler, so it is not recommended to use Docker images
 designed for GPU Cloud within Serverless.</p>
 <h3 id="endpoints">Endpoints</h3>
+<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/endpoints">RunPod Serverless Endpoints</a> and click
+the <code>New Endpoint</code> button.</p>
 <p>An endpoint is your actual Serverless Endpoint that will provide a
 <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>
 API endpoint for serving your application.</p>
+<p><img alt="RunPod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"></p>
 <p>When adding a new Endpoint, you will need to configure a few things:</p>
 <ul>
 <li>Endpoint Name</li>
@@ -347,6 +368,7 @@ API endpoint for serving your application.</p>
 <li>FlashBoot</li>
 </ul>
 <p>And additional Advanced options:</p>
+<p><img alt="RunPod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"></p>
 <ul>
 <li>Deployment Region</li>
 <li>Scale Type</li>
@@ -439,10 +461,11 @@ queue.</p>
 <h2 id="resources">Resources</h2>
 <ul>
 <li><a href="https://www.youtube.com/@generativelabs/videos">YouTube Tutorials by Generative Labs</a></li>
-<li><a href="https://github.com/runpod-workers">RunPod's Own Endpoints</a></li>
-<li><a href="https://github.com/ashleykleynhans/runpod-worker-inswapper">My Face Swap Endpoint</a></li>
-<li><a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan">My Upscaling Endpoint</a></li>
-<li><a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga">My Oobabooga Text Generation Endpoint</a></li>
+<li><a href="https://blog.runpod.io/serverless-create-a-basic-api/">RunPod's Blog Post on Creating a Custom Basic API Endpoint</a></li>
+<li><a href="https://github.com/runpod-workers">Source Code to RunPod's Own Endpoints</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-inswapper">Source Code to My Face Swap Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan">Source Code to My Upscaling Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga">Source Code to My Oobabooga Text Generation Endpoint</a></li>
 </ul>
   </div>
   <div class="tag-cloud">
