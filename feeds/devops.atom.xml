@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2023-07-20T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2023-07-20T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-01-15T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-01-15T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
 Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is RunPod?&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt; is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
@@ -87,11 +87,11 @@ locally as follows:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This will return an output that looks similar to the following:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #268bd2"&gt;WARN&lt;/span&gt;&lt;span style="color: #839496"&gt;   &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;RUNPOD_WEBHOOK_GET_JOB&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;not&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;set&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;switching&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;to&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;get_local&lt;/span&gt;
-&lt;span style="color: #268bd2"&gt;INFO&lt;/span&gt;&lt;span style="color: #839496"&gt;   &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;local_test&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;Started&lt;/span&gt;
-&lt;span style="color: #268bd2"&gt;WARN&lt;/span&gt;&lt;span style="color: #839496"&gt;   &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;Local&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;test&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;job&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;results&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;for&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;local_test&lt;/span&gt;:&lt;span style="color: #839496"&gt; &lt;/span&gt;{&lt;span style="color: #2aa198"&gt;&amp;quot;output&amp;quot;&lt;/span&gt;:&lt;span style="color: #839496"&gt; &lt;/span&gt;{&lt;span style="color: #2aa198"&gt;&amp;quot;greeting&amp;quot;&lt;/span&gt;:&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;Hello Ashley&amp;quot;&lt;/span&gt;}}
-&lt;span style="color: #268bd2"&gt;INFO&lt;/span&gt;&lt;span style="color: #839496"&gt;   &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;local_test&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;Finished&lt;/span&gt;
-&lt;span style="color: #268bd2"&gt;INFO&lt;/span&gt;&lt;span style="color: #839496"&gt;   &lt;/span&gt;&lt;span style="color: #586e75"&gt;|&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;Local&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;testing&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;complete&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;exiting&lt;/span&gt;.
+&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
+INFO   | local_test | Started
+WARN   | Local test job results for local_test: {&amp;quot;output&amp;quot;: {&amp;quot;greeting&amp;quot;: &amp;quot;Hello Ashley&amp;quot;}}
+INFO   | local_test | Finished
+INFO   | Local testing complete, exiting.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once you are happy with the results of your local testing,
@@ -205,22 +205,31 @@ endpoint, especially when you have multiple different endpoints.&lt;/p&gt;
 &lt;p&gt;The Template is described above, and specifies the Docker image
 containing your application that should be pulled from the container
 registry (such as Docker Hub).&lt;/p&gt;
+&lt;h4 id="gpu-tiers"&gt;GPU Tiers&lt;/h4&gt;
+&lt;p&gt;GPU tiers are the servers that will be used for the workers
+for your endpoint.  The GPU tier you choose is dependent on the
+type of application you are running.  For example, an LLM typically
+needs a lot more VRAM than running inference using Stable Diffusion.&lt;/p&gt;
+&lt;h4 id="active-workers"&gt;Active Workers&lt;/h4&gt;
+&lt;p&gt;Active workers will allow your Serverless endpoint to respond
+much faster, and reduce cold start time, but I don't recommend setting
+any Active workers due to the high cost of keeping them
+running constantly.&lt;/p&gt;
 &lt;h4 id="max-workers"&gt;Max Workers&lt;/h4&gt;
 &lt;p&gt;The Max Workers are the maximum number of servers that run your
 application so that your application can be scaled up automatically
 across multiple servers to meet demand.  The default of 3 is usually
-sufficient for development and testing purposes, but you will want
-to set Max Workers to at least 5 in production.&lt;/p&gt;
-&lt;h4 id="gpu-types"&gt;GPU Types&lt;/h4&gt;
-&lt;p&gt;GPU types are the servers that will be used for the workers
-for your endpoint.  The GPU type you choose is dependent on the
-type of application you are running.  For example, an LLM typically
-needs a lot more VRAM than running inference using Stable Diffusion.&lt;/p&gt;
-&lt;h4 id="min-provisioned-workers"&gt;Min Provisioned Workers&lt;/h4&gt;
-&lt;p&gt;Minimum Provisioned workers will allow your Serverless endpoint to respond
-much faster, and reduce cold start time, but I don't recommend setting
-any Min Provisioned workers due to the high cost of keeping them
-running constantly.&lt;/p&gt;
+sufficient for development and testing purposes.  If you set this to
+a value of 2 to 5, RunPod will provide you with additional workers
+(up to a maximum of 5) to help prevent your workers from being
+throttled.  I don't recommend setting this to a value of 1, because
+there is a very high chance that your worker will become throttled,
+and your requests will sit in the queue for a long time before being
+processed.&lt;/p&gt;
+&lt;h4 id="gpusworker"&gt;GPUs/Worker&lt;/h4&gt;
+&lt;p&gt;If you select the 48GB GPU tier, you will be able to assign more
+than one GPU per worker.  This is only available to the 48GB tier
+and not any of the other GPU tiers.&lt;/p&gt;
 &lt;h4 id="idle-timeout"&gt;Idle Timeout&lt;/h4&gt;
 &lt;p&gt;Idle Timeout is the amount of time in seconds that your idle
 workers will remain running and waiting to accept new requests.
@@ -229,13 +238,12 @@ for most cases.&lt;/p&gt;
 &lt;h4 id="flashboot"&gt;FlashBoot&lt;/h4&gt;
 &lt;p&gt;FlashBoot is disabled by default, but you can enable it to reduce
 the majority of cold-starts down to 2 seconds, even for LLMs.&lt;/p&gt;
-&lt;h4 id="deployment-region-advanced-setting"&gt;Deployment Region (Advanced Setting)&lt;/h4&gt;
-&lt;p&gt;By default, your application will by deployed in both the
-United States, and Europe regions.  If you have strict compliance
-requirements such as GDPR for example, you will want to restrict
-the region to Europe only.&lt;/p&gt;
-&lt;p&gt;If you are using a Network Volume, the Deployment Region will
-be automatically adjusted to the region where your Network
+&lt;h4 id="data-centers-advanced-setting"&gt;Data Centers (Advanced Setting)&lt;/h4&gt;
+&lt;p&gt;By default, your application will by deployed in all data centers.
+If you have strict compliance requirements such as GDPR for example,
+you will want to restrict the data centers to Europe only.&lt;/p&gt;
+&lt;p&gt;If you are using a Network Volume, the Data Center will
+be automatically adjusted to the data center where your Network
 Volume resides.&lt;/p&gt;
 &lt;h4 id="scale-type-advanced-setting"&gt;Scale Type (Advanced Setting)&lt;/h4&gt;
 &lt;p&gt;There are 2 different scaling Strategies:&lt;/p&gt;
@@ -265,11 +273,15 @@ a Network Volume to use RunPod Serverless, you can still deploy
 an application without using a Network Volume, but they are
 useful for certain use cases.&lt;/p&gt;
 &lt;p&gt;Network Volumes need to be added within the GPU Cloud section of
-the RunPod console, and are only currently available in 3 data
+the RunPod console, and are only currently available in these data
 centers:&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;CA-MTL-1 (Canada)&lt;/li&gt;
 &lt;li&gt;EU-CZ-1 (Europe)&lt;/li&gt;
 &lt;li&gt;EU-RO-1 (Europe)&lt;/li&gt;
+&lt;li&gt;EU-SE-1 (Europe)&lt;/li&gt;
+&lt;li&gt;EUR-NO-1 (Europe)&lt;/li&gt;
+&lt;li&gt;US-KS-1 (United States)&lt;/li&gt;
 &lt;li&gt;US-KS-2 (United States)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Unfortunately this also means that the GPU availability for
@@ -289,6 +301,8 @@ queue.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/runpod-workers"&gt;Source Code to RunPod's Own Endpoints&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-inswapper"&gt;Source Code to My Face Swap Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan"&gt;Source Code to My Upscaling Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-llava"&gt;Source Code to My LLaVA Endpoint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-a1111"&gt;Source Code to My A1111 Stable Diffusion Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga"&gt;Source Code to My Oobabooga Text Generation Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="runpod"></category><category term="serverless"></category><category term="ai"></category><category term="gpu"></category><category term="cloud"></category><category term="docker"></category></entry><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
 agent on macOS servers so that they can be monitored by your

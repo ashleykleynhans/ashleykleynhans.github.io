@@ -76,7 +76,7 @@
   <meta property="og:url" content="https://trapdoor.cloud/getting-started-with-runpod-serverless/"/>
   <meta property="og:type" content="article"/>
   <meta property="article:published_time" content="2023-07-16 00:00:00+02:00"/>
-  <meta property="article:modified_time" content="2023-07-20 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2024-01-15 00:00:00+02:00"/>
   <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
   <meta property="article:section" content="DevOps"/>
   <meta property="article:tag" content="devops"/>
@@ -170,7 +170,7 @@
     <p>
       Posted on Sun 16 July 2023 in <a href="https://trapdoor.cloud/category/devops.html">DevOps</a>
 
-        &#8226; 7 min read
+        &#8226; 8 min read
     </p>
   </header>
 
@@ -263,11 +263,11 @@ locally as follows:</p>
 </code></pre></div>
 
 <p>This will return an output that looks similar to the following:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #268bd2">WARN</span><span style="color: #839496">   </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">RUNPOD_WEBHOOK_GET_JOB</span><span style="color: #839496"> </span><span style="color: #268bd2">not</span><span style="color: #839496"> </span><span style="color: #268bd2">set</span>,<span style="color: #839496"> </span><span style="color: #268bd2">switching</span><span style="color: #839496"> </span><span style="color: #268bd2">to</span><span style="color: #839496"> </span><span style="color: #268bd2">get_local</span>
-<span style="color: #268bd2">INFO</span><span style="color: #839496">   </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">local_test</span><span style="color: #839496"> </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">Started</span>
-<span style="color: #268bd2">WARN</span><span style="color: #839496">   </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">Local</span><span style="color: #839496"> </span><span style="color: #268bd2">test</span><span style="color: #839496"> </span><span style="color: #268bd2">job</span><span style="color: #839496"> </span><span style="color: #268bd2">results</span><span style="color: #839496"> </span><span style="color: #859900">for</span><span style="color: #839496"> </span><span style="color: #268bd2">local_test</span>:<span style="color: #839496"> </span>{<span style="color: #2aa198">&quot;output&quot;</span>:<span style="color: #839496"> </span>{<span style="color: #2aa198">&quot;greeting&quot;</span>:<span style="color: #839496"> </span><span style="color: #2aa198">&quot;Hello Ashley&quot;</span>}}
-<span style="color: #268bd2">INFO</span><span style="color: #839496">   </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">local_test</span><span style="color: #839496"> </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">Finished</span>
-<span style="color: #268bd2">INFO</span><span style="color: #839496">   </span><span style="color: #586e75">|</span><span style="color: #839496"> </span><span style="color: #268bd2">Local</span><span style="color: #839496"> </span><span style="color: #268bd2">testing</span><span style="color: #839496"> </span><span style="color: #268bd2">complete</span>,<span style="color: #839496"> </span><span style="color: #268bd2">exiting</span>.
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
+INFO   | local_test | Started
+WARN   | Local test job results for local_test: {&quot;output&quot;: {&quot;greeting&quot;: &quot;Hello Ashley&quot;}}
+INFO   | local_test | Finished
+INFO   | Local testing complete, exiting.
 </code></pre></div>
 
 <p>Once you are happy with the results of your local testing,
@@ -381,22 +381,31 @@ endpoint, especially when you have multiple different endpoints.</p>
 <p>The Template is described above, and specifies the Docker image
 containing your application that should be pulled from the container
 registry (such as Docker Hub).</p>
+<h4 id="gpu-tiers">GPU Tiers</h4>
+<p>GPU tiers are the servers that will be used for the workers
+for your endpoint.  The GPU tier you choose is dependent on the
+type of application you are running.  For example, an LLM typically
+needs a lot more VRAM than running inference using Stable Diffusion.</p>
+<h4 id="active-workers">Active Workers</h4>
+<p>Active workers will allow your Serverless endpoint to respond
+much faster, and reduce cold start time, but I don't recommend setting
+any Active workers due to the high cost of keeping them
+running constantly.</p>
 <h4 id="max-workers">Max Workers</h4>
 <p>The Max Workers are the maximum number of servers that run your
 application so that your application can be scaled up automatically
 across multiple servers to meet demand.  The default of 3 is usually
-sufficient for development and testing purposes, but you will want
-to set Max Workers to at least 5 in production.</p>
-<h4 id="gpu-types">GPU Types</h4>
-<p>GPU types are the servers that will be used for the workers
-for your endpoint.  The GPU type you choose is dependent on the
-type of application you are running.  For example, an LLM typically
-needs a lot more VRAM than running inference using Stable Diffusion.</p>
-<h4 id="min-provisioned-workers">Min Provisioned Workers</h4>
-<p>Minimum Provisioned workers will allow your Serverless endpoint to respond
-much faster, and reduce cold start time, but I don't recommend setting
-any Min Provisioned workers due to the high cost of keeping them
-running constantly.</p>
+sufficient for development and testing purposes.  If you set this to
+a value of 2 to 5, RunPod will provide you with additional workers
+(up to a maximum of 5) to help prevent your workers from being
+throttled.  I don't recommend setting this to a value of 1, because
+there is a very high chance that your worker will become throttled,
+and your requests will sit in the queue for a long time before being
+processed.</p>
+<h4 id="gpusworker">GPUs/Worker</h4>
+<p>If you select the 48GB GPU tier, you will be able to assign more
+than one GPU per worker.  This is only available to the 48GB tier
+and not any of the other GPU tiers.</p>
 <h4 id="idle-timeout">Idle Timeout</h4>
 <p>Idle Timeout is the amount of time in seconds that your idle
 workers will remain running and waiting to accept new requests.
@@ -405,13 +414,12 @@ for most cases.</p>
 <h4 id="flashboot">FlashBoot</h4>
 <p>FlashBoot is disabled by default, but you can enable it to reduce
 the majority of cold-starts down to 2 seconds, even for LLMs.</p>
-<h4 id="deployment-region-advanced-setting">Deployment Region (Advanced Setting)</h4>
-<p>By default, your application will by deployed in both the
-United States, and Europe regions.  If you have strict compliance
-requirements such as GDPR for example, you will want to restrict
-the region to Europe only.</p>
-<p>If you are using a Network Volume, the Deployment Region will
-be automatically adjusted to the region where your Network
+<h4 id="data-centers-advanced-setting">Data Centers (Advanced Setting)</h4>
+<p>By default, your application will by deployed in all data centers.
+If you have strict compliance requirements such as GDPR for example,
+you will want to restrict the data centers to Europe only.</p>
+<p>If you are using a Network Volume, the Data Center will
+be automatically adjusted to the data center where your Network
 Volume resides.</p>
 <h4 id="scale-type-advanced-setting">Scale Type (Advanced Setting)</h4>
 <p>There are 2 different scaling Strategies:</p>
@@ -441,11 +449,15 @@ a Network Volume to use RunPod Serverless, you can still deploy
 an application without using a Network Volume, but they are
 useful for certain use cases.</p>
 <p>Network Volumes need to be added within the GPU Cloud section of
-the RunPod console, and are only currently available in 3 data
+the RunPod console, and are only currently available in these data
 centers:</p>
 <ul>
+<li>CA-MTL-1 (Canada)</li>
 <li>EU-CZ-1 (Europe)</li>
 <li>EU-RO-1 (Europe)</li>
+<li>EU-SE-1 (Europe)</li>
+<li>EUR-NO-1 (Europe)</li>
+<li>US-KS-1 (United States)</li>
 <li>US-KS-2 (United States)</li>
 </ul>
 <p>Unfortunately this also means that the GPU availability for
@@ -465,6 +477,8 @@ queue.</p>
 <li><a href="https://github.com/runpod-workers">Source Code to RunPod's Own Endpoints</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-inswapper">Source Code to My Face Swap Endpoint</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan">Source Code to My Upscaling Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-llava">Source Code to My LLaVA Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-a1111">Source Code to My A1111 Stable Diffusion Endpoint</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga">Source Code to My Oobabooga Text Generation Endpoint</a></li>
 </ul>
   </div>
@@ -508,7 +522,7 @@ queue.</p>
 
 <footer>
 <p>
-  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
