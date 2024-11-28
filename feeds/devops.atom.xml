@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-01-15T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-01-15T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-11-28T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-11-28T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
 Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is RunPod?&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt; is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
@@ -282,12 +282,16 @@ the RunPod console, and are only currently available in these data
 centers:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;CA-MTL-1 (Canada)&lt;/li&gt;
+&lt;li&gt;CA-MTL-3 (Canada)&lt;/li&gt;
 &lt;li&gt;EU-CZ-1 (Europe)&lt;/li&gt;
 &lt;li&gt;EU-RO-1 (Europe)&lt;/li&gt;
 &lt;li&gt;EU-SE-1 (Europe)&lt;/li&gt;
-&lt;li&gt;EUR-NO-1 (Europe)&lt;/li&gt;
+&lt;li&gt;EUR-IS-1 (Europe)&lt;/li&gt;
+&lt;li&gt;US-GA-2 (United States)&lt;/li&gt;
 &lt;li&gt;US-KS-1 (United States)&lt;/li&gt;
 &lt;li&gt;US-KS-2 (United States)&lt;/li&gt;
+&lt;li&gt;US-OR-1 (United States)&lt;/li&gt;
+&lt;li&gt;US-TX-1 (United States)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Unfortunately this also means that the GPU availability for
 your Serverless application will be pretty low due to the limited
