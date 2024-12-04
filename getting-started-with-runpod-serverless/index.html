@@ -210,60 +210,60 @@ back.</p>
 <p>The Serverless handler accepts a JSON payload that contains an <code>input</code>,
 and returns a response that contains an <code>output</code>.</p>
 <p>Example Serverless Handler (<code>rp_handler.py</code>):</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #cb4b16">import</span> <span style="color: #268bd2">runpod</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #ff7b72">import</span> <span style="color: #ff7b72">runpod</span>
 
 
-<span style="color: #859900">def</span> <span style="color: #268bd2">process_input</span><span style="color: #839496">(</span><span style="color: #268bd2">input</span><span style="color: #839496">):</span>
-<span style="color: #839496">    </span><span style="color: #586e75">&quot;&quot;&quot;</span>
-<span style="color: #586e75">    Execute the application code</span>
-<span style="color: #586e75">    &quot;&quot;&quot;</span>
-    <span style="color: #839496">name</span> <span style="color: #586e75">=</span> <span style="color: #268bd2">input</span><span style="color: #839496">[</span><span style="color: #2aa198">&#39;name&#39;</span><span style="color: #839496">]</span>
-    <span style="color: #839496">greeting</span> <span style="color: #586e75">=</span> <span style="color: #2aa198">f&#39;Hello {</span><span style="color: #839496">name</span><span style="color: #2aa198">}&#39;</span>
+<span style="color: #ff7b72">def</span> <span style="color: #d2a8ff; font-weight: bold">process_input</span><span style="color: #e6edf3">(input):</span>
+<span style="color: #6e7681">    </span><span style="color: #a5d6ff">&quot;&quot;&quot;</span>
+<span style="color: #a5d6ff">    Execute the application code</span>
+<span style="color: #a5d6ff">    &quot;&quot;&quot;</span>
+    <span style="color: #e6edf3">name</span> <span style="color: #ff7b72; font-weight: bold">=</span> <span style="color: #e6edf3">input[</span><span style="color: #a5d6ff">&#39;name&#39;</span><span style="color: #e6edf3">]</span>
+    <span style="color: #e6edf3">greeting</span> <span style="color: #ff7b72; font-weight: bold">=</span> <span style="color: #79c0ff">f</span><span style="color: #a5d6ff">&#39;Hello {</span><span style="color: #e6edf3">name</span><span style="color: #a5d6ff">}&#39;</span>
 
-    <span style="color: #859900">return</span> <span style="color: #839496">{</span>
-        <span style="color: #2aa198">&quot;greeting&quot;</span><span style="color: #839496">:</span> <span style="color: #839496">greeting</span>
-    <span style="color: #839496">}</span>
-
-
-<span style="color: #586e75; font-style: italic"># ---------------------------------------------------------------------------- #</span>
-<span style="color: #586e75; font-style: italic">#                                RunPod Handler                                #</span>
-<span style="color: #586e75; font-style: italic"># ---------------------------------------------------------------------------- #</span>
-<span style="color: #859900">def</span> <span style="color: #268bd2">handler</span><span style="color: #839496">(event):</span>
-<span style="color: #839496">    </span><span style="color: #586e75">&quot;&quot;&quot;</span>
-<span style="color: #586e75">    This is the handler function that will be called by RunPod serverless.</span>
-<span style="color: #586e75">    &quot;&quot;&quot;</span>
-    <span style="color: #859900">return</span> <span style="color: #839496">process_input(event[</span><span style="color: #2aa198">&#39;input&#39;</span><span style="color: #839496">])</span>
+    <span style="color: #ff7b72">return</span> <span style="color: #e6edf3">{</span>
+        <span style="color: #a5d6ff">&quot;greeting&quot;</span><span style="color: #e6edf3">:</span> <span style="color: #e6edf3">greeting</span>
+    <span style="color: #e6edf3">}</span>
 
 
-<span style="color: #859900">if</span> <span style="color: #268bd2">__name__</span> <span style="color: #586e75">==</span> <span style="color: #2aa198">&#39;__main__&#39;</span><span style="color: #839496">:</span>
-    <span style="color: #839496">runpod</span><span style="color: #586e75">.</span><span style="color: #839496">serverless</span><span style="color: #586e75">.</span><span style="color: #839496">start({</span><span style="color: #2aa198">&#39;handler&#39;</span><span style="color: #839496">:</span> <span style="color: #839496">handler})</span>
+<span style="color: #8b949e; font-style: italic"># ---------------------------------------------------------------------------- #</span>
+<span style="color: #8b949e; font-style: italic">#                                RunPod Handler                                #</span>
+<span style="color: #8b949e; font-style: italic"># ---------------------------------------------------------------------------- #</span>
+<span style="color: #ff7b72">def</span> <span style="color: #d2a8ff; font-weight: bold">handler</span><span style="color: #e6edf3">(event):</span>
+<span style="color: #6e7681">    </span><span style="color: #a5d6ff">&quot;&quot;&quot;</span>
+<span style="color: #a5d6ff">    This is the handler function that will be called by RunPod serverless.</span>
+<span style="color: #a5d6ff">    &quot;&quot;&quot;</span>
+    <span style="color: #ff7b72">return</span> <span style="color: #e6edf3">process_input(event[</span><span style="color: #a5d6ff">&#39;input&#39;</span><span style="color: #e6edf3">])</span>
+
+
+<span style="color: #ff7b72">if</span> <span style="color: #79c0ff">__name__</span> <span style="color: #ff7b72; font-weight: bold">==</span> <span style="color: #a5d6ff">&#39;__main__&#39;</span><span style="color: #e6edf3">:</span>
+    <span style="color: #e6edf3">runpod</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">serverless</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">start({</span><span style="color: #a5d6ff">&#39;handler&#39;</span><span style="color: #e6edf3">:</span> <span style="color: #e6edf3">handler})</span>
 </code></pre></div>
 
 <h4 id="local-testing">Local Testing</h4>
 <p>It is useful to test your Serverless Handler code locally before deploying
 it to RunPod.  You can do this by creating a file called <code>test_input.json</code>
 with a body that looks like this:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #839496">{</span>
-<span style="color: #839496">    </span><span style="color: #268bd2">&quot;input&quot;</span><span style="color: #839496">: {</span>
-<span style="color: #839496">        </span><span style="color: #268bd2">&quot;name&quot;</span><span style="color: #839496">: </span><span style="color: #2aa198">&quot;Ashley&quot;</span>
-<span style="color: #839496">    }</span>
-<span style="color: #839496">}</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">{</span>
+<span style="color: #6e7681">    </span><span style="color: #7ee787">&quot;input&quot;</span><span style="color: #e6edf3">:</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">{</span>
+<span style="color: #6e7681">        </span><span style="color: #7ee787">&quot;name&quot;</span><span style="color: #e6edf3">:</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;Ashley&quot;</span>
+<span style="color: #6e7681">    </span><span style="color: #e6edf3">}</span>
+<span style="color: #e6edf3">}</span>
 </code></pre></div>
 
 <p>You can then create a Python virtual environment and install the
 <code>runpod</code> module as follows:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>python3<span style="color: #839496"> </span>-m<span style="color: #839496"> </span>venv<span style="color: #839496"> </span>venv
-<span style="color: #268bd2">source</span><span style="color: #839496"> </span>venv/bin/activate
-pip3<span style="color: #839496"> </span>install<span style="color: #839496"> </span>runpod
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>python3<span style="color: #6e7681"> </span>-m<span style="color: #6e7681"> </span>venv<span style="color: #6e7681"> </span>venv
+<span style="color: #e6edf3">source</span><span style="color: #6e7681"> </span>venv/bin/activate
+pip3<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>runpod
 </code></pre></div>
 
 <p>Once the <code>runpod</code> module is installed, you can test your handler
 locally as follows:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>python3<span style="color: #839496"> </span>-u<span style="color: #839496"> </span>rp_handler.py
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>python3<span style="color: #6e7681"> </span>-u<span style="color: #6e7681"> </span>rp_handler.py
 </code></pre></div>
 
 <p>This will return an output that looks similar to the following:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
 INFO   | local_test | Started
 WARN   | Local test job results for local_test: {&quot;output&quot;: {&quot;greeting&quot;: &quot;Hello Ashley&quot;}}
 INFO   | local_test | Finished
@@ -278,18 +278,18 @@ application code using a Dockerfile.</p>
 <p>First, you will need to create a <code>Dockerfile</code> that looks 
 similar to the following (Refer to the Resources link at
 the bottom of this post for more advanced usage):</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #859900">FROM</span><span style="color: #839496"> </span><span style="color: #2aa198">python:3.10-slim</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #ff7b72">FROM</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">python:3.10-slim</span>
 
-<span style="color: #859900">WORKDIR</span><span style="color: #839496"> </span><span style="color: #2aa198">/</span>
-<span style="color: #859900">RUN</span><span style="color: #839496"> </span>pip<span style="color: #839496"> </span>install<span style="color: #839496"> </span>--no-cache-dir<span style="color: #839496"> </span>runpod
-<span style="color: #859900">COPY</span><span style="color: #839496"> </span>rp_handler.py<span style="color: #839496"> </span>/
+<span style="color: #ff7b72">WORKDIR</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">/</span>
+<span style="color: #ff7b72">RUN</span><span style="color: #6e7681"> </span>pip<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>--no-cache-dir<span style="color: #6e7681"> </span>runpod
+<span style="color: #ff7b72">COPY</span><span style="color: #6e7681"> </span>rp_handler.py<span style="color: #6e7681"> </span>/
 
-<span style="color: #586e75; font-style: italic"># Start the container</span>
-<span style="color: #859900">CMD</span><span style="color: #839496"> [</span><span style="color: #2aa198">&quot;python3&quot;</span><span style="color: #839496">, </span><span style="color: #2aa198">&quot;-u&quot;</span><span style="color: #839496">, </span><span style="color: #2aa198">&quot;rp_handler.py&quot;</span><span style="color: #839496">]</span>
+<span style="color: #8b949e; font-style: italic"># Start the container</span>
+<span style="color: #ff7b72">CMD</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">[</span><span style="color: #a5d6ff">&quot;python3&quot;</span><span style="color: #e6edf3">,</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;-u&quot;</span><span style="color: #e6edf3">,</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;rp_handler.py&quot;</span><span style="color: #e6edf3">]</span>
 </code></pre></div>
 
 <p>Then you will need to log into your Docker Hub account:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #839496"> </span>login
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #6e7681"> </span>login
 </code></pre></div>
 
 <p>When building your Docker image, it is best practice to
@@ -300,13 +300,13 @@ same tag.</p>
 <p>RunPod containers run on <code>amd64</code> architecture, so if you are using
 an M1/M2 Mac to build the Docker image, you will need to use <code>buildx</code>
 and specify the <code>platform</code>, for example:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #839496"> </span>buildx<span style="color: #839496"> </span>build<span style="color: #839496"> </span>--push<span style="color: #839496"> </span>-t<span style="color: #839496"> </span>username/imagename:tag<span style="color: #839496"> </span>.<span style="color: #839496"> </span>--platform<span style="color: #839496"> </span>linux/amd64
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #6e7681"> </span>buildx<span style="color: #6e7681"> </span>build<span style="color: #6e7681"> </span>--push<span style="color: #6e7681"> </span>-t<span style="color: #6e7681"> </span>username/imagename:tag<span style="color: #6e7681"> </span>.<span style="color: #6e7681"> </span>--platform<span style="color: #6e7681"> </span>linux/amd64
 </code></pre></div>
 
 <p>If you are building the image on an <code>amd64</code> compatible
 machine, you can build and push the image as follows:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #839496"> </span>build<span style="color: #839496"> </span>-t<span style="color: #839496"> </span>username/imagename:tag<span style="color: #839496"> </span>.
-docker<span style="color: #839496"> </span>push<span style="color: #839496"> </span>username/imagename:tag
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #6e7681"> </span>build<span style="color: #6e7681"> </span>-t<span style="color: #6e7681"> </span>username/imagename:tag<span style="color: #6e7681"> </span>.
+docker<span style="color: #6e7681"> </span>push<span style="color: #6e7681"> </span>username/imagename:tag
 </code></pre></div>
 
 <p>Once your image is pushed to Docker Hub, you are ready to create
@@ -442,7 +442,7 @@ according to the total number if requests in the queue and in
 progress.  It automatically adds workers as the number of
 requests increases, ensuring that tasks are handled efficiently.
 The default is 4 requests.</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>Total Workers Formula: Math.ceil((requestsInQueue + requestsInProgress) / 4)
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>Total Workers Formula: Math.ceil((requestsInQueue + requestsInProgress) / 4)
 </code></pre></div>
 
 <h4 id="network-volume-advanced-setting">Network Volume (Advanced Setting)</h4>
@@ -507,6 +507,9 @@ queue.</p>
   <div class="neighbors">
     <a class="btn float-left" href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" title="Installing CheckMK Agent on macOS">
       <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://trapdoor.cloud/injecting-content-type-header-into-python-flask-webhooks/" title="Injecting Content-Type Header into Python Flask Webhooks">
+      Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
 

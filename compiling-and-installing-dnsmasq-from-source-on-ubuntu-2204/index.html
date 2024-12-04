@@ -191,9 +191,9 @@ referrer: "https://example.com/worker.js"
 have any IPv6 addresses attached to them, but discovered that
 the DNS lookup for my Firebase application was returning the
 same IPv6 address that I noticed in my nginx log file.</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #839496"> </span>host<span style="color: #839496"> </span>example-app.firebaseapp.com
-example-app.firebaseapp.com<span style="color: #839496"> </span>has<span style="color: #839496"> </span>address<span style="color: #839496"> </span><span style="color: #2aa198">192</span>.168.1.1
-example-app.firebaseapp.com<span style="color: #839496"> </span>has<span style="color: #839496"> </span>IPv6<span style="color: #839496"> </span>address<span style="color: #839496"> </span>fe80::cf4d:cab8:b943
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #6e7681"> </span>host<span style="color: #6e7681"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span><span style="color: #a5d6ff">192</span>.168.1.1
+example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>IPv6<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span>fe80::cf4d:cab8:b943
 </code></pre></div>
 
 <p>I then determined that the best way to solve this problem would
@@ -210,102 +210,102 @@ supports the <code>filter-AAAA</code> feature, so I decided to compile
 and install dnsmasq from the <a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz">source used by Ubuntu 23.04</a>.</p>
 <h2 id="download-compile-and-install-dnsmasq-from-source">Download, Compile and Install dnsmasq from Source</h2>
 <h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site">Download source for dnsmasq version 2.88 from Ubuntu Launchpad site</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #268bd2">cd</span><span style="color: #839496"> </span>/tmp
-wget<span style="color: #839496"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">cd</span><span style="color: #6e7681"> </span>/tmp
+wget<span style="color: #6e7681"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
 </code></pre></div>
 
 <h3 id="extract-dnsmasq-288-source">Extract dnsmasq 2.88 source</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>tar<span style="color: #839496"> </span>zxvf<span style="color: #839496"> </span>dnsmasq_2.88.orig.tar.gz
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>tar<span style="color: #6e7681"> </span>zxvf<span style="color: #6e7681"> </span>dnsmasq_2.88.orig.tar.gz
 </code></pre></div>
 
 <h3 id="install-dependency-packages">Install dependency packages</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>update
-sudo<span style="color: #839496"> </span>apt<span style="color: #839496"> </span>install<span style="color: #839496"> </span>dnsmasq<span style="color: #839496"> </span>gettext
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>update
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>dnsmasq<span style="color: #6e7681"> </span>gettext
 </code></pre></div>
 
 <h3 id="compile-dnsmasq">Compile dnsmasq</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #268bd2">cd</span><span style="color: #839496"> </span>dnsmasq-2.88.orig
-make<span style="color: #839496"> </span>all-i18n
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">cd</span><span style="color: #6e7681"> </span>dnsmasq-2.88.orig
+make<span style="color: #6e7681"> </span>all-i18n
 </code></pre></div>
 
 <h3 id="confirm-the-version-of-the-compiled-dnsmasq-binary">Confirm the version of the compiled dnsmasq binary</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>src/dnsmasq<span style="color: #839496"> </span>-v
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>src/dnsmasq<span style="color: #6e7681"> </span>-v
 </code></pre></div>
 
 <h3 id="stop-the-dnsmasq-service">Stop the dnsmasq service</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>stop<span style="color: #839496"> </span>dnsmasq
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>dnsmasq
 </code></pre></div>
 
 <h3 id="copy-the-newly-compiled-binary-over-the-old-one">Copy the newly compiled binary over the old one</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>cp<span style="color: #839496"> </span>src/dnsmasq<span style="color: #839496"> </span>/usr/sbin/dnsmasq
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>cp<span style="color: #6e7681"> </span>src/dnsmasq<span style="color: #6e7681"> </span>/usr/sbin/dnsmasq
 </code></pre></div>
 
 <h3 id="remove-file-that-is-no-longer-supported-by-the-new-binary">Remove file that is no longer supported by the new binary</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>rm<span style="color: #839496"> </span>/usr/share/dns/root.ds
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>rm<span style="color: #6e7681"> </span>/usr/share/dns/root.ds
 </code></pre></div>
 
 <h3 id="edit-the-dnsmasq-config-file-and-configure-it-to-exclude-ipv6-lookups">Edit the dnsmasq config file and configure it to exclude IPv6 lookups</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/dnsmasq.conf
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/dnsmasq.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #839496">listen</span><span style="color: #586e75">-</span><span style="color: #839496">address</span><span style="color: #586e75">=</span><span style="color: #2aa198">127.0</span><span style="color: #586e75">.</span><span style="color: #2aa198">0.53</span>
-<span style="color: #839496">port</span><span style="color: #586e75">=</span><span style="color: #2aa198">53</span>
-<span style="color: #839496">bind</span><span style="color: #586e75">-</span><span style="color: #839496">interfaces</span>
-<span style="color: #839496">user</span><span style="color: #586e75">=</span><span style="color: #839496">dnsmasq</span>
-<span style="color: #839496">group</span><span style="color: #586e75">=</span><span style="color: #839496">nogroup</span>
-<span style="color: #839496">pid</span><span style="color: #586e75">-</span><span style="color: #839496">file</span><span style="color: #586e75">=/</span><span style="color: #859900">var</span><span style="color: #586e75">/</span><span style="color: #839496">run</span><span style="color: #586e75">/</span><span style="color: #839496">dnsmasq</span><span style="color: #586e75">/</span><span style="color: #839496">dnsmasq</span><span style="color: #586e75">.</span><span style="color: #839496">pid</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">listen</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">address</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">127.0</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #a5d6ff">0.53</span>
+<span style="color: #e6edf3">port</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">53</span>
+<span style="color: #e6edf3">bind</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">interfaces</span>
+<span style="color: #e6edf3">user</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #e6edf3">dnsmasq</span>
+<span style="color: #e6edf3">group</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #e6edf3">nogroup</span>
+<span style="color: #e6edf3">pid</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">file</span><span style="color: #ff7b72; font-weight: bold">=/</span><span style="color: #ff7b72">var</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">run</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">dnsmasq</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">dnsmasq</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">pid</span>
 
-<span style="color: #586e75; font-style: italic"># Name resolution options</span>
-<span style="color: #839496">resolv</span><span style="color: #586e75">-</span><span style="color: #839496">file</span><span style="color: #586e75">=/</span><span style="color: #839496">etc</span><span style="color: #586e75">/</span><span style="color: #839496">resolv</span><span style="color: #586e75">.</span><span style="color: #839496">dnsmasq</span>
-<span style="color: #839496">cache</span><span style="color: #586e75">-</span><span style="color: #839496">size</span><span style="color: #586e75">=</span><span style="color: #2aa198">500</span>
-<span style="color: #839496">neg</span><span style="color: #586e75">-</span><span style="color: #839496">ttl</span><span style="color: #586e75">=</span><span style="color: #2aa198">60</span>
-<span style="color: #839496">domain</span><span style="color: #586e75">-</span><span style="color: #839496">needed</span>
-<span style="color: #839496">bogus</span><span style="color: #586e75">-</span><span style="color: #839496">priv</span>
-<span style="color: #839496">filter</span><span style="color: #586e75">-</span><span style="color: #839496">AAAA</span>
+<span style="color: #8b949e; font-style: italic"># Name resolution options</span>
+<span style="color: #e6edf3">resolv</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">file</span><span style="color: #ff7b72; font-weight: bold">=/</span><span style="color: #e6edf3">etc</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">resolv</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">dnsmasq</span>
+<span style="color: #e6edf3">cache</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">size</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">500</span>
+<span style="color: #e6edf3">neg</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">ttl</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">60</span>
+<span style="color: #e6edf3">domain</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">needed</span>
+<span style="color: #e6edf3">bogus</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">priv</span>
+<span style="color: #e6edf3">filter</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">AAAA</span>
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="configure-the-dns-resolver-for-the-dnsmasq-service">Configure the DNS resolver for the dnsmasq service</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>bash<span style="color: #839496"> </span>-c<span style="color: #839496"> </span><span style="color: #2aa198">&quot;echo &#39;nameserver 1.1.1.1&#39; &gt; /etc/resolv.dnsmasq&quot;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>bash<span style="color: #6e7681"> </span>-c<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;echo &#39;nameserver 1.1.1.1&#39; &gt; /etc/resolv.dnsmasq&quot;</span>
 </code></pre></div>
 
 <h3 id="configure-dns-resolver-for-consul-optional">Configure DNS resolver for Consul (OPTIONAL)</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/dnsmasq.d/10-consul
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/dnsmasq.d/10-consul
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>server=/consul/127.0.0.1#8600
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>server=/consul/127.0.0.1#8600
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="disable-systemd-resolved">Disable systemd resolved</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/systemd/resolved.conf.d/noresolved.conf
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/systemd/resolved.conf.d/noresolved.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #859900">[Resolve]</span>
-<span style="color: #839496">DNSStubListener</span><span style="color: #586e75">=</span><span style="color: #2aa198">no</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #ff7b72">[Resolve]</span>
+<span style="color: #e6edf3">DNSStubListener</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">no</span>
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="restart-the-systemd-resolved-and-dnsmasq-services">Restart the systemd-resolved and dnsmasq services</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>restart<span style="color: #839496"> </span>systemd-resolved
-sudo<span style="color: #839496"> </span>systemctl<span style="color: #839496"> </span>restart<span style="color: #839496"> </span>dnsmasq.service
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>restart<span style="color: #6e7681"> </span>systemd-resolved
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>restart<span style="color: #6e7681"> </span>dnsmasq.service
 </code></pre></div>
 
 <h3 id="edit-etcresolvconf-to-use-dnsmasq-as-the-dns-resolver">Edit /etc/resolv.conf to use dnsmasq as the DNS resolver</h3>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #839496"> </span>vim<span style="color: #839496"> </span>/etc/resolv.conf
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/resolv.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>nameserver 127.0.0.53
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>nameserver 127.0.0.53
 </code></pre></div>
 
 <p>And save the file.</p>
 <h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore">Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore</h2>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #839496"> </span>host<span style="color: #839496"> </span>example-app.firebaseapp.com
-example-app.firebaseapp.com<span style="color: #839496"> </span>has<span style="color: #839496"> </span>address<span style="color: #839496"> </span><span style="color: #2aa198">192</span>.168.1.1
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #6e7681"> </span>host<span style="color: #6e7681"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span><span style="color: #a5d6ff">192</span>.168.1.1
 </code></pre></div>
   </div>
   <div class="tag-cloud">

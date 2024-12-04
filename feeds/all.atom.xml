@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-11-28T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-11-28T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-12-04T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Injecting Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject &lt;code&gt;Content-Type&lt;/code&gt;
+headers into your Python Flask Webhooks.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;We recently had an issue where one of our 3rd party providers decided
+that it would be a good idea to remove the &lt;code&gt;Content-Type&lt;/code&gt; header
+from the webhooks that they send to our application, breaking the
+contract of the webhook format.&lt;/p&gt;
+&lt;p&gt;Our application relies heavily on the webhooks for receiving status
+updates and the output from the 3rd party application, and our
+customers were negatively impacted by this unannounced change.&lt;/p&gt;
+&lt;h2 id="automatically-injecting-the-missing-content-type-headers"&gt;Automatically injecting the missing Content-Type headers&lt;/h2&gt;
+&lt;p&gt;Fortunately, it is possible to implement a simple work-around
+for this issue in a Python Flask application as follows:&lt;/p&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #d2a8ff; font-weight: bold"&gt;@app&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;before_request&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;def&lt;/span&gt; &lt;span style="color: #d2a8ff; font-weight: bold"&gt;before_request&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;():&lt;/span&gt;
+    &lt;span style="color: #8b949e; font-style: italic"&gt;# Only handle POST requests to /webhook endpoints&lt;/span&gt;
+    &lt;span style="color: #ff7b72"&gt;if&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;method&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;==&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;and&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;/webhook/&amp;#39;&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;path:&lt;/span&gt;
+        &lt;span style="color: #e6edf3"&gt;content_type&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;headers&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;get(&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;)&lt;/span&gt;
+
+        &lt;span style="color: #8b949e; font-style: italic"&gt;# If Content-Type is not set or is not application/json&lt;/span&gt;
+        &lt;span style="color: #ff7b72"&gt;if&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;not&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;content_type&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;lower():&lt;/span&gt;
+            &lt;span style="color: #8b949e; font-style: italic"&gt;# Try to parse the data as JSON&lt;/span&gt;
+            &lt;span style="color: #ff7b72"&gt;try&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt;
+                &lt;span style="color: #8b949e; font-style: italic"&gt;# Force Flask to parse JSON data even if Content-Type is not set&lt;/span&gt;
+                &lt;span style="color: #ff7b72"&gt;if&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;data:&lt;/span&gt;
+                    &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;get_json(force&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #79c0ff"&gt;True&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;)&lt;/span&gt;
+                &lt;span style="color: #8b949e; font-style: italic"&gt;# Modify the request headers to include Content-Type&lt;/span&gt;
+                &lt;span style="color: #e6edf3"&gt;request&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;environ[&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;CONTENT_TYPE&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;]&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt;
+            &lt;span style="color: #ff7b72"&gt;except&lt;/span&gt; &lt;span style="color: #f0883e; font-weight: bold"&gt;Exception&lt;/span&gt; &lt;span style="color: #ff7b72"&gt;as&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;e:&lt;/span&gt;
+                &lt;span style="color: #8b949e; font-style: italic"&gt;# If JSON parsing fails, return 400 Bad Request&lt;/span&gt;
+                &lt;span style="color: #ff7b72"&gt;return&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;make_response(jsonify({&lt;/span&gt;
+                    &lt;span style="color: #a5d6ff"&gt;&amp;#39;stage&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;self&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;
+                    &lt;span style="color: #a5d6ff"&gt;&amp;#39;status&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;error&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;
+                    &lt;span style="color: #a5d6ff"&gt;&amp;#39;msg&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;Invalid JSON data&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;
+                    &lt;span style="color: #a5d6ff"&gt;&amp;#39;detail&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;str(e)&lt;/span&gt;
+                &lt;span style="color: #e6edf3"&gt;}),&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;400&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="python"></category><category term="flask"></category><category term="webhooks"></category></entry><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-11-28T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
 Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is RunPod?&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt; is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
@@ -34,60 +69,60 @@ back.&lt;/p&gt;
 &lt;p&gt;The Serverless handler accepts a JSON payload that contains an &lt;code&gt;input&lt;/code&gt;,
 and returns a response that contains an &lt;code&gt;output&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Example Serverless Handler (&lt;code&gt;rp_handler.py&lt;/code&gt;):&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #cb4b16"&gt;import&lt;/span&gt; &lt;span style="color: #268bd2"&gt;runpod&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;import&lt;/span&gt; &lt;span style="color: #ff7b72"&gt;runpod&lt;/span&gt;
 
 
-&lt;span style="color: #859900"&gt;def&lt;/span&gt; &lt;span style="color: #268bd2"&gt;process_input&lt;/span&gt;&lt;span style="color: #839496"&gt;(&lt;/span&gt;&lt;span style="color: #268bd2"&gt;input&lt;/span&gt;&lt;span style="color: #839496"&gt;):&lt;/span&gt;
-&lt;span style="color: #839496"&gt;    &lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span style="color: #586e75"&gt;    Execute the application code&lt;/span&gt;
-&lt;span style="color: #586e75"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-    &lt;span style="color: #839496"&gt;name&lt;/span&gt; &lt;span style="color: #586e75"&gt;=&lt;/span&gt; &lt;span style="color: #268bd2"&gt;input&lt;/span&gt;&lt;span style="color: #839496"&gt;[&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;]&lt;/span&gt;
-    &lt;span style="color: #839496"&gt;greeting&lt;/span&gt; &lt;span style="color: #586e75"&gt;=&lt;/span&gt; &lt;span style="color: #2aa198"&gt;f&amp;#39;Hello {&lt;/span&gt;&lt;span style="color: #839496"&gt;name&lt;/span&gt;&lt;span style="color: #2aa198"&gt;}&amp;#39;&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;def&lt;/span&gt; &lt;span style="color: #d2a8ff; font-weight: bold"&gt;process_input&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;(input):&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;    Execute the application code&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span style="color: #e6edf3"&gt;name&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;input[&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;]&lt;/span&gt;
+    &lt;span style="color: #e6edf3"&gt;greeting&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt; &lt;span style="color: #79c0ff"&gt;f&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;Hello {&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;name&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;}&amp;#39;&lt;/span&gt;
 
-    &lt;span style="color: #859900"&gt;return&lt;/span&gt; &lt;span style="color: #839496"&gt;{&lt;/span&gt;
-        &lt;span style="color: #2aa198"&gt;&amp;quot;greeting&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;:&lt;/span&gt; &lt;span style="color: #839496"&gt;greeting&lt;/span&gt;
-    &lt;span style="color: #839496"&gt;}&lt;/span&gt;
-
-
-&lt;span style="color: #586e75; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
-&lt;span style="color: #586e75; font-style: italic"&gt;#                                RunPod Handler                                #&lt;/span&gt;
-&lt;span style="color: #586e75; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
-&lt;span style="color: #859900"&gt;def&lt;/span&gt; &lt;span style="color: #268bd2"&gt;handler&lt;/span&gt;&lt;span style="color: #839496"&gt;(event):&lt;/span&gt;
-&lt;span style="color: #839496"&gt;    &lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span style="color: #586e75"&gt;    This is the handler function that will be called by RunPod serverless.&lt;/span&gt;
-&lt;span style="color: #586e75"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-    &lt;span style="color: #859900"&gt;return&lt;/span&gt; &lt;span style="color: #839496"&gt;process_input(event[&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;])&lt;/span&gt;
+    &lt;span style="color: #ff7b72"&gt;return&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;{&lt;/span&gt;
+        &lt;span style="color: #a5d6ff"&gt;&amp;quot;greeting&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;greeting&lt;/span&gt;
+    &lt;span style="color: #e6edf3"&gt;}&lt;/span&gt;
 
 
-&lt;span style="color: #859900"&gt;if&lt;/span&gt; &lt;span style="color: #268bd2"&gt;__name__&lt;/span&gt; &lt;span style="color: #586e75"&gt;==&lt;/span&gt; &lt;span style="color: #2aa198"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;:&lt;/span&gt;
-    &lt;span style="color: #839496"&gt;runpod&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;serverless&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;start({&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;handler&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;:&lt;/span&gt; &lt;span style="color: #839496"&gt;handler})&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;#                                RunPod Handler                                #&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;def&lt;/span&gt; &lt;span style="color: #d2a8ff; font-weight: bold"&gt;handler&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;(event):&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;    This is the handler function that will be called by RunPod serverless.&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span style="color: #ff7b72"&gt;return&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;process_input(event[&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;])&lt;/span&gt;
+
+
+&lt;span style="color: #ff7b72"&gt;if&lt;/span&gt; &lt;span style="color: #79c0ff"&gt;__name__&lt;/span&gt; &lt;span style="color: #ff7b72; font-weight: bold"&gt;==&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt;
+    &lt;span style="color: #e6edf3"&gt;runpod&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;serverless&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;start({&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;handler&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;handler})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4 id="local-testing"&gt;Local Testing&lt;/h4&gt;
 &lt;p&gt;It is useful to test your Serverless Handler code locally before deploying
 it to RunPod.  You can do this by creating a file called &lt;code&gt;test_input.json&lt;/code&gt;
 with a body that looks like this:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;{&lt;/span&gt;
-&lt;span style="color: #839496"&gt;    &lt;/span&gt;&lt;span style="color: #268bd2"&gt;&amp;quot;input&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;: {&lt;/span&gt;
-&lt;span style="color: #839496"&gt;        &lt;/span&gt;&lt;span style="color: #268bd2"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;: &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;Ashley&amp;quot;&lt;/span&gt;
-&lt;span style="color: #839496"&gt;    }&lt;/span&gt;
-&lt;span style="color: #839496"&gt;}&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;{&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #7ee787"&gt;&amp;quot;input&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;{&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;        &lt;/span&gt;&lt;span style="color: #7ee787"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;Ashley&amp;quot;&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;}&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You can then create a Python virtual environment and install the
 &lt;code&gt;runpod&lt;/code&gt; module as follows:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span style="color: #839496"&gt; &lt;/span&gt;-m&lt;span style="color: #839496"&gt; &lt;/span&gt;venv&lt;span style="color: #839496"&gt; &lt;/span&gt;venv
-&lt;span style="color: #268bd2"&gt;source&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;venv/bin/activate
-pip3&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;runpod
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-m&lt;span style="color: #6e7681"&gt; &lt;/span&gt;venv&lt;span style="color: #6e7681"&gt; &lt;/span&gt;venv
+&lt;span style="color: #e6edf3"&gt;source&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;venv/bin/activate
+pip3&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;runpod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once the &lt;code&gt;runpod&lt;/code&gt; module is installed, you can test your handler
 locally as follows:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span style="color: #839496"&gt; &lt;/span&gt;-u&lt;span style="color: #839496"&gt; &lt;/span&gt;rp_handler.py
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-u&lt;span style="color: #6e7681"&gt; &lt;/span&gt;rp_handler.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This will return an output that looks similar to the following:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
 INFO   | local_test | Started
 WARN   | Local test job results for local_test: {&amp;quot;output&amp;quot;: {&amp;quot;greeting&amp;quot;: &amp;quot;Hello Ashley&amp;quot;}}
 INFO   | local_test | Finished
@@ -102,18 +137,18 @@ application code using a Dockerfile.&lt;/p&gt;
 &lt;p&gt;First, you will need to create a &lt;code&gt;Dockerfile&lt;/code&gt; that looks 
 similar to the following (Refer to the Resources link at
 the bottom of this post for more advanced usage):&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;FROM&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;python:3.10-slim&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;FROM&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;python:3.10-slim&lt;/span&gt;
 
-&lt;span style="color: #859900"&gt;WORKDIR&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;/&lt;/span&gt;
-&lt;span style="color: #859900"&gt;RUN&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;pip&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;--no-cache-dir&lt;span style="color: #839496"&gt; &lt;/span&gt;runpod
-&lt;span style="color: #859900"&gt;COPY&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;rp_handler.py&lt;span style="color: #839496"&gt; &lt;/span&gt;/
+&lt;span style="color: #ff7b72"&gt;WORKDIR&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;/&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;RUN&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;pip&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--no-cache-dir&lt;span style="color: #6e7681"&gt; &lt;/span&gt;runpod
+&lt;span style="color: #ff7b72"&gt;COPY&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;rp_handler.py&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Start the container&lt;/span&gt;
-&lt;span style="color: #859900"&gt;CMD&lt;/span&gt;&lt;span style="color: #839496"&gt; [&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;python3&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;, &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;-u&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;, &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;rp_handler.py&amp;quot;&lt;/span&gt;&lt;span style="color: #839496"&gt;]&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Start the container&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;CMD&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;[&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;python3&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;-u&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;rp_handler.py&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then you will need to log into your Docker Hub account:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #839496"&gt; &lt;/span&gt;login
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;login
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;When building your Docker image, it is best practice to
@@ -124,13 +159,13 @@ same tag.&lt;/p&gt;
 &lt;p&gt;RunPod containers run on &lt;code&gt;amd64&lt;/code&gt; architecture, so if you are using
 an M1/M2 Mac to build the Docker image, you will need to use &lt;code&gt;buildx&lt;/code&gt;
 and specify the &lt;code&gt;platform&lt;/code&gt;, for example:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #839496"&gt; &lt;/span&gt;buildx&lt;span style="color: #839496"&gt; &lt;/span&gt;build&lt;span style="color: #839496"&gt; &lt;/span&gt;--push&lt;span style="color: #839496"&gt; &lt;/span&gt;-t&lt;span style="color: #839496"&gt; &lt;/span&gt;username/imagename:tag&lt;span style="color: #839496"&gt; &lt;/span&gt;.&lt;span style="color: #839496"&gt; &lt;/span&gt;--platform&lt;span style="color: #839496"&gt; &lt;/span&gt;linux/amd64
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;buildx&lt;span style="color: #6e7681"&gt; &lt;/span&gt;build&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--push&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-t&lt;span style="color: #6e7681"&gt; &lt;/span&gt;username/imagename:tag&lt;span style="color: #6e7681"&gt; &lt;/span&gt;.&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--platform&lt;span style="color: #6e7681"&gt; &lt;/span&gt;linux/amd64
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;If you are building the image on an &lt;code&gt;amd64&lt;/code&gt; compatible
 machine, you can build and push the image as follows:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #839496"&gt; &lt;/span&gt;build&lt;span style="color: #839496"&gt; &lt;/span&gt;-t&lt;span style="color: #839496"&gt; &lt;/span&gt;username/imagename:tag&lt;span style="color: #839496"&gt; &lt;/span&gt;.
-docker&lt;span style="color: #839496"&gt; &lt;/span&gt;push&lt;span style="color: #839496"&gt; &lt;/span&gt;username/imagename:tag
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;build&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-t&lt;span style="color: #6e7681"&gt; &lt;/span&gt;username/imagename:tag&lt;span style="color: #6e7681"&gt; &lt;/span&gt;.
+docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;push&lt;span style="color: #6e7681"&gt; &lt;/span&gt;username/imagename:tag
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once your image is pushed to Docker Hub, you are ready to create
@@ -266,7 +301,7 @@ according to the total number if requests in the queue and in
 progress.  It automatically adds workers as the number of
 requests increases, ensuring that tasks are handled efficiently.
 The default is 4 requests.&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Total Workers Formula: Math.ceil((requestsInQueue + requestsInProgress) / 4)
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Total Workers Formula: Math.ceil((requestsInQueue + requestsInProgress) / 4)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4 id="network-volume-advanced-setting"&gt;Network Volume (Advanced Setting)&lt;/h4&gt;
@@ -317,44 +352,44 @@ queue.&lt;/p&gt;
 agent on macOS servers so that they can be monitored by your
 CheckMK server.&lt;/p&gt;</summary><content type="html">&lt;h2 id="installation-procedure"&gt;Installation Procedure&lt;/h2&gt;
 &lt;p&gt;You can install CheckMK agent on your macOS servers as follows:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #586e75; font-style: italic"&gt;# Clone Repo&lt;/span&gt;
-git&lt;span style="color: #839496"&gt; &lt;/span&gt;clone&lt;span style="color: #839496"&gt; &lt;/span&gt;https://github.com/ThomasKaiser/Check_MK.git
-&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;Check_MK
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #8b949e; font-style: italic"&gt;# Clone Repo&lt;/span&gt;
+git&lt;span style="color: #6e7681"&gt; &lt;/span&gt;clone&lt;span style="color: #6e7681"&gt; &lt;/span&gt;https://github.com/ThomasKaiser/Check_MK.git
+&lt;span style="color: #e6edf3"&gt;cd&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;Check_MK
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Remove less common plugins&lt;/span&gt;
-rm&lt;span style="color: #839496"&gt; &lt;/span&gt;-f&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/monitor-jss-and-macos-updates&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/city-temperatures&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/monitor-kerio&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/smart*
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Remove less common plugins&lt;/span&gt;
+rm&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-f&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/plugins/monitor-jss-and-macos-updates&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/plugins/city-temperatures&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/plugins/monitor-kerio&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/plugins/smart*
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Install dependencies&lt;/span&gt;
-brew&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;smartmontools&lt;span style="color: #839496"&gt; &lt;/span&gt;osx-cpu-temp
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Install dependencies&lt;/span&gt;
+brew&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;smartmontools&lt;span style="color: #6e7681"&gt; &lt;/span&gt;osx-cpu-temp
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Modify the plist file (remove cwd)&lt;/span&gt;
-sed&lt;span style="color: #839496"&gt; &lt;/span&gt;-i&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;/&amp;lt;key&amp;gt;WorkingDirectory/{N;d;}&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Modify the plist file (remove cwd)&lt;/span&gt;
+sed&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-i&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;/&amp;lt;key&amp;gt;WorkingDirectory/{N;d;}&amp;#39;&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Create directories needed and copy files to required location&lt;/span&gt;
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;-p&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/local
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/check_mk_agent.macosx&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;-r&lt;span style="color: #839496"&gt; &lt;/span&gt;agents/plugins/&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;-p&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/bin
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;ln&lt;span style="color: #839496"&gt; &lt;/span&gt;-s&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/bin/check_mk_agent
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mkdir&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/check_mk
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Create directories needed and copy files to required location&lt;/span&gt;
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mkdir&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-p&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mkdir&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/local
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;cp&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/check_mk_agent.macosx&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;cp&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-r&lt;span style="color: #6e7681"&gt; &lt;/span&gt;agents/plugins/&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;cp&lt;span style="color: #6e7681"&gt; &lt;/span&gt;LaunchDaemon/de.mathias-kettner.check_mk.plist&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/Library/LaunchDaemons/
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mkdir&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-p&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/bin
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;ln&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-s&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/bin/check_mk_agent
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mkdir&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/check_mk
 
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;touch&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;touch&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/log/check_mk.err
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;touch&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;touch&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/var/log/check_mk.err
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Permissions&lt;/span&gt;
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;+x&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;o+rw&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;666&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/var/log/check_mk.err
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chown&lt;span style="color: #839496"&gt; &lt;/span&gt;-R&lt;span style="color: #839496"&gt; &lt;/span&gt;root:admin&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;chmod&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;644&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Permissions&lt;/span&gt;
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;chmod&lt;span style="color: #6e7681"&gt; &lt;/span&gt;+x&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent/check_mk_agent.macosx
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;chmod&lt;span style="color: #6e7681"&gt; &lt;/span&gt;o+rw&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/var/run/de.arts-others.softwareupdatecheck
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;chmod&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;666&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/var/log/check_mk.err
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;chown&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-R&lt;span style="color: #6e7681"&gt; &lt;/span&gt;root:admin&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/local/lib/check_mk_agent
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;chmod&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;644&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Install LaunchDaemon&lt;/span&gt;
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;launchctl&lt;span style="color: #839496"&gt; &lt;/span&gt;load&lt;span style="color: #839496"&gt; &lt;/span&gt;-w&lt;span style="color: #839496"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Install LaunchDaemon&lt;/span&gt;
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;launchctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;load&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-w&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/Library/LaunchDaemons/de.mathias-kettner.check_mk.plist
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Once lnx_if fix is merged into the agent, the below is required (see: https://github.com/ThomasKaiser/Check_MK/pull/2)&lt;/span&gt;
-brew&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;iproute2mac
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Once lnx_if fix is merged into the agent, the below is required (see: https://github.com/ThomasKaiser/Check_MK/pull/2)&lt;/span&gt;
+brew&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;iproute2mac
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
@@ -384,9 +419,9 @@ referrer: "https://example.com/worker.js"
 have any IPv6 addresses attached to them, but discovered that
 the DNS lookup for my Firebase application was returning the
 same IPv6 address that I noticed in my nginx log file.&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #839496"&gt; &lt;/span&gt;host&lt;span style="color: #839496"&gt; &lt;/span&gt;example-app.firebaseapp.com
-example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;192&lt;/span&gt;.168.1.1
-example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;IPv6&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;fe80::cf4d:cab8:b943
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #6e7681"&gt; &lt;/span&gt;host&lt;span style="color: #6e7681"&gt; &lt;/span&gt;example-app.firebaseapp.com
+example-app.firebaseapp.com&lt;span style="color: #6e7681"&gt; &lt;/span&gt;has&lt;span style="color: #6e7681"&gt; &lt;/span&gt;address&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;192&lt;/span&gt;.168.1.1
+example-app.firebaseapp.com&lt;span style="color: #6e7681"&gt; &lt;/span&gt;has&lt;span style="color: #6e7681"&gt; &lt;/span&gt;IPv6&lt;span style="color: #6e7681"&gt; &lt;/span&gt;address&lt;span style="color: #6e7681"&gt; &lt;/span&gt;fe80::cf4d:cab8:b943
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I then determined that the best way to solve this problem would
@@ -403,102 +438,102 @@ supports the &lt;code&gt;filter-AAAA&lt;/code&gt; feature, so I decided to compi
 and install dnsmasq from the &lt;a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz"&gt;source used by Ubuntu 23.04&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id="download-compile-and-install-dnsmasq-from-source"&gt;Download, Compile and Install dnsmasq from Source&lt;/h2&gt;
 &lt;h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site"&gt;Download source for dnsmasq version 2.88 from Ubuntu Launchpad site&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;/tmp
-wget&lt;span style="color: #839496"&gt; &lt;/span&gt;https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;cd&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/tmp
+wget&lt;span style="color: #6e7681"&gt; &lt;/span&gt;https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="extract-dnsmasq-288-source"&gt;Extract dnsmasq 2.88 source&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar&lt;span style="color: #839496"&gt; &lt;/span&gt;zxvf&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq_2.88.orig.tar.gz
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar&lt;span style="color: #6e7681"&gt; &lt;/span&gt;zxvf&lt;span style="color: #6e7681"&gt; &lt;/span&gt;dnsmasq_2.88.orig.tar.gz
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="install-dependency-packages"&gt;Install dependency packages&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;update
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;gettext
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;update
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;dnsmasq&lt;span style="color: #6e7681"&gt; &lt;/span&gt;gettext
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="compile-dnsmasq"&gt;Compile dnsmasq&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #268bd2"&gt;cd&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq-2.88.orig
-make&lt;span style="color: #839496"&gt; &lt;/span&gt;all-i18n
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;cd&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;dnsmasq-2.88.orig
+make&lt;span style="color: #6e7681"&gt; &lt;/span&gt;all-i18n
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="confirm-the-version-of-the-compiled-dnsmasq-binary"&gt;Confirm the version of the compiled dnsmasq binary&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;src/dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;-v
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;src/dnsmasq&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-v
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="stop-the-dnsmasq-service"&gt;Stop the dnsmasq service&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;stop&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;stop&lt;span style="color: #6e7681"&gt; &lt;/span&gt;dnsmasq
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="copy-the-newly-compiled-binary-over-the-old-one"&gt;Copy the newly compiled binary over the old one&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;cp&lt;span style="color: #839496"&gt; &lt;/span&gt;src/dnsmasq&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/sbin/dnsmasq
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;cp&lt;span style="color: #6e7681"&gt; &lt;/span&gt;src/dnsmasq&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/sbin/dnsmasq
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="remove-file-that-is-no-longer-supported-by-the-new-binary"&gt;Remove file that is no longer supported by the new binary&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;rm&lt;span style="color: #839496"&gt; &lt;/span&gt;/usr/share/dns/root.ds
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;rm&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/share/dns/root.ds
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="edit-the-dnsmasq-config-file-and-configure-it-to-exclude-ipv6-lookups"&gt;Edit the dnsmasq config file and configure it to exclude IPv6 lookups&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/dnsmasq.conf
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/dnsmasq.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;listen&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;address&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;127.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.53&lt;/span&gt;
-&lt;span style="color: #839496"&gt;port&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;53&lt;/span&gt;
-&lt;span style="color: #839496"&gt;bind&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;interfaces&lt;/span&gt;
-&lt;span style="color: #839496"&gt;user&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;
-&lt;span style="color: #839496"&gt;group&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt;nogroup&lt;/span&gt;
-&lt;span style="color: #839496"&gt;pid&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;file&lt;/span&gt;&lt;span style="color: #586e75"&gt;=/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;run&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;pid&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;listen&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;address&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;127.0&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0.53&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;port&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;53&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;bind&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;interfaces&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;user&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;dnsmasq&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;group&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;nogroup&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;pid&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;file&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=/&lt;/span&gt;&lt;span style="color: #ff7b72"&gt;var&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;run&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;dnsmasq&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;pid&lt;/span&gt;
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Name resolution options&lt;/span&gt;
-&lt;span style="color: #839496"&gt;resolv&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;file&lt;/span&gt;&lt;span style="color: #586e75"&gt;=/&lt;/span&gt;&lt;span style="color: #839496"&gt;etc&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;resolv&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;dnsmasq&lt;/span&gt;
-&lt;span style="color: #839496"&gt;cache&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;size&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;500&lt;/span&gt;
-&lt;span style="color: #839496"&gt;neg&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;ttl&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;60&lt;/span&gt;
-&lt;span style="color: #839496"&gt;domain&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;needed&lt;/span&gt;
-&lt;span style="color: #839496"&gt;bogus&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;priv&lt;/span&gt;
-&lt;span style="color: #839496"&gt;filter&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;AAAA&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Name resolution options&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;resolv&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;file&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;etc&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;resolv&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;dnsmasq&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;cache&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;size&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;500&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;neg&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;ttl&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;60&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;domain&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;needed&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;bogus&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;priv&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;filter&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;AAAA&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And save the file.&lt;/p&gt;
 &lt;h3 id="configure-the-dns-resolver-for-the-dnsmasq-service"&gt;Configure the DNS resolver for the dnsmasq service&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;bash&lt;span style="color: #839496"&gt; &lt;/span&gt;-c&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;quot;echo &amp;#39;nameserver 1.1.1.1&amp;#39; &amp;gt; /etc/resolv.dnsmasq&amp;quot;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;bash&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-c&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;echo &amp;#39;nameserver 1.1.1.1&amp;#39; &amp;gt; /etc/resolv.dnsmasq&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="configure-dns-resolver-for-consul-optional"&gt;Configure DNS resolver for Consul (OPTIONAL)&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/dnsmasq.d/10-consul
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/dnsmasq.d/10-consul
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;server=/consul/127.0.0.1#8600
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;server=/consul/127.0.0.1#8600
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And save the file.&lt;/p&gt;
 &lt;h3 id="disable-systemd-resolved"&gt;Disable systemd resolved&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/systemd/resolved.conf.d/noresolved.conf
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/systemd/resolved.conf.d/noresolved.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;[Resolve]&lt;/span&gt;
-&lt;span style="color: #839496"&gt;DNSStubListener&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;no&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;[Resolve]&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;DNSStubListener&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;no&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And save the file.&lt;/p&gt;
 &lt;h3 id="restart-the-systemd-resolved-and-dnsmasq-services"&gt;Restart the systemd-resolved and dnsmasq services&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;systemd-resolved
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;dnsmasq.service
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;restart&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemd-resolved
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;restart&lt;span style="color: #6e7681"&gt; &lt;/span&gt;dnsmasq.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="edit-etcresolvconf-to-use-dnsmasq-as-the-dns-resolver"&gt;Edit /etc/resolv.conf to use dnsmasq as the DNS resolver&lt;/h3&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/resolv.conf
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/resolv.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;nameserver 127.0.0.53
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;nameserver 127.0.0.53
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And save the file.&lt;/p&gt;
 &lt;h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore"&gt;Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #839496"&gt; &lt;/span&gt;host&lt;span style="color: #839496"&gt; &lt;/span&gt;example-app.firebaseapp.com
-example-app.firebaseapp.com&lt;span style="color: #839496"&gt; &lt;/span&gt;has&lt;span style="color: #839496"&gt; &lt;/span&gt;address&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;192&lt;/span&gt;.168.1.1
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #6e7681"&gt; &lt;/span&gt;host&lt;span style="color: #6e7681"&gt; &lt;/span&gt;example-app.firebaseapp.com
+example-app.firebaseapp.com&lt;span style="color: #6e7681"&gt; &lt;/span&gt;has&lt;span style="color: #6e7681"&gt; &lt;/span&gt;address&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;192&lt;/span&gt;.168.1.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="dns"></category><category term="dnsmasq"></category><category term="nginx"></category></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-03-02T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
 Aurora MySQL RDS cluster running a specific engine version to a
 new Aurora MySQL RDS cluster running a new engine version
@@ -511,12 +546,12 @@ an Aurora MySQL from 5.7 to Aurora MySQL 8.&lt;/p&gt;
 your queries will no longer work in MySQL 8, so you will either need
 to update your queries to use the correct &lt;code&gt;DATETIME&lt;/code&gt; format, ie
 &lt;code&gt;YYYY-MM-DD HH:MM:SS&lt;/code&gt;, or to use the &lt;code&gt;STR_TO_DATE&lt;/code&gt; function, eg:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;SELECT&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;STR_TO_DATE&lt;/span&gt;&lt;span style="color: #839496"&gt;( &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2019-02-20T10:00:00.000Z&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;, &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;%Y-%m-%dT%T.%fZ&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;);&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;SELECT&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #d2a8ff; font-weight: bold"&gt;STR_TO_DATE&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;(&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;2019-02-20T10:00:00.000Z&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;%Y-%m-%dT%T.%fZ&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Otherwise you will run into errors that look like this:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;mysql&lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;gt;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;SELECT&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;*&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;FROM&lt;/span&gt;&lt;span style="color: #839496"&gt;  example_table &lt;/span&gt;&lt;span style="color: #859900"&gt;WHERE&lt;/span&gt;&lt;span style="color: #839496"&gt; example_field &lt;/span&gt;&lt;span style="color: #586e75"&gt;&amp;gt;=&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
-&lt;span style="color: #859900"&gt;ERROR&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;1525&lt;/span&gt;&lt;span style="color: #839496"&gt; (HY000)&lt;/span&gt;&lt;span style="color: #586e75"&gt;:&lt;/span&gt;&lt;span style="color: #839496"&gt; Incorrect &lt;/span&gt;&lt;span style="color: #b58900"&gt;DATETIME&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;value&lt;/span&gt;&lt;span style="color: #586e75"&gt;:&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;mysql&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;&amp;gt;&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;SELECT&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;*&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;FROM&lt;/span&gt;&lt;span style="color: #6e7681"&gt;  &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;example_table&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;WHERE&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;example_field&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;&amp;gt;=&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;ERROR&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;1525&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;(HY000)&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;Incorrect&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;DATETIME&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;value&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;2023-01-02T06:45:31+0000&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="prepare-for-upgrade"&gt;Prepare for Upgrade&lt;/h2&gt;
@@ -541,22 +576,22 @@ production cluster into read only mode.&lt;/strong&gt;&lt;/p&gt;
 &lt;li&gt;Confirm that &lt;code&gt;binlog_format&lt;/code&gt; is enabled on the new Writer instance that you
   failed over to in point (4) above.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;VARIABLES&lt;span style="color: #839496"&gt; &lt;/span&gt;LIKE&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;binlog_format&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #6e7681"&gt; &lt;/span&gt;VARIABLES&lt;span style="color: #6e7681"&gt; &lt;/span&gt;LIKE&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;binlog_format&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The output should look like this:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;+---------------+-------+
-&lt;span style="color: #839496"&gt;| &lt;/span&gt;Variable_name&lt;span style="color: #839496"&gt; | &lt;/span&gt;Value&lt;span style="color: #839496"&gt; |&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;+---------------+-------+
+&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;Variable_name&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;Value&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;
 +---------------+-------+
-&lt;span style="color: #839496"&gt;| &lt;/span&gt;binlog_format&lt;span style="color: #839496"&gt; | &lt;/span&gt;MIXED&lt;span style="color: #839496"&gt; |&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;binlog_format&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;MIXED&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;
 +---------------+-------+
-&lt;span style="color: #2aa198"&gt;1&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;row&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;in&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #268bd2"&gt;set&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0&lt;/span&gt;.00&lt;span style="color: #839496"&gt; &lt;/span&gt;sec&lt;span style="color: #586e75"&gt;)&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;1&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;row&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72"&gt;in&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;set&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;(&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0&lt;/span&gt;.00&lt;span style="color: #6e7681"&gt; &lt;/span&gt;sec&lt;span style="color: #ff7b72; font-weight: bold"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Confirm that the new Writer is able to replicate to a new cluster:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;MASTER&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #6e7681"&gt; &lt;/span&gt;MASTER&lt;span style="color: #6e7681"&gt; &lt;/span&gt;STATUS&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;If nothing is returned, replication is not enabled and you need to investigate
@@ -564,14 +599,14 @@ before proceeding.&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Check binlog rotation time, increase to 24 hours minimum:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_show_configuration&lt;span style="color: #586e75"&gt;()&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
-CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_configuration&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;binlog retention hours&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;24&lt;/span&gt;&lt;span style="color: #586e75"&gt;)&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_show_configuration&lt;span style="color: #ff7b72; font-weight: bold"&gt;()&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
+CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_set_configuration&lt;span style="color: #ff7b72; font-weight: bold"&gt;(&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;binlog retention hours&amp;#39;&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;24&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;)&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Create a user to set up replication:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;GRANT&lt;span style="color: #839496"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #839496"&gt; &lt;/span&gt;SLAVE,&lt;span style="color: #839496"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #839496"&gt; &lt;/span&gt;CLIENT&lt;span style="color: #839496"&gt; &lt;/span&gt;ON&lt;span style="color: #839496"&gt; &lt;/span&gt;*.*&lt;span style="color: #839496"&gt; &lt;/span&gt;to&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;@&lt;span style="color: #2aa198"&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;IDENTIFIED&lt;span style="color: #839496"&gt; &lt;/span&gt;BY&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;GRANT&lt;span style="color: #6e7681"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #6e7681"&gt; &lt;/span&gt;SLAVE,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;REPLICATION&lt;span style="color: #6e7681"&gt; &lt;/span&gt;CLIENT&lt;span style="color: #6e7681"&gt; &lt;/span&gt;ON&lt;span style="color: #6e7681"&gt; &lt;/span&gt;*.*&lt;span style="color: #6e7681"&gt; &lt;/span&gt;to&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;@&lt;span style="color: #a5d6ff"&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;IDENTIFIED&lt;span style="color: #6e7681"&gt; &lt;/span&gt;BY&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="start-the-upgrade"&gt;Start the Upgrade&lt;/h2&gt;
@@ -579,7 +614,7 @@ CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_configuration
 &lt;ul&gt;
 &lt;li&gt;Check binlog positions:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;MASTER&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #6e7681"&gt; &lt;/span&gt;MASTER&lt;span style="color: #6e7681"&gt; &lt;/span&gt;STATUS&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -588,15 +623,15 @@ CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_configuration
 &lt;li&gt;Configure the Writer in the new Aurora cluster to replicate from the Aurora
    cluster running the old engine version:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_set_external_master&lt;span style="color: #586e75"&gt;(&lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;MASTER_ENDPOINT&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;3306&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;BINLOG_FILE&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;&amp;#39;&amp;lt;BINLOG_POSITION&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0&lt;/span&gt;&lt;span style="color: #586e75"&gt;)&lt;/span&gt;&lt;span style="color: #839496"&gt;;&lt;/span&gt;
-CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_start_replication&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_set_external_master&lt;span style="color: #ff7b72; font-weight: bold"&gt;(&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;MASTER_ENDPOINT&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;3306&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;USERNAME&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;PASSWORD&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;BINLOG_FILE&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;&amp;lt;BINLOG_POSITION&amp;gt;&amp;#39;&lt;/span&gt;,&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;)&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
+CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_start_replication&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Check that there is no replication lag, and wait for the slave to catch up
    to master (ensure that &lt;code&gt;Seconds_Behind_Master&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;):&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #839496"&gt; &lt;/span&gt;SLAVE&lt;span style="color: #839496"&gt; &lt;/span&gt;STATUS&lt;span style="color: #2aa198"&gt;\G&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;SHOW&lt;span style="color: #6e7681"&gt; &lt;/span&gt;SLAVE&lt;span style="color: #6e7681"&gt; &lt;/span&gt;STATUS&lt;span style="color: #79c0ff"&gt;\G&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -610,7 +645,7 @@ CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_start_replication
 &lt;li&gt;Update DNS CNAME to point to the new RDS Cluster endpoint.&lt;/li&gt;
 &lt;li&gt;Reset the new master/writer in the new Aurora cluster:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_reset_external_master&lt;span style="color: #839496"&gt;;&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_reset_external_master&lt;span style="color: #e6edf3"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -635,99 +670,99 @@ CALL&lt;span style="color: #839496"&gt; &lt;/span&gt;mysql.rds_start_replication
 &lt;li&gt;&lt;a href="https://blogs.halodoc.io/upgrading-to-rds-mysql-8-0-with-minimum-downtime/"&gt;Upgrading to RDS MySQL 8.0 with minimum downtime&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/enable-binary-logging-aurora/"&gt;How do I turn on binary logging for my Amazon Aurora MySQL cluster?&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="aws"></category><category term="rds"></category><category term="aurora"></category><category term="mysql"></category></entry><entry><title>Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-18T00:00:00+02:00</published><updated>2023-01-18T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-18:/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 7.x to 8.x on Ubuntu 22.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="update-apt-repo-from-version-7x-to-version-8x"&gt;Update apt repo from version 7.x to version 8.x&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;mv&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-7.x.list&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mv&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-7.x.list&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;deb&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #2aa198"&gt;[signed-by=/usr/share/keyrings/elastic.gpg]&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;https://artifacts.elastic.co/packages/8.x/apt&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;stable&lt;/span&gt;&lt;span style="color: #839496"&gt; &lt;/span&gt;&lt;span style="color: #859900"&gt;main&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;deb&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;[signed-by=/usr/share/keyrings/elastic.gpg]&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #79c0ff"&gt;https://artifacts.elastic.co/packages/8.x/apt&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #79c0ff"&gt;stable&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #79c0ff"&gt;main&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="upgrade-packages"&gt;Upgrade packages&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;update
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;apt&lt;span style="color: #839496"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #839496"&gt; &lt;/span&gt;install&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch&lt;span style="color: #839496"&gt; &lt;/span&gt;filebeat&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana&lt;span style="color: #839496"&gt; &lt;/span&gt;logstash
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;update
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch&lt;span style="color: #6e7681"&gt; &lt;/span&gt;filebeat&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana&lt;span style="color: #6e7681"&gt; &lt;/span&gt;logstash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="update-elasticsearch-config"&gt;Update Elasticsearch config&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/elasticsearch/elasticsearch.yml
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/elasticsearch/elasticsearch.yml
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content, updating the cluster name as appropriate:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #839496"&gt;cluster&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;name: your&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;cluster&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;name&lt;/span&gt;
-&lt;span style="color: #839496"&gt;node&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;name: node&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #2aa198"&gt;1&lt;/span&gt;
-&lt;span style="color: #839496"&gt;path&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;data: &lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;lib&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;elasticsearch&lt;/span&gt;
-&lt;span style="color: #839496"&gt;path&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;logs: &lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #859900"&gt;var&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #268bd2"&gt;log&lt;/span&gt;&lt;span style="color: #586e75"&gt;/&lt;/span&gt;&lt;span style="color: #839496"&gt;elasticsearch&lt;/span&gt;
-&lt;span style="color: #839496"&gt;network&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;host: &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;
-&lt;span style="color: #839496"&gt;discovery&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;type: single&lt;/span&gt;&lt;span style="color: #586e75"&gt;-&lt;/span&gt;&lt;span style="color: #839496"&gt;node&lt;/span&gt;
-&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
-&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enrollment&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;cluster&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;name:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;your&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;cluster&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;name&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;node&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;name:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;node&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;1&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;path&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;data:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #ff7b72"&gt;var&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;lib&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;elasticsearch&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;path&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;logs:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #ff7b72"&gt;var&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;log&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;/&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;elasticsearch&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;network&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;host:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0.0&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0.0&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;discovery&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;type:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;single&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;-&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;node&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;xpack&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;security&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;enabled:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;false&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;xpack&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;security&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;enrollment&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;enabled:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;false&lt;/span&gt;
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents&lt;/span&gt;
-&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;http&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;ssl:&lt;/span&gt;
-&lt;span style="color: #839496"&gt;  enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;xpack&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;security&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;http&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;ssl:&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;  &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;enabled:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;false&lt;/span&gt;
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Enable encryption and mutual authentication between cluster nodes&lt;/span&gt;
-&lt;span style="color: #839496"&gt;xpack&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;security&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;transport&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;ssl:&lt;/span&gt;
-&lt;span style="color: #839496"&gt;  enabled: &lt;/span&gt;&lt;span style="color: #268bd2"&gt;false&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Enable encryption and mutual authentication between cluster nodes&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;xpack&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;security&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;transport&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;ssl:&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;  &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;enabled:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;false&lt;/span&gt;
 
-&lt;span style="color: #586e75; font-style: italic"&gt;# Allow HTTP API connections from anywhere&lt;/span&gt;
-&lt;span style="color: #586e75; font-style: italic"&gt;# Connections are encrypted and require user authentication&lt;/span&gt;
-&lt;span style="color: #839496"&gt;http&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #839496"&gt;host: &lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;&lt;span style="color: #586e75"&gt;.&lt;/span&gt;&lt;span style="color: #2aa198"&gt;0.0&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Allow HTTP API connections from anywhere&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;# Connections are encrypted and require user authentication&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;http&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;host:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0.0&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;.&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;0.0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="restart-elasticsearch"&gt;Restart Elasticsearch&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;restart&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="remove-incompatible-logging-from-kibana-systemd-service"&gt;Remove incompatible logging from Kibana systemd service&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;vim&lt;span style="color: #839496"&gt; &lt;/span&gt;/etc/systemd/system/kibana.service
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/systemd/system/kibana.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Paste the following content:&lt;/p&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #859900"&gt;[Unit]&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Description&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;Kibana&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Documentation&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;https://www.elastic.co&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Wants&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;network-online.target&lt;/span&gt;
-&lt;span style="color: #839496"&gt;After&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;network-online.target&lt;/span&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #ff7b72"&gt;[Unit]&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Description&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;Kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Documentation&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;https://www.elastic.co&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Wants&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;network-online.target&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;After&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;network-online.target&lt;/span&gt;
 
-&lt;span style="color: #859900"&gt;[Service]&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Type&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;simple&lt;/span&gt;
-&lt;span style="color: #839496"&gt;User&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;kibana&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Group&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;kibana&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;[Service]&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Type&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;simple&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;User&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Group&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;kibana&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;Environment&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;KBN_HOME=/usr/share/kibana&lt;/span&gt;
-&lt;span style="color: #839496"&gt;Environment&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;KBN_PATH_CONF=/etc/kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Environment&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;KBN_HOME=/usr/share/kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Environment&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;KBN_PATH_CONF=/etc/kibana&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;-/etc/default/kibana&lt;/span&gt;
-&lt;span style="color: #839496"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;-/etc/sysconfig/kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;-/etc/default/kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;EnvironmentFile&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;-/etc/sysconfig/kibana&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;ExecStart&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;/usr/share/kibana/bin/kibana --pid.file=&amp;quot;/run/kibana/kibana.pid&amp;quot;&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;ExecStart&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;/usr/share/kibana/bin/kibana --pid.file=&amp;quot;/run/kibana/kibana.pid&amp;quot;&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;Restart&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;on-failure&lt;/span&gt;
-&lt;span style="color: #839496"&gt;RestartSec&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;3&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;Restart&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;on-failure&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;RestartSec&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;3&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;StartLimitBurst&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;3&lt;/span&gt;
-&lt;span style="color: #839496"&gt;StartLimitInterval&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;60&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;StartLimitBurst&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;3&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;StartLimitInterval&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;60&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;WorkingDirectory&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;/usr/share/kibana&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;WorkingDirectory&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;/usr/share/kibana&lt;/span&gt;
 
-&lt;span style="color: #839496"&gt;StandardOutput&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;journal&lt;/span&gt;
-&lt;span style="color: #839496"&gt;StandardError&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;inherit&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;StandardOutput&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;journal&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;StandardError&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;inherit&lt;/span&gt;
 
-&lt;span style="color: #859900"&gt;[Install]&lt;/span&gt;
-&lt;span style="color: #839496"&gt;WantedBy&lt;/span&gt;&lt;span style="color: #586e75"&gt;=&lt;/span&gt;&lt;span style="color: #2aa198"&gt;multi-user.target&lt;/span&gt;
+&lt;span style="color: #ff7b72"&gt;[Install]&lt;/span&gt;
+&lt;span style="color: #e6edf3"&gt;WantedBy&lt;/span&gt;&lt;span style="color: #ff7b72; font-weight: bold"&gt;=&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;multi-user.target&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="restart-kibana"&gt;Restart Kibana&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;restart&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;restart&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="verify-all-services-are-running"&gt;Verify all services are running&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;elasticsearch
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;logstash
-sudo&lt;span style="color: #839496"&gt; &lt;/span&gt;systemctl&lt;span style="color: #839496"&gt; &lt;/span&gt;status&lt;span style="color: #839496"&gt; &lt;/span&gt;kibana
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;status&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;status&lt;span style="color: #6e7681"&gt; &lt;/span&gt;logstash
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;status&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="verify-version-of-elasticsearch"&gt;Verify version of Elasticsearch&lt;/h2&gt;
-&lt;div class="highlight" style="background: #002b36"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span style="color: #839496"&gt; &lt;/span&gt;http://127.0.0.1:9200
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;http://127.0.0.1:9200
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="elastic"></category><category term="ubuntu"></category><category term="devops"></category></entry></feed>

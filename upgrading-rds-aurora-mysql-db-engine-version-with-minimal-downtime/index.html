@@ -186,12 +186,12 @@ an Aurora MySQL from 5.7 to Aurora MySQL 8.</p>
 your queries will no longer work in MySQL 8, so you will either need
 to update your queries to use the correct <code>DATETIME</code> format, ie
 <code>YYYY-MM-DD HH:MM:SS</code>, or to use the <code>STR_TO_DATE</code> function, eg:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #859900">SELECT</span><span style="color: #839496"> </span><span style="color: #268bd2">STR_TO_DATE</span><span style="color: #839496">( </span><span style="color: #2aa198">&#39;2019-02-20T10:00:00.000Z&#39;</span><span style="color: #839496">, </span><span style="color: #2aa198">&#39;%Y-%m-%dT%T.%fZ&#39;</span><span style="color: #839496">);</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #ff7b72">SELECT</span><span style="color: #6e7681"> </span><span style="color: #d2a8ff; font-weight: bold">STR_TO_DATE</span><span style="color: #e6edf3">(</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;2019-02-20T10:00:00.000Z&#39;</span><span style="color: #e6edf3">,</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;%Y-%m-%dT%T.%fZ&#39;</span><span style="color: #e6edf3">);</span>
 </code></pre></div>
 
 <p>Otherwise you will run into errors that look like this:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code><span style="color: #839496">mysql</span><span style="color: #586e75">&gt;</span><span style="color: #839496"> </span><span style="color: #859900">SELECT</span><span style="color: #839496"> </span><span style="color: #586e75">*</span><span style="color: #839496"> </span><span style="color: #859900">FROM</span><span style="color: #839496">  example_table </span><span style="color: #859900">WHERE</span><span style="color: #839496"> example_field </span><span style="color: #586e75">&gt;=</span><span style="color: #839496"> </span><span style="color: #2aa198">&#39;2023-01-02T06:45:31+0000&#39;</span><span style="color: #839496">;</span>
-<span style="color: #859900">ERROR</span><span style="color: #839496"> </span><span style="color: #2aa198">1525</span><span style="color: #839496"> (HY000)</span><span style="color: #586e75">:</span><span style="color: #839496"> Incorrect </span><span style="color: #b58900">DATETIME</span><span style="color: #839496"> </span><span style="color: #859900">value</span><span style="color: #586e75">:</span><span style="color: #839496"> </span><span style="color: #2aa198">&#39;2023-01-02T06:45:31+0000&#39;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">mysql</span><span style="color: #ff7b72; font-weight: bold">&gt;</span><span style="color: #6e7681"> </span><span style="color: #ff7b72">SELECT</span><span style="color: #6e7681"> </span><span style="color: #ff7b72; font-weight: bold">*</span><span style="color: #6e7681"> </span><span style="color: #ff7b72">FROM</span><span style="color: #6e7681">  </span><span style="color: #e6edf3">example_table</span><span style="color: #6e7681"> </span><span style="color: #ff7b72">WHERE</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">example_field</span><span style="color: #6e7681"> </span><span style="color: #ff7b72; font-weight: bold">&gt;=</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;2023-01-02T06:45:31+0000&#39;</span><span style="color: #e6edf3">;</span>
+<span style="color: #ff7b72">ERROR</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">1525</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">(HY000)</span><span style="color: #ff7b72; font-weight: bold">:</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">Incorrect</span><span style="color: #6e7681"> </span><span style="color: #ff7b72">DATETIME</span><span style="color: #6e7681"> </span><span style="color: #ff7b72">value</span><span style="color: #ff7b72; font-weight: bold">:</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;2023-01-02T06:45:31+0000&#39;</span>
 </code></pre></div>
 
 <h2 id="prepare-for-upgrade">Prepare for Upgrade</h2>
@@ -216,22 +216,22 @@ production cluster into read only mode.</strong></p>
 <li>Confirm that <code>binlog_format</code> is enabled on the new Writer instance that you
   failed over to in point (4) above.</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #839496"> </span>VARIABLES<span style="color: #839496"> </span>LIKE<span style="color: #839496"> </span><span style="color: #2aa198">&#39;binlog_format&#39;</span><span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #6e7681"> </span>VARIABLES<span style="color: #6e7681"> </span>LIKE<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;binlog_format&#39;</span><span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <p>The output should look like this:</p>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>+---------------+-------+
-<span style="color: #839496">| </span>Variable_name<span style="color: #839496"> | </span>Value<span style="color: #839496"> |</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>+---------------+-------+
+<span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>Variable_name<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>Value<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span>
 +---------------+-------+
-<span style="color: #839496">| </span>binlog_format<span style="color: #839496"> | </span>MIXED<span style="color: #839496"> |</span>
+<span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>binlog_format<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>MIXED<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span>
 +---------------+-------+
-<span style="color: #2aa198">1</span><span style="color: #839496"> </span>row<span style="color: #839496"> </span><span style="color: #859900">in</span><span style="color: #839496"> </span><span style="color: #268bd2">set</span><span style="color: #839496"> </span><span style="color: #586e75">(</span><span style="color: #2aa198">0</span>.00<span style="color: #839496"> </span>sec<span style="color: #586e75">)</span>
+<span style="color: #a5d6ff">1</span><span style="color: #6e7681"> </span>row<span style="color: #6e7681"> </span><span style="color: #ff7b72">in</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">set</span><span style="color: #6e7681"> </span><span style="color: #ff7b72; font-weight: bold">(</span><span style="color: #a5d6ff">0</span>.00<span style="color: #6e7681"> </span>sec<span style="color: #ff7b72; font-weight: bold">)</span>
 </code></pre></div>
 
 <ul>
 <li>Confirm that the new Writer is able to replicate to a new cluster:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #839496"> </span>MASTER<span style="color: #839496"> </span>STATUS<span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #6e7681"> </span>MASTER<span style="color: #6e7681"> </span>STATUS<span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <p><strong>If nothing is returned, replication is not enabled and you need to investigate
@@ -239,14 +239,14 @@ before proceeding.</strong></p>
 <ul>
 <li>Check binlog rotation time, increase to 24 hours minimum:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #839496"> </span>mysql.rds_show_configuration<span style="color: #586e75">()</span><span style="color: #839496">;</span>
-CALL<span style="color: #839496"> </span>mysql.rds_set_configuration<span style="color: #586e75">(</span><span style="color: #2aa198">&#39;binlog retention hours&#39;</span>,<span style="color: #839496"> </span><span style="color: #2aa198">24</span><span style="color: #586e75">)</span><span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #6e7681"> </span>mysql.rds_show_configuration<span style="color: #ff7b72; font-weight: bold">()</span><span style="color: #e6edf3">;</span>
+CALL<span style="color: #6e7681"> </span>mysql.rds_set_configuration<span style="color: #ff7b72; font-weight: bold">(</span><span style="color: #a5d6ff">&#39;binlog retention hours&#39;</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">24</span><span style="color: #ff7b72; font-weight: bold">)</span><span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <ul>
 <li>Create a user to set up replication:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>GRANT<span style="color: #839496"> </span>REPLICATION<span style="color: #839496"> </span>SLAVE,<span style="color: #839496"> </span>REPLICATION<span style="color: #839496"> </span>CLIENT<span style="color: #839496"> </span>ON<span style="color: #839496"> </span>*.*<span style="color: #839496"> </span>to<span style="color: #839496"> </span><span style="color: #2aa198">&#39;&lt;USERNAME&gt;&#39;</span>@<span style="color: #2aa198">&#39;%&#39;</span><span style="color: #839496"> </span>IDENTIFIED<span style="color: #839496"> </span>BY<span style="color: #839496"> </span><span style="color: #2aa198">&#39;&lt;PASSWORD&gt;&#39;</span><span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>GRANT<span style="color: #6e7681"> </span>REPLICATION<span style="color: #6e7681"> </span>SLAVE,<span style="color: #6e7681"> </span>REPLICATION<span style="color: #6e7681"> </span>CLIENT<span style="color: #6e7681"> </span>ON<span style="color: #6e7681"> </span>*.*<span style="color: #6e7681"> </span>to<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;&lt;USERNAME&gt;&#39;</span>@<span style="color: #a5d6ff">&#39;%&#39;</span><span style="color: #6e7681"> </span>IDENTIFIED<span style="color: #6e7681"> </span>BY<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;&lt;PASSWORD&gt;&#39;</span><span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <h2 id="start-the-upgrade">Start the Upgrade</h2>
@@ -254,7 +254,7 @@ CALL<span style="color: #839496"> </span>mysql.rds_set_configuration<span style=
 <ul>
 <li>Check binlog positions:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #839496"> </span>MASTER<span style="color: #839496"> </span>STATUS<span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #6e7681"> </span>MASTER<span style="color: #6e7681"> </span>STATUS<span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <ul>
@@ -263,15 +263,15 @@ CALL<span style="color: #839496"> </span>mysql.rds_set_configuration<span style=
 <li>Configure the Writer in the new Aurora cluster to replicate from the Aurora
    cluster running the old engine version:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #839496"> </span>mysql.rds_set_external_master<span style="color: #586e75">(</span><span style="color: #2aa198">&#39;&lt;MASTER_ENDPOINT&gt;&#39;</span>,<span style="color: #839496"> </span><span style="color: #2aa198">3306</span>,<span style="color: #839496"> </span><span style="color: #2aa198">&#39;&lt;USERNAME&gt;&#39;</span>,<span style="color: #839496"> </span><span style="color: #2aa198">&#39;&lt;PASSWORD&gt;&#39;</span>,<span style="color: #2aa198">&#39;&lt;BINLOG_FILE&gt;&#39;</span>,<span style="color: #839496"> </span><span style="color: #2aa198">&#39;&lt;BINLOG_POSITION&gt;&#39;</span>,<span style="color: #839496"> </span><span style="color: #2aa198">0</span><span style="color: #586e75">)</span><span style="color: #839496">;</span>
-CALL<span style="color: #839496"> </span>mysql.rds_start_replication<span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #6e7681"> </span>mysql.rds_set_external_master<span style="color: #ff7b72; font-weight: bold">(</span><span style="color: #a5d6ff">&#39;&lt;MASTER_ENDPOINT&gt;&#39;</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">3306</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;&lt;USERNAME&gt;&#39;</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;&lt;PASSWORD&gt;&#39;</span>,<span style="color: #a5d6ff">&#39;&lt;BINLOG_FILE&gt;&#39;</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&#39;&lt;BINLOG_POSITION&gt;&#39;</span>,<span style="color: #6e7681"> </span><span style="color: #a5d6ff">0</span><span style="color: #ff7b72; font-weight: bold">)</span><span style="color: #e6edf3">;</span>
+CALL<span style="color: #6e7681"> </span>mysql.rds_start_replication<span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <ul>
 <li>Check that there is no replication lag, and wait for the slave to catch up
    to master (ensure that <code>Seconds_Behind_Master</code> is <code>0</code>):</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #839496"> </span>SLAVE<span style="color: #839496"> </span>STATUS<span style="color: #2aa198">\G</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>SHOW<span style="color: #6e7681"> </span>SLAVE<span style="color: #6e7681"> </span>STATUS<span style="color: #79c0ff">\G</span>
 </code></pre></div>
 
 <ul>
@@ -285,7 +285,7 @@ CALL<span style="color: #839496"> </span>mysql.rds_start_replication<span style=
 <li>Update DNS CNAME to point to the new RDS Cluster endpoint.</li>
 <li>Reset the new master/writer in the new Aurora cluster:</li>
 </ul>
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #839496"> </span>mysql.rds_reset_external_master<span style="color: #839496">;</span>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>CALL<span style="color: #6e7681"> </span>mysql.rds_reset_external_master<span style="color: #e6edf3">;</span>
 </code></pre></div>
 
 <ul>
