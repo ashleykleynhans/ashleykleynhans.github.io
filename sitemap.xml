@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/</loc>
-<lastmod>2024-12-04T13:10:25-00:00</lastmod>
+<lastmod>2024-12-04T13:11:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/tags.html</loc>
-<lastmod>2024-12-04T13:10:25-00:00</lastmod>
+<lastmod>2024-12-04T13:11:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/categories.html</loc>
-<lastmod>2024-12-04T13:10:25-00:00</lastmod>
+<lastmod>2024-12-04T13:11:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/authors.html</loc>
-<lastmod>2024-12-04T13:10:25-00:00</lastmod>
+<lastmod>2024-12-04T13:11:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/archives.html</loc>
-<lastmod>2024-12-04T13:10:25-00:00</lastmod>
+<lastmod>2024-12-04T13:11:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -46,7 +46,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://trapdoor.cloud/injecting-content-type-header-into-python-flask-webhooks/</loc>
+<loc>https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/</loc>
 <lastmod>2024-12-04T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.6</priority>
