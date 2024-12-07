@@ -22,7 +22,7 @@ of them.&lt;/p&gt;
    from being damaged by the couriers, only large items
    that already have their own sturdy packaging are not
    placed into boxes.&lt;/li&gt;
-&lt;li&gt;The packaging tape is very easy to remove.&lt;/li&gt;
+&lt;li&gt;The packaging tape on the boxes is very easy to remove.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id="cons"&gt;Cons&lt;/h3&gt;
 &lt;ol&gt;
@@ -67,8 +67,10 @@ of them.&lt;/p&gt;
    deals pages.&lt;/li&gt;
 &lt;li&gt;The UI of the page to cancel order items is hideous,
    and only allows the user to cancel the entire quantity
-   instead of allowing the uer to specify a quantity.&lt;/li&gt;
+   instead of allowing the user to specify the quantity that
+   they want to cancel.&lt;/li&gt;
 &lt;li&gt;The general UI and UX are very dated and not user-friendly
    at all.&lt;/li&gt;
-&lt;li&gt;The user has to fight with the packaging tape to remove it.&lt;/li&gt;
+&lt;li&gt;The user has to fight with the packaging tape to remove it
+   from the boxes.&lt;/li&gt;
 &lt;/ol&gt;</content><category term="eCommerce"></category><category term="ecommerce"></category><category term="shopping"></category></entry></feed>
