@@ -28,6 +28,10 @@ of them.&lt;/p&gt;
    doesn't approve the review automatically, so if the
    review guidelines are adhered to, product reviews are
    approved very quickly.&lt;/li&gt;
+&lt;li&gt;Delivery drivers give the user a phone call if they
+   don't hear them hooting to ensure that the delivery is
+   not missed.&lt;/li&gt;
+&lt;li&gt;Delivery handover is smooth and efficient.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id="cons"&gt;Cons&lt;/h3&gt;
 &lt;ol&gt;
@@ -74,28 +78,39 @@ of them.&lt;/p&gt;
 &lt;h3 id="cons_1"&gt;Cons&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Around 50% of the items that I ordered arrived with
-   broken or damaged boxes, or even boxes that had been opened
-   which is especially unacceptable when purchasing gifts.&lt;/li&gt;
+    broken or damaged boxes, or even boxes that had been opened
+    which is especially unacceptable when purchasing gifts.&lt;/li&gt;
 &lt;li&gt;Some items are packed into soft courier bags instead of
-   boxes, which causes items to be damaged by the couriers.&lt;/li&gt;
+    boxes, which causes items to be damaged by the couriers.&lt;/li&gt;
 &lt;li&gt;Prices are not visible when browsing through the deals
-   pages.  The user has to click though to the product page
-   for each item to view the price of that specific item.&lt;/li&gt;
+    pages.  The user has to click though to the product page
+    for each item to view the price of that specific item.&lt;/li&gt;
 &lt;li&gt;The navigation on both the website and mobile app are very
-   buggy and they both jump and make the user lose track of
-   where they were while trying to scroll through the 
-   deals pages.&lt;/li&gt;
+    buggy and they both jump and make the user lose track of
+    where they were while trying to scroll through the 
+    deals pages.&lt;/li&gt;
 &lt;li&gt;The UI of the page to cancel order items is hideous,
-   and only allows the user to cancel the entire quantity
-   instead of allowing the user to specify the quantity that
-   they want to cancel.&lt;/li&gt;
+    and only allows the user to cancel the entire quantity
+    instead of allowing the user to specify the quantity that
+    they want to cancel.&lt;/li&gt;
 &lt;li&gt;The general UI and UX are very dated and not user-friendly
-   at all.&lt;/li&gt;
+    at all.&lt;/li&gt;
 &lt;li&gt;The user has to fight with the packaging tape to remove it
-   from the boxes.&lt;/li&gt;
+    from the boxes.&lt;/li&gt;
 &lt;li&gt;The product review process seems to be manual, so it takes
-   a long time for product reviews to be approved.&lt;/li&gt;
-&lt;/ol&gt;</content><category term="eCommerce"></category><category term="ecommerce"></category><category term="shopping"></category></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
+    a long time for product reviews to be approved.&lt;/li&gt;
+&lt;li&gt;Delivery drivers drive off if the user does not hear them
+    hooting, and also do not give the user sufficient time to
+    meet them before driving off.&lt;/li&gt;
+&lt;li&gt;Delivery handover is slow and inefficient and requires
+    a lot of patience most of the time.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Takealot is generally a far superior experience.&lt;/li&gt;
+&lt;li&gt;Amazon South Africa has far more competitive pricing,
+  especially during Black Friday.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="eCommerce"></category><category term="ecommerce"></category><category term="shopping"></category></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
 &lt;code&gt;Content-Type&lt;/code&gt; headers into your Python Flask Webhooks.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;We recently had an issue where one of our 3rd party providers decided
 that it would be a good idea to remove the &lt;code&gt;Content-Type&lt;/code&gt; header
