@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/</loc>
-<lastmod>2024-12-04T13:16:41-00:00</lastmod>
+<lastmod>2024-12-07T14:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/tags.html</loc>
-<lastmod>2024-12-04T13:16:41-00:00</lastmod>
+<lastmod>2024-12-07T14:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/categories.html</loc>
-<lastmod>2024-12-04T13:16:41-00:00</lastmod>
+<lastmod>2024-12-07T14:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/authors.html</loc>
-<lastmod>2024-12-04T13:16:41-00:00</lastmod>
+<lastmod>2024-12-07T14:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/archives.html</loc>
-<lastmod>2024-12-04T13:16:41-00:00</lastmod>
+<lastmod>2024-12-07T14:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2023-01-18T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/comparison-between-takealot-and-amazon-south-africa/</loc>
+<lastmod>2024-12-07T00:00:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -90,6 +97,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://trapdoor.cloud/category/devops.html</loc>
 <lastmod>2024-12-04T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/category/ecommerce.html</loc>
+<lastmod>2024-12-07T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/ecommerce.html</loc>
+<lastmod>2024-12-07T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/shopping.html</loc>
+<lastmod>2024-12-07T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -250,7 +278,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/author/ashley-kleynhans.html</loc>
-<lastmod>2024-12-04T00:00:00+01:52</lastmod>
+<lastmod>2024-12-07T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
