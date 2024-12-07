@@ -28,20 +28,23 @@ of them.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Prices are often much higher than Amazon South Africa.&lt;/li&gt;
 &lt;li&gt;Only a single collection point in my area which is inconvenient
-   and out of my way.&lt;/li&gt;
+    and out of my way.&lt;/li&gt;
 &lt;li&gt;Returns can be scheduled before an item is even delivered.&lt;/li&gt;
 &lt;li&gt;Collections for returns cannot be rescheduled by the user.&lt;/li&gt;
 &lt;li&gt;Notifications for wish list items seem to be based on price
-   changes, regardless of whether the price increases or decreases.&lt;/li&gt;
+    changes, regardless of whether the price increases or decreases.&lt;/li&gt;
 &lt;li&gt;An order cannot be cancelled once the user has paid for it,
-   you have to wait for it to be delivered and then schedule
-   a return.&lt;/li&gt;
+    they have to wait for it to be delivered and then schedule
+    a return.&lt;/li&gt;
 &lt;li&gt;The user is able to review items before they are even
-   delivered.&lt;/li&gt;
+    delivered.&lt;/li&gt;
 &lt;li&gt;No progress bar to show the percentage of deals claimed.&lt;/li&gt;
 &lt;li&gt;Excessive use of boxes by either using oversized boxes or
-   placing each order item into separate boxes instead of
-   packaging everything together into a single box.&lt;/li&gt;
+    placing each order item into separate boxes instead of
+    packaging everything together into a single box.&lt;/li&gt;
+&lt;li&gt;No indication of last purchased date if the user views
+    the product page for a product that they have previously
+    purchased.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="amazon-south-africa"&gt;Amazon South Africa&lt;/h2&gt;
 &lt;h3 id="pros_1"&gt;Pros&lt;/h3&gt;
@@ -53,6 +56,11 @@ of them.&lt;/p&gt;
 &lt;li&gt;Order items can be cancelled before the order is packed.&lt;/li&gt;
 &lt;li&gt;The deals page has a progress bar that shows the percentage
    of deals claimed.&lt;/li&gt;
+&lt;li&gt;If the user clicks through to a product page for a product
+   that they have previously purchased, the page product page
+   will display the date that the product was previously
+   purchased, which is useful for accidentally purchasing the
+   same product more than once.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id="cons_1"&gt;Cons&lt;/h3&gt;
 &lt;ol&gt;
