@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-12-11T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Comparison between Takealot and Amazon South Africa</title><link href="https://trapdoor.cloud/comparison-between-takealot-and-amazon-south-africa/" rel="alternate"></link><published>2024-12-07T00:00:00+02:00</published><updated>2024-12-11T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-07:/comparison-between-takealot-and-amazon-south-africa/</id><summary type="html">&lt;p&gt;This post does a comparison between Takealot and
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-12-20T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Comparison between Takealot and Amazon South Africa</title><link href="https://trapdoor.cloud/comparison-between-takealot-and-amazon-south-africa/" rel="alternate"></link><published>2024-12-07T00:00:00+02:00</published><updated>2024-12-20T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-07:/comparison-between-takealot-and-amazon-south-africa/</id><summary type="html">&lt;p&gt;This post does a comparison between Takealot and
 Amazon South Africa.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;I have been using Takealot for online shopping for as long
 as I can remember, but Amazon recently launched in South Africa
@@ -12,25 +12,26 @@ of them.&lt;/p&gt;
 &lt;h3 id="pros"&gt;Pros&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Items hardly ever arrive damaged.&lt;/li&gt;
+&lt;li&gt;Significantly larger product catalog.&lt;/li&gt;
 &lt;li&gt;User can immediately see the prices of items when browsing
-   through the various deals pages without having to click
-   through to the product page of each item.&lt;/li&gt;
+    through the various deals pages without having to click
+    through to the product page of each item.&lt;/li&gt;
 &lt;li&gt;The website and mobile app are both user-friendly
-   and easy to navigate, and have modern UI and UX.&lt;/li&gt;
+    and easy to navigate, and have modern UI and UX.&lt;/li&gt;
 &lt;li&gt;It is simple to reschedule a delivery.&lt;/li&gt;
 &lt;li&gt;Small items are always placed into boxes to prevent them
-   from being damaged by the couriers, only large items
-   that already have their own sturdy packaging are not
-   placed into boxes.&lt;/li&gt;
+    from being damaged by the couriers, only large items
+    that already have their own sturdy packaging are not
+    placed into boxes.&lt;/li&gt;
 &lt;li&gt;The packaging tape on the boxes is very easy to remove.&lt;/li&gt;
 &lt;li&gt;The product review process uses AI to moderate the reviews
-   and the review only requires manual approval if the AI
-   doesn't approve the review automatically, so if the
-   review guidelines are adhered to, product reviews are
-   approved very quickly.&lt;/li&gt;
+    and the review only requires manual approval if the AI
+    doesn't approve the review automatically, so if the
+    review guidelines are adhered to, product reviews are
+    approved very quickly.&lt;/li&gt;
 &lt;li&gt;Delivery drivers give the user a phone call if they
-   don't hear them hooting to ensure that the delivery is
-   not missed.&lt;/li&gt;
+    don't hear them hooting to ensure that the delivery is
+    not missed.&lt;/li&gt;
 &lt;li&gt;Delivery handover is smooth and efficient.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id="cons"&gt;Cons&lt;/h3&gt;
@@ -105,9 +106,19 @@ of them.&lt;/p&gt;
     which is especially unacceptable when purchasing gifts.&lt;/li&gt;
 &lt;li&gt;Some items are packed into soft courier bags instead of
     boxes, which causes items to be damaged by the couriers.&lt;/li&gt;
+&lt;li&gt;Liquids aren't packaged properly and get packaged with
+    other items on the same order and then leak onto those
+    items.&lt;/li&gt;
+&lt;li&gt;There are products that have incorrect or deceptive images
+    on the product pages, which is very misleading.&lt;/li&gt;
 &lt;li&gt;Prices are not visible when browsing through the deals
     pages.  The user has to click though to the product page
     for each item to view the price of that specific item.&lt;/li&gt;
+&lt;li&gt;Some deals have a product limit per customer, for example
+    only a quantity of 2 of the specific item may be purchased
+    at the deal price.&lt;/li&gt;
+&lt;li&gt;Some products are categorised incorrectly into the incorrect
+    product category.&lt;/li&gt;
 &lt;li&gt;The navigation on both the website and mobile app are very
     buggy and they both jump and make the user lose track of
     where they were while trying to scroll through the 
@@ -135,7 +146,8 @@ of them.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Takealot is generally a far superior experience.&lt;/li&gt;
 &lt;li&gt;Amazon South Africa has far more competitive pricing,
-  especially during Black Friday.&lt;/li&gt;
+  for their daily and Black Friday deals if you get there
+  early enough before the deal gets sold out.&lt;/li&gt;
 &lt;/ul&gt;</content><category term="eCommerce"></category><category term="ecommerce"></category><category term="shopping"></category></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
 &lt;code&gt;Content-Type&lt;/code&gt; headers into your Python Flask Webhooks.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;We recently had an issue where one of our 3rd party providers decided
