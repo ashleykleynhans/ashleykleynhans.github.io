@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2024-12-04T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2025-05-14T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"></link><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
+when running Vagrant and Parallels with NFS synced folders.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I am running an Apple MacBook Pro with an Apple M1 Max chipset.
+The Apple Silicon chipsets use &lt;code&gt;arm64&lt;/code&gt; architecture, but when
+I first started using Vagrant with the Parallels provider on
+my M1 Max, Parallels didn't yet support shared/synced folders
+on the &lt;code&gt;arm64&lt;/code&gt; architecture, so I was using NFS for my
+synced folders in my Vagrant development environment.&lt;/p&gt;
+&lt;p&gt;This worked perfectly until Apple released macOS Sequoia 15.4,
+and then suddenly the synced folders across NFS constantly
+caused macOS kernel panics resulting my laptop crashing.&lt;/p&gt;
+&lt;h2 id="debugging-the-issue"&gt;Debugging the issue&lt;/h2&gt;
+&lt;p&gt;I was hopeful with every macOS Sequoia 15.4.x point release that
+the issue would be resolved, but unfortunately the issue persisted
+with every macOS Sequoia 15.4.x point release, and also in macOS
+Sequoia 15.5.&lt;/p&gt;
+&lt;p&gt;When I inspected the crash files that were generated for sending
+to Apple, it appeared as though there may have been issues with
+my &lt;code&gt;NFS for Mac&lt;/code&gt; application, so I uninstalled it, removed all
+of its kernel extensions, and rebooted my laptop but unfortunately
+the issue persisted.&lt;/p&gt;
+&lt;p&gt;I then finally realised that the issue was caused by using NFS
+for my Parallels synced folders, and discovered that the latest
+versions of Parallels now support shared folders on arm64
+architecture.&lt;/p&gt;
+&lt;h2 id="resolving-the-issue"&gt;Resolving the issue&lt;/h2&gt;
+&lt;p&gt;Changing all of my synced_folder configuration in my &lt;code&gt;Vagrantfile&lt;/code&gt;
+from &lt;code&gt;type: "nfs"&lt;/code&gt; to &lt;code&gt;type: "parallels"&lt;/code&gt; finally resolved the
+issue, and I have not experienced a single macOS kernel panic
+since.&lt;/p&gt;</content><category term="DevOps"></category><category term="macos"></category><category term="vagrant"></category><category term="parallels"></category><category term="vm"></category></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
 &lt;code&gt;Content-Type&lt;/code&gt; headers into your Python Flask Webhooks.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;We recently had an issue where one of our 3rd party providers decided
 that it would be a good idea to remove the &lt;code&gt;Content-Type&lt;/code&gt; header

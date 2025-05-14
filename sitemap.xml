@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/</loc>
-<lastmod>2024-12-20T15:02:32-00:00</lastmod>
+<lastmod>2025-05-14T14:35:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/tags.html</loc>
-<lastmod>2024-12-20T15:02:32-00:00</lastmod>
+<lastmod>2025-05-14T14:35:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/categories.html</loc>
-<lastmod>2024-12-20T15:02:32-00:00</lastmod>
+<lastmod>2025-05-14T14:35:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/authors.html</loc>
-<lastmod>2024-12-20T15:02:32-00:00</lastmod>
+<lastmod>2025-05-14T14:35:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/archives.html</loc>
-<lastmod>2024-12-20T15:02:32-00:00</lastmod>
+<lastmod>2025-05-14T14:35:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2023-01-18T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</loc>
+<lastmod>2025-05-14T00:00:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -96,7 +103,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/category/devops.html</loc>
-<lastmod>2024-12-04T00:00:00+01:52</lastmod>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -104,6 +111,34 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://trapdoor.cloud/category/ecommerce.html</loc>
 <lastmod>2024-12-20T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/macos.html</loc>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/vagrant.html</loc>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/parallels.html</loc>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/vm.html</loc>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -207,13 +242,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://trapdoor.cloud/tag/macos.html</loc>
-<lastmod>2023-02-03T00:00:00+01:52</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.6</priority>
-</url>
-
-<url>
 <loc>https://trapdoor.cloud/tag/dns.html</loc>
 <lastmod>2023-01-19T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
@@ -278,7 +306,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/author/ashley-kleynhans.html</loc>
-<lastmod>2024-12-20T00:00:00+01:52</lastmod>
+<lastmod>2025-05-14T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
