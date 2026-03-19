@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"></link><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"></link><id>https://trapdoor.cloud/</id><updated>2025-05-14T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"></link><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-19T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"/><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
 when running Vagrant and Parallels with NFS synced folders.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;I am running an Apple MacBook Pro with an Apple M1 Max chipset.
 The Apple Silicon chipsets use &lt;code&gt;arm64&lt;/code&gt; architecture, but when
@@ -28,7 +28,7 @@ architecture.&lt;/p&gt;
 &lt;p&gt;Changing all of my synced_folder configuration in my &lt;code&gt;Vagrantfile&lt;/code&gt;
 from &lt;code&gt;type: "nfs"&lt;/code&gt; to &lt;code&gt;type: "parallels"&lt;/code&gt; finally resolved the
 issue, and I have not experienced a single macOS kernel panic
-since.&lt;/p&gt;</content><category term="DevOps"></category><category term="macos"></category><category term="vagrant"></category><category term="parallels"></category><category term="vm"></category></entry><entry><title>Comparison between Takealot and Amazon South Africa</title><link href="https://trapdoor.cloud/comparison-between-takealot-and-amazon-south-africa/" rel="alternate"></link><published>2024-12-07T00:00:00+02:00</published><updated>2024-12-20T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-07:/comparison-between-takealot-and-amazon-south-africa/</id><summary type="html">&lt;p&gt;This post does a comparison between Takealot and
+since.&lt;/p&gt;</content><category term="DevOps"/><category term="macos"/><category term="vagrant"/><category term="parallels"/><category term="vm"/></entry><entry><title>Comparison between Takealot and Amazon South Africa</title><link href="https://trapdoor.cloud/comparison-between-takealot-and-amazon-south-africa/" rel="alternate"/><published>2024-12-07T00:00:00+02:00</published><updated>2024-12-20T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-07:/comparison-between-takealot-and-amazon-south-africa/</id><summary type="html">&lt;p&gt;This post does a comparison between Takealot and
 Amazon South Africa.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;I have been using Takealot for online shopping for as long
 as I can remember, but Amazon recently launched in South Africa
@@ -177,7 +177,7 @@ of them.&lt;/p&gt;
 &lt;li&gt;Amazon South Africa has far more competitive pricing,
   for their daily and Black Friday deals if you get there
   early enough before the deal gets sold out.&lt;/li&gt;
-&lt;/ul&gt;</content><category term="eCommerce"></category><category term="ecommerce"></category><category term="shopping"></category></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"></link><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
+&lt;/ul&gt;</content><category term="eCommerce"/><category term="ecommerce"/><category term="shopping"/></entry><entry><title>Injecting Missing Content-Type Header into Python Flask Webhooks</title><link href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" rel="alternate"/><published>2024-12-04T00:00:00+02:00</published><updated>2024-12-04T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2024-12-04:/injecting-missing-content-type-header-into-python-flask-webhooks/</id><summary type="html">&lt;p&gt;This post helps you to automatically inject missing
 &lt;code&gt;Content-Type&lt;/code&gt; headers into your Python Flask Webhooks.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;We recently had an issue where one of our 3rd party providers decided
 that it would be a good idea to remove the &lt;code&gt;Content-Type&lt;/code&gt; header
@@ -212,9 +212,9 @@ for this issue in a Python Flask application as follows:&lt;/p&gt;
                     &lt;span style="color: #a5d6ff"&gt;&amp;#39;msg&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;&amp;#39;Invalid JSON data&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;,&lt;/span&gt;
                     &lt;span style="color: #a5d6ff"&gt;&amp;#39;detail&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;str(e)&lt;/span&gt;
                 &lt;span style="color: #e6edf3"&gt;}),&lt;/span&gt; &lt;span style="color: #a5d6ff"&gt;400&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="python"></category><category term="flask"></category><category term="webhooks"></category></entry><entry><title>Getting Started with RunPod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"></link><published>2023-07-16T00:00:00+02:00</published><updated>2024-11-28T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt;
-Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is RunPod?&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://runpod.io?ref=2xxro4sy"&gt;RunPod&lt;/a&gt; is a Cloud Hosting Provider that allows
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"/><category term="python"/><category term="flask"/><category term="webhooks"/></entry><entry><title>Getting Started with Runpod Serverless</title><link href="https://trapdoor.cloud/getting-started-with-runpod-serverless/" rel="alternate"/><published>2023-07-16T00:00:00+02:00</published><updated>2026-03-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-07-16:/getting-started-with-runpod-serverless/</id><summary type="html">&lt;p&gt;This post helps you to get started with &lt;a href="https://runpod.io?ref=2xxro4sy"&gt;Runpod&lt;/a&gt;
+Serverless for hosting and scaling your AI applications in the cloud.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-runpod"&gt;What is Runpod?&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://runpod.io?ref=2xxro4sy"&gt;Runpod&lt;/a&gt; is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
 GPU instances so that you can benefit from their Cloud GPU for running
 your AI tasks if you don't have a powerful enough
@@ -222,26 +222,27 @@ GPU to run them yourself.&lt;/p&gt;
 &lt;p&gt;They offer various different types of services, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Dedicated and On-Demand GPU Instances.&lt;/li&gt;
-&lt;li&gt;Serverless GPU Hosting.&lt;/li&gt;
+&lt;li&gt;Serverless GPU and CPU Hosting.&lt;/li&gt;
 &lt;li&gt;AI API Endpoints.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;This post focuses on their Serverless GPU hosting which can be used
+&lt;p&gt;This post focuses on their Serverless hosting which can be used
 to scale your application to hundreds of users.&lt;/p&gt;
 &lt;h2 id="serverless-key-concepts"&gt;Serverless Key Concepts&lt;/h2&gt;
-&lt;p&gt;There are three main concepts:&lt;/p&gt;
+&lt;p&gt;There are four main concepts:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Serverless Handler&lt;/li&gt;
 &lt;li&gt;Templates&lt;/li&gt;
 &lt;li&gt;Endpoints&lt;/li&gt;
+&lt;li&gt;Worker Types (Flex and Active)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="serverless-handler"&gt;Serverless Handler&lt;/h3&gt;
 &lt;p&gt;This is a critical component for your application to function correctly
-within RunPod Serverless.  You need to import the &lt;code&gt;runpod&lt;/code&gt; Python
+within Runpod Serverless.  You need to import the &lt;code&gt;runpod&lt;/code&gt; Python
 module, and also ensure that you are using Python version 3.10.x because
-the latest RunPod module is not compatible with Python versions prior
+the latest Runpod module is not compatible with Python versions prior
 to version 3.10.x.&lt;/p&gt;
 &lt;p&gt;The Serverless handler is usually implemented in a file called
-&lt;code&gt;rp_handler.py&lt;/code&gt; (RunPod Handler) and looks something like the example
+&lt;code&gt;rp_handler.py&lt;/code&gt; (Runpod Handler) and looks something like the example
 code below that will take a &lt;code&gt;name&lt;/code&gt; as input and then send a greeting
 back.&lt;/p&gt;
 &lt;p&gt;The Serverless handler accepts a JSON payload that contains an &lt;code&gt;input&lt;/code&gt;,
@@ -263,11 +264,11 @@ and returns a response that contains an &lt;code&gt;output&lt;/code&gt;.&lt;/p&g
 
 
 &lt;span style="color: #8b949e; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
-&lt;span style="color: #8b949e; font-style: italic"&gt;#                                RunPod Handler                                #&lt;/span&gt;
+&lt;span style="color: #8b949e; font-style: italic"&gt;#                                Runpod Handler                                #&lt;/span&gt;
 &lt;span style="color: #8b949e; font-style: italic"&gt;# ---------------------------------------------------------------------------- #&lt;/span&gt;
 &lt;span style="color: #ff7b72"&gt;def&lt;/span&gt; &lt;span style="color: #d2a8ff; font-weight: bold"&gt;handler&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;(event):&lt;/span&gt;
 &lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span style="color: #a5d6ff"&gt;    This is the handler function that will be called by RunPod serverless.&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;    This is the handler function that will be called by Runpod serverless.&lt;/span&gt;
 &lt;span style="color: #a5d6ff"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
     &lt;span style="color: #ff7b72"&gt;return&lt;/span&gt; &lt;span style="color: #e6edf3"&gt;process_input(event[&lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;])&lt;/span&gt;
 
@@ -278,7 +279,7 @@ and returns a response that contains an &lt;code&gt;output&lt;/code&gt;.&lt;/p&g
 
 &lt;h4 id="local-testing"&gt;Local Testing&lt;/h4&gt;
 &lt;p&gt;It is useful to test your Serverless Handler code locally before deploying
-it to RunPod.  You can do this by creating a file called &lt;code&gt;test_input.json&lt;/code&gt;
+it to Runpod.  You can do this by creating a file called &lt;code&gt;test_input.json&lt;/code&gt;
 with a body that looks like this:&lt;/p&gt;
 &lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;{&lt;/span&gt;
 &lt;span style="color: #6e7681"&gt;    &lt;/span&gt;&lt;span style="color: #7ee787"&gt;&amp;quot;input&amp;quot;&lt;/span&gt;&lt;span style="color: #e6edf3"&gt;:&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;{&lt;/span&gt;
@@ -308,7 +309,7 @@ INFO   | Local testing complete, exiting.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once you are happy with the results of your local testing,
-you are ready to deploy your application to RunPod Serverless.
+you are ready to deploy your application to Runpod Serverless.
 This will require you to build a Docker image containing your
 application code using a Dockerfile.&lt;/p&gt;
 &lt;h4 id="building-a-docker-image-for-your-application"&gt;Building a Docker image for your application&lt;/h4&gt;
@@ -331,11 +332,11 @@ the bottom of this post for more advanced usage):&lt;/p&gt;
 
 &lt;p&gt;When building your Docker image, it is best practice to
 use a version rather than &lt;code&gt;latest&lt;/code&gt; as a tag, since the images
-are cached by the RunPod Serverless workers, and they will not know
+are cached by the Runpod Serverless workers, and they will not know
 that you have made a change to your image if you keep using the
 same tag.&lt;/p&gt;
-&lt;p&gt;RunPod containers run on &lt;code&gt;amd64&lt;/code&gt; architecture, so if you are using
-an M1/M2 Mac to build the Docker image, you will need to use &lt;code&gt;buildx&lt;/code&gt;
+&lt;p&gt;Runpod containers run on &lt;code&gt;amd64&lt;/code&gt; architecture, so if you are using
+an Apple Silicon Mac to build the Docker image, you will need to use &lt;code&gt;buildx&lt;/code&gt;
 and specify the &lt;code&gt;platform&lt;/code&gt;, for example:&lt;/p&gt;
 &lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;buildx&lt;span style="color: #6e7681"&gt; &lt;/span&gt;build&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--push&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-t&lt;span style="color: #6e7681"&gt; &lt;/span&gt;username/imagename:tag&lt;span style="color: #6e7681"&gt; &lt;/span&gt;.&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--platform&lt;span style="color: #6e7681"&gt; &lt;/span&gt;linux/amd64
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -349,7 +350,7 @@ docker&lt;span style="color: #6e7681"&gt; &lt;/span&gt;push&lt;span style="color
 &lt;p&gt;Once your image is pushed to Docker Hub, you are ready to create
 a Serverless Template for your image.&lt;/p&gt;
 &lt;h3 id="templates"&gt;Templates&lt;/h3&gt;
-&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/templates"&gt;RunPod Serverless Templates&lt;/a&gt; and click
+&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/templates"&gt;Runpod Serverless Templates&lt;/a&gt; and click
 the &lt;code&gt;New Template&lt;/code&gt; button.&lt;/p&gt;
 &lt;p&gt;A template is  a specification for the &lt;a href="https://www.docker.com/"&gt;Docker&lt;/a&gt;
 containers that will run your Serverless application.&lt;/p&gt;
@@ -360,7 +361,7 @@ but you can also use other Docker container registries.  If you choose to
 use a private Docker registry rather than the public Docker Hub registry,
 you will also need to provide &lt;code&gt;Container Registry Credentials&lt;/code&gt;.  The
 credentials are not required if you use a Public registry.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="RunPod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Runpod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Enter a name for your template.&lt;/li&gt;
 &lt;li&gt;Enter the Docker image name for the Docker image that you want to use
@@ -385,12 +386,12 @@ A GPU Cloud template will not work in Serverless without the
 Serverless handler, so it is not recommended to use Docker images
 designed for GPU Cloud within Serverless.&lt;/p&gt;
 &lt;h3 id="endpoints"&gt;Endpoints&lt;/h3&gt;
-&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/endpoints"&gt;RunPod Serverless Endpoints&lt;/a&gt; and click
+&lt;p&gt;Navigate to your &lt;a href="https://www.runpod.io/console/serverless/user/endpoints"&gt;Runpod Serverless Endpoints&lt;/a&gt; and click
 the &lt;code&gt;New Endpoint&lt;/code&gt; button.&lt;/p&gt;
 &lt;p&gt;An endpoint is your actual Serverless Endpoint that will provide a
 &lt;a href="https://en.wikipedia.org/wiki/Representational_state_transfer"&gt;REST&lt;/a&gt;
 API endpoint for serving your application.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="RunPod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Runpod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"&gt;&lt;/p&gt;
 &lt;p&gt;When adding a new Endpoint, you will need to configure a few things:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Endpoint Name&lt;/li&gt;
@@ -401,11 +402,11 @@ API endpoint for serving your application.&lt;/p&gt;
 &lt;p&gt;You can also optionally configure:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Min Provisioned Workers&lt;/li&gt;
-&lt;li&gt;Ide Timeout&lt;/li&gt;
+&lt;li&gt;Idle Timeout&lt;/li&gt;
 &lt;li&gt;FlashBoot&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;And additional Advanced options:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="RunPod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Runpod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Deployment Region&lt;/li&gt;
 &lt;li&gt;Scale Type&lt;/li&gt;
@@ -428,34 +429,94 @@ your priorities are assigned, you are able to limit your workers
 to using specific GPU types within that GPU tier, for example, if
 you select the 24GB GPU tier, you will be able to limit your workers
 to only using the 3090 GPU type and exclude the A5000 and L4 GPU types.&lt;/p&gt;
-&lt;h4 id="active-workers"&gt;Active Workers&lt;/h4&gt;
-&lt;p&gt;Active workers will allow your Serverless endpoint to respond
-much faster, and reduce cold start time, but I don't recommend setting
-any Active workers due to the high cost of keeping them
+&lt;p&gt;The available GPU tiers are:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tier&lt;/th&gt;
+&lt;th&gt;VRAM&lt;/th&gt;
+&lt;th&gt;Example GPUs&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;16 GB&lt;/td&gt;
+&lt;td&gt;16 GB&lt;/td&gt;
+&lt;td&gt;A4000, A4500, RTX 4000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;24 GB&lt;/td&gt;
+&lt;td&gt;24 GB&lt;/td&gt;
+&lt;td&gt;L4, A5000, RTX 3090&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;24 GB PRO&lt;/td&gt;
+&lt;td&gt;24 GB&lt;/td&gt;
+&lt;td&gt;RTX 4090 PRO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;48 GB&lt;/td&gt;
+&lt;td&gt;48 GB&lt;/td&gt;
+&lt;td&gt;A6000, A40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;48 GB PRO&lt;/td&gt;
+&lt;td&gt;48 GB&lt;/td&gt;
+&lt;td&gt;L40, L40S, RTX 6000 Ada PRO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;80 GB&lt;/td&gt;
+&lt;td&gt;80 GB&lt;/td&gt;
+&lt;td&gt;A100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;80 GB PRO&lt;/td&gt;
+&lt;td&gt;80 GB&lt;/td&gt;
+&lt;td&gt;H100 PRO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;141 GB&lt;/td&gt;
+&lt;td&gt;141 GB&lt;/td&gt;
+&lt;td&gt;H200 PRO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;180 GB&lt;/td&gt;
+&lt;td&gt;180 GB&lt;/td&gt;
+&lt;td&gt;B200&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;CPU-only workers are also available if your application does
+not require a GPU.&lt;/p&gt;
+&lt;h4 id="active-provisioned-workers"&gt;Active (Provisioned) Workers&lt;/h4&gt;
+&lt;p&gt;Active workers run 24/7 and allow your Serverless endpoint to respond
+much faster by eliminating cold start time.  Runpod offers up to
+a 30% discount on Active workers compared to on-demand pricing, but
+I still don't recommend setting any Active workers unless you have
+consistent traffic that justifies the cost of keeping them
 running constantly.&lt;/p&gt;
 &lt;h4 id="max-workers"&gt;Max Workers&lt;/h4&gt;
 &lt;p&gt;The Max Workers are the maximum number of servers that run your
 application so that your application can be scaled up automatically
 across multiple servers to meet demand.  The default of 3 is usually
 sufficient for development and testing purposes.  If you set this to
-a value of 2 to 5, RunPod will provide you with additional workers
+a value of 2 to 5, Runpod will provide you with additional workers
 (up to a maximum of 5) to help prevent your workers from being
 throttled.  I don't recommend setting this to a value of 1, because
 there is a very high chance that your worker will become throttled,
 and your requests will sit in the queue for a long time before being
 processed.&lt;/p&gt;
 &lt;h4 id="gpusworker"&gt;GPUs/Worker&lt;/h4&gt;
-&lt;p&gt;If you select the 48GB GPU tier, you will be able to assign more
-than one GPU per worker.  This is only available to the 48GB tier
-and not any of the other GPU tiers.&lt;/p&gt;
+&lt;p&gt;You can assign more than one GPU per worker for GPU tiers
+that support multi-GPU configurations.&lt;/p&gt;
 &lt;h4 id="idle-timeout"&gt;Idle Timeout&lt;/h4&gt;
 &lt;p&gt;Idle Timeout is the amount of time in seconds that your idle
 workers will remain running and waiting to accept new requests.
 You are charged for the timeout, so the default should be fine
 for most cases.&lt;/p&gt;
 &lt;h4 id="flashboot"&gt;FlashBoot&lt;/h4&gt;
-&lt;p&gt;FlashBoot is disabled by default, but you can enable it to reduce
-the majority of cold-starts down to 2 seconds, even for LLMs.&lt;/p&gt;
+&lt;p&gt;FlashBoot is now enabled by default and delivers sub-second cold
+starts at no additional cost.&lt;/p&gt;
 &lt;h4 id="data-centers-advanced-setting"&gt;Data Centers (Advanced Setting)&lt;/h4&gt;
 &lt;p&gt;By default, your application will by deployed in all data centers.
 If you have strict compliance requirements such as GDPR for example,
@@ -487,46 +548,66 @@ The default is 4 requests.&lt;/p&gt;
 You can use a Network Volume for all your workers to be able to
 access the same files, for example if you have multiple different
 models that you want to use with your endpoint.  You don't need
-a Network Volume to use RunPod Serverless, you can still deploy
+a Network Volume to use Runpod Serverless, you can still deploy
 an application without using a Network Volume, but they are
 useful for certain use cases.&lt;/p&gt;
 &lt;p&gt;Network Volumes need to be added within the GPU Cloud section of
-the RunPod console, and are only currently available in these data
-centers:&lt;/p&gt;
+the Runpod console.  Runpod has significantly expanded their data
+center presence and now has GPUs across 31+ global regions,
+including locations in the United States, Canada, Europe, and
+Asia-Pacific (including Japan and Australia).&lt;/p&gt;
+&lt;p&gt;You can attach multiple Network Volumes from different data
+centers to a single endpoint for improved resilience and GPU
+availability.  Check the Runpod console for the current list
+of data centers that support Network Volumes, as this list
+is frequently updated.&lt;/p&gt;
+&lt;h3 id="worker-types"&gt;Worker Types&lt;/h3&gt;
+&lt;p&gt;Runpod Serverless has two worker types:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;CA-MTL-1 (Canada)&lt;/li&gt;
-&lt;li&gt;CA-MTL-3 (Canada)&lt;/li&gt;
-&lt;li&gt;EU-CZ-1 (Europe)&lt;/li&gt;
-&lt;li&gt;EU-RO-1 (Europe)&lt;/li&gt;
-&lt;li&gt;EU-SE-1 (Europe)&lt;/li&gt;
-&lt;li&gt;EUR-IS-1 (Europe)&lt;/li&gt;
-&lt;li&gt;US-GA-2 (United States)&lt;/li&gt;
-&lt;li&gt;US-KS-1 (United States)&lt;/li&gt;
-&lt;li&gt;US-KS-2 (United States)&lt;/li&gt;
-&lt;li&gt;US-OR-1 (United States)&lt;/li&gt;
-&lt;li&gt;US-TX-1 (United States)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flex Workers&lt;/strong&gt; scale from zero to your configured max workers
+  based on demand.  You only pay for the time your workers are
+  actively processing requests.  This is the default and recommended
+  type for most use cases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Active Workers&lt;/strong&gt; run 24/7 and eliminate cold start time entirely.
+  They are best suited for applications with consistent, predictable
+  traffic.  Runpod offers up to a 30% discount on Active workers.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Unfortunately this also means that the GPU availability for
-your Serverless application will be pretty low due to the limited
-amount of data centers in which the Network Volumes are available
-and could lead to your requests waiting in the queue for extended
-periods of time if you use a region with low GPU availability for
-the particular GPU type you require.   At the time of writing, the
-highest GPU availability is for &lt;code&gt;RTX 4090&lt;/code&gt; in &lt;code&gt;EU-RO-1&lt;/code&gt;.  If
-you place your Network Volume in any other data center, you could
-experience high delays in your requests being picked up from the
-queue.&lt;/p&gt;
+&lt;h3 id="advanced-handler-features"&gt;Advanced Handler Features&lt;/h3&gt;
+&lt;p&gt;Since the initial release of the Runpod SDK, several new handler
+types have been added:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Streaming Handlers&lt;/strong&gt; use &lt;code&gt;yield&lt;/code&gt; to return results incrementally,
+  which is useful for LLMs and other applications that produce output
+  progressively.  Streaming results can be consumed via the &lt;code&gt;/stream&lt;/code&gt;
+  endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Async Handlers&lt;/strong&gt; support &lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt; for concurrent I/O
+  operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrent Handlers&lt;/strong&gt; allow a single worker to process multiple
+  requests simultaneously, which is useful for lightweight operations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additional SDK features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Progress Updates&lt;/strong&gt; via &lt;code&gt;runpod.serverless.progress_update()&lt;/code&gt; to
+  report progress back to the caller during long-running jobs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Worker Refresh&lt;/strong&gt; by returning &lt;code&gt;{"refresh_worker": True}&lt;/code&gt; in your
+  handler response to reset worker state between jobs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local API Server&lt;/strong&gt; by passing &lt;code&gt;--rp_serve_api&lt;/code&gt; when running your
+  handler locally, which starts a local FastAPI server that mimics
+  the production endpoint for more realistic testing.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id="resources"&gt;Resources&lt;/h2&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.runpod.io/serverless/overview"&gt;Runpod Serverless Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/runpod/runpod-python"&gt;Runpod Python SDK on GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/runpod/containers"&gt;Runpod Official Base Docker Images&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.youtube.com/@generativelabs/videos"&gt;YouTube Tutorials by Generative Labs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://blog.runpod.io/serverless-create-a-basic-api/"&gt;RunPod's Blog Post on Creating a Custom Basic API Endpoint&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/runpod-workers"&gt;Source Code to RunPod's Own Endpoints&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/runpod-workers"&gt;Source Code to Runpod's Own Endpoints&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-inswapper"&gt;Source Code to My Face Swap Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan"&gt;Source Code to My Upscaling Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-llava"&gt;Source Code to My LLaVA Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-a1111"&gt;Source Code to My A1111 Stable Diffusion Endpoint&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga"&gt;Source Code to My Oobabooga Text Generation Endpoint&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="runpod"></category><category term="serverless"></category><category term="ai"></category><category term="gpu"></category><category term="cloud"></category><category term="docker"></category></entry><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"></link><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
+&lt;/ul&gt;</content><category term="DevOps"/><category term="devops"/><category term="runpod"/><category term="serverless"/><category term="ai"/><category term="gpu"/><category term="cloud"/><category term="docker"/></entry><entry><title>Installing CheckMK Agent on macOS</title><link href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" rel="alternate"/><published>2023-02-03T00:00:00+02:00</published><updated>2023-02-03T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-02-03:/installing-checkmk-agent-on-macos/</id><summary type="html">&lt;p&gt;This post walks you through the process of installing CheckMK
 agent on macOS servers so that they can be monitored by your
 CheckMK server.&lt;/p&gt;</summary><content type="html">&lt;h2 id="installation-procedure"&gt;Installation Procedure&lt;/h2&gt;
 &lt;p&gt;You can install CheckMK agent on your macOS servers as follows:&lt;/p&gt;
@@ -573,7 +654,7 @@ brew&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="colo
 &lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://gist.github.com/catchdave/44c45e31951fcc9ee4fb8768f4d95f21"&gt;Install check_mk agent on OSX&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="checkmk"></category><category term="monitoring"></category><category term="macos"></category></entry><entry><title>Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title><link href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;This post walks you through the process of compiling and
+&lt;/ul&gt;</content><category term="DevOps"/><category term="devops"/><category term="checkmk"/><category term="monitoring"/><category term="macos"/></entry><entry><title>Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title><link href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/" rel="alternate"/><published>2023-01-19T00:00:00+02:00</published><updated>2023-01-19T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;This post walks you through the process of compiling and
 installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you
 can benefit from the &lt;code&gt;filter-AAAA&lt;/code&gt; feature that was introduced
 in dnsmasq version 2.87 in order to resolve issues with nginx
@@ -712,7 +793,7 @@ sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="co
 &lt;h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore"&gt;Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore&lt;/h2&gt;
 &lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span style="color: #6e7681"&gt; &lt;/span&gt;host&lt;span style="color: #6e7681"&gt; &lt;/span&gt;example-app.firebaseapp.com
 example-app.firebaseapp.com&lt;span style="color: #6e7681"&gt; &lt;/span&gt;has&lt;span style="color: #6e7681"&gt; &lt;/span&gt;address&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;192&lt;/span&gt;.168.1.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="dns"></category><category term="dnsmasq"></category><category term="nginx"></category></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"></link><published>2023-01-19T00:00:00+02:00</published><updated>2023-03-02T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"/><category term="devops"/><category term="dns"/><category term="dnsmasq"/><category term="nginx"/></entry><entry><title>Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</title><link href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" rel="alternate"/><published>2023-01-19T00:00:00+02:00</published><updated>2023-03-02T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-19:/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process of upgrading an RDS Aurora MySQL DB engine with minimal downtime.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This procedure explains how to switch over from an existing
 Aurora MySQL RDS cluster running a specific engine version to a
 new Aurora MySQL RDS cluster running a new engine version
 (eg. Upgrading the engine version of Aurora MySQL from 5.6 to
@@ -847,7 +928,7 @@ CALL&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mysql.rds_start_replication
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://blogs.halodoc.io/upgrading-to-rds-mysql-8-0-with-minimum-downtime/"&gt;Upgrading to RDS MySQL 8.0 with minimum downtime&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/enable-binary-logging-aurora/"&gt;How do I turn on binary logging for my Amazon Aurora MySQL cluster?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="DevOps"></category><category term="devops"></category><category term="aws"></category><category term="rds"></category><category term="aurora"></category><category term="mysql"></category></entry><entry><title>Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/" rel="alternate"></link><published>2023-01-18T00:00:00+02:00</published><updated>2023-01-18T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-18:/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 7.x to 8.x on Ubuntu 22.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="update-apt-repo-from-version-7x-to-version-8x"&gt;Update apt repo from version 7.x to version 8.x&lt;/h2&gt;
+&lt;/ul&gt;</content><category term="DevOps"/><category term="devops"/><category term="aws"/><category term="rds"/><category term="aurora"/><category term="mysql"/></entry><entry><title>Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/" rel="alternate"/><published>2023-01-18T00:00:00+02:00</published><updated>2023-01-18T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2023-01-18:/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 7.x to 8.x on Ubuntu 22.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="update-apt-repo-from-version-7x-to-version-8x"&gt;Update apt repo from version 7.x to version 8.x&lt;/h2&gt;
 &lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;mv&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-7.x.list&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
 sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;vim&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic-8.x.list
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -943,4 +1024,4 @@ sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="co
 
 &lt;h2 id="verify-version-of-elasticsearch"&gt;Verify version of Elasticsearch&lt;/h2&gt;
 &lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;http://127.0.0.1:9200
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"></category><category term="elastic"></category><category term="ubuntu"></category><category term="devops"></category></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"/><category term="elastic"/><category term="ubuntu"/><category term="devops"/></entry></feed>

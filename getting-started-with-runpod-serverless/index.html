@@ -65,18 +65,18 @@
  
 
 <meta name="author" content="Ashley Kleynhans" />
-<meta name="description" content="This post helps you to get started with RunPod Serverless for hosting and scaling your AI applications in the cloud." />
+<meta name="description" content="This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud." />
 <meta name="keywords" content="devops, runpod, serverless, ai, gpu, cloud, docker">
 
 
   <meta property="og:site_name" content="Ashley's Blog"/>
-  <meta property="og:title" content="Getting Started with RunPod Serverless"/>
-  <meta property="og:description" content="This post helps you to get started with RunPod Serverless for hosting and scaling your AI applications in the cloud."/>
+  <meta property="og:title" content="Getting Started with Runpod Serverless"/>
+  <meta property="og:description" content="This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:url" content="https://trapdoor.cloud/getting-started-with-runpod-serverless/"/>
   <meta property="og:type" content="article"/>
   <meta property="article:published_time" content="2023-07-16 00:00:00+02:00"/>
-  <meta property="article:modified_time" content="2024-11-28 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-03-19 00:00:00+02:00"/>
   <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
   <meta property="article:section" content="DevOps"/>
   <meta property="article:tag" content="devops"/>
@@ -88,7 +88,7 @@
   <meta property="article:tag" content="docker"/>
   <meta property="og:image" content="/images/profile.jpeg">
 
-  <title>Ashley's Blog &ndash; Getting Started with RunPod Serverless</title>
+  <title>Ashley's Blog &ndash; Getting Started with Runpod Serverless</title>
 
 
 </head>
@@ -166,18 +166,18 @@
 <article class="single">
   <header>
       
-    <h1 id="getting-started-with-runpod-serverless">Getting Started with RunPod Serverless</h1>
+    <h1 id="getting-started-with-runpod-serverless">Getting Started with Runpod Serverless</h1>
     <p>
       Posted on Sun 16 July 2023 in <a href="https://trapdoor.cloud/category/devops.html">DevOps</a>
 
-        &#8226; 8 min read
+        &#8226; 9 min read
     </p>
   </header>
 
 
   <div>
-    <h2 id="what-is-runpod">What is RunPod?</h2>
-<p><a href="https://runpod.io?ref=2xxro4sy">RunPod</a> is a Cloud Hosting Provider that allows
+    <h2 id="what-is-runpod">What is Runpod?</h2>
+<p><a href="https://runpod.io?ref=2xxro4sy">Runpod</a> is a Cloud Hosting Provider that allows
 you to rent Docker containers that are attached to various different sizes of
 GPU instances so that you can benefit from their Cloud GPU for running
 your AI tasks if you don't have a powerful enough
@@ -185,26 +185,27 @@ GPU to run them yourself.</p>
 <p>They offer various different types of services, including:</p>
 <ul>
 <li>Dedicated and On-Demand GPU Instances.</li>
-<li>Serverless GPU Hosting.</li>
+<li>Serverless GPU and CPU Hosting.</li>
 <li>AI API Endpoints.</li>
 </ul>
-<p>This post focuses on their Serverless GPU hosting which can be used
+<p>This post focuses on their Serverless hosting which can be used
 to scale your application to hundreds of users.</p>
 <h2 id="serverless-key-concepts">Serverless Key Concepts</h2>
-<p>There are three main concepts:</p>
+<p>There are four main concepts:</p>
 <ul>
 <li>Serverless Handler</li>
 <li>Templates</li>
 <li>Endpoints</li>
+<li>Worker Types (Flex and Active)</li>
 </ul>
 <h3 id="serverless-handler">Serverless Handler</h3>
 <p>This is a critical component for your application to function correctly
-within RunPod Serverless.  You need to import the <code>runpod</code> Python
+within Runpod Serverless.  You need to import the <code>runpod</code> Python
 module, and also ensure that you are using Python version 3.10.x because
-the latest RunPod module is not compatible with Python versions prior
+the latest Runpod module is not compatible with Python versions prior
 to version 3.10.x.</p>
 <p>The Serverless handler is usually implemented in a file called
-<code>rp_handler.py</code> (RunPod Handler) and looks something like the example
+<code>rp_handler.py</code> (Runpod Handler) and looks something like the example
 code below that will take a <code>name</code> as input and then send a greeting
 back.</p>
 <p>The Serverless handler accepts a JSON payload that contains an <code>input</code>,
@@ -226,11 +227,11 @@ and returns a response that contains an <code>output</code>.</p>
 
 
 <span style="color: #8b949e; font-style: italic"># ---------------------------------------------------------------------------- #</span>
-<span style="color: #8b949e; font-style: italic">#                                RunPod Handler                                #</span>
+<span style="color: #8b949e; font-style: italic">#                                Runpod Handler                                #</span>
 <span style="color: #8b949e; font-style: italic"># ---------------------------------------------------------------------------- #</span>
 <span style="color: #ff7b72">def</span> <span style="color: #d2a8ff; font-weight: bold">handler</span><span style="color: #e6edf3">(event):</span>
 <span style="color: #6e7681">    </span><span style="color: #a5d6ff">&quot;&quot;&quot;</span>
-<span style="color: #a5d6ff">    This is the handler function that will be called by RunPod serverless.</span>
+<span style="color: #a5d6ff">    This is the handler function that will be called by Runpod serverless.</span>
 <span style="color: #a5d6ff">    &quot;&quot;&quot;</span>
     <span style="color: #ff7b72">return</span> <span style="color: #e6edf3">process_input(event[</span><span style="color: #a5d6ff">&#39;input&#39;</span><span style="color: #e6edf3">])</span>
 
@@ -241,7 +242,7 @@ and returns a response that contains an <code>output</code>.</p>
 
 <h4 id="local-testing">Local Testing</h4>
 <p>It is useful to test your Serverless Handler code locally before deploying
-it to RunPod.  You can do this by creating a file called <code>test_input.json</code>
+it to Runpod.  You can do this by creating a file called <code>test_input.json</code>
 with a body that looks like this:</p>
 <div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">{</span>
 <span style="color: #6e7681">    </span><span style="color: #7ee787">&quot;input&quot;</span><span style="color: #e6edf3">:</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">{</span>
@@ -271,7 +272,7 @@ INFO   | Local testing complete, exiting.
 </code></pre></div>
 
 <p>Once you are happy with the results of your local testing,
-you are ready to deploy your application to RunPod Serverless.
+you are ready to deploy your application to Runpod Serverless.
 This will require you to build a Docker image containing your
 application code using a Dockerfile.</p>
 <h4 id="building-a-docker-image-for-your-application">Building a Docker image for your application</h4>
@@ -294,11 +295,11 @@ the bottom of this post for more advanced usage):</p>
 
 <p>When building your Docker image, it is best practice to
 use a version rather than <code>latest</code> as a tag, since the images
-are cached by the RunPod Serverless workers, and they will not know
+are cached by the Runpod Serverless workers, and they will not know
 that you have made a change to your image if you keep using the
 same tag.</p>
-<p>RunPod containers run on <code>amd64</code> architecture, so if you are using
-an M1/M2 Mac to build the Docker image, you will need to use <code>buildx</code>
+<p>Runpod containers run on <code>amd64</code> architecture, so if you are using
+an Apple Silicon Mac to build the Docker image, you will need to use <code>buildx</code>
 and specify the <code>platform</code>, for example:</p>
 <div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>docker<span style="color: #6e7681"> </span>buildx<span style="color: #6e7681"> </span>build<span style="color: #6e7681"> </span>--push<span style="color: #6e7681"> </span>-t<span style="color: #6e7681"> </span>username/imagename:tag<span style="color: #6e7681"> </span>.<span style="color: #6e7681"> </span>--platform<span style="color: #6e7681"> </span>linux/amd64
 </code></pre></div>
@@ -312,7 +313,7 @@ docker<span style="color: #6e7681"> </span>push<span style="color: #6e7681"> </s
 <p>Once your image is pushed to Docker Hub, you are ready to create
 a Serverless Template for your image.</p>
 <h3 id="templates">Templates</h3>
-<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/templates">RunPod Serverless Templates</a> and click
+<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/templates">Runpod Serverless Templates</a> and click
 the <code>New Template</code> button.</p>
 <p>A template is  a specification for the <a href="https://www.docker.com/">Docker</a>
 containers that will run your Serverless application.</p>
@@ -323,7 +324,7 @@ but you can also use other Docker container registries.  If you choose to
 use a private Docker registry rather than the public Docker Hub registry,
 you will also need to provide <code>Container Registry Credentials</code>.  The
 credentials are not required if you use a Public registry.</p>
-<p><img alt="RunPod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"></p>
+<p><img alt="Runpod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"></p>
 <ol>
 <li>Enter a name for your template.</li>
 <li>Enter the Docker image name for the Docker image that you want to use
@@ -348,12 +349,12 @@ A GPU Cloud template will not work in Serverless without the
 Serverless handler, so it is not recommended to use Docker images
 designed for GPU Cloud within Serverless.</p>
 <h3 id="endpoints">Endpoints</h3>
-<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/endpoints">RunPod Serverless Endpoints</a> and click
+<p>Navigate to your <a href="https://www.runpod.io/console/serverless/user/endpoints">Runpod Serverless Endpoints</a> and click
 the <code>New Endpoint</code> button.</p>
 <p>An endpoint is your actual Serverless Endpoint that will provide a
 <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>
 API endpoint for serving your application.</p>
-<p><img alt="RunPod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"></p>
+<p><img alt="Runpod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"></p>
 <p>When adding a new Endpoint, you will need to configure a few things:</p>
 <ul>
 <li>Endpoint Name</li>
@@ -364,11 +365,11 @@ API endpoint for serving your application.</p>
 <p>You can also optionally configure:</p>
 <ul>
 <li>Min Provisioned Workers</li>
-<li>Ide Timeout</li>
+<li>Idle Timeout</li>
 <li>FlashBoot</li>
 </ul>
 <p>And additional Advanced options:</p>
-<p><img alt="RunPod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"></p>
+<p><img alt="Runpod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"></p>
 <ul>
 <li>Deployment Region</li>
 <li>Scale Type</li>
@@ -391,34 +392,94 @@ your priorities are assigned, you are able to limit your workers
 to using specific GPU types within that GPU tier, for example, if
 you select the 24GB GPU tier, you will be able to limit your workers
 to only using the 3090 GPU type and exclude the A5000 and L4 GPU types.</p>
-<h4 id="active-workers">Active Workers</h4>
-<p>Active workers will allow your Serverless endpoint to respond
-much faster, and reduce cold start time, but I don't recommend setting
-any Active workers due to the high cost of keeping them
+<p>The available GPU tiers are:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>VRAM</th>
+<th>Example GPUs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16 GB</td>
+<td>16 GB</td>
+<td>A4000, A4500, RTX 4000</td>
+</tr>
+<tr>
+<td>24 GB</td>
+<td>24 GB</td>
+<td>L4, A5000, RTX 3090</td>
+</tr>
+<tr>
+<td>24 GB PRO</td>
+<td>24 GB</td>
+<td>RTX 4090 PRO</td>
+</tr>
+<tr>
+<td>48 GB</td>
+<td>48 GB</td>
+<td>A6000, A40</td>
+</tr>
+<tr>
+<td>48 GB PRO</td>
+<td>48 GB</td>
+<td>L40, L40S, RTX 6000 Ada PRO</td>
+</tr>
+<tr>
+<td>80 GB</td>
+<td>80 GB</td>
+<td>A100</td>
+</tr>
+<tr>
+<td>80 GB PRO</td>
+<td>80 GB</td>
+<td>H100 PRO</td>
+</tr>
+<tr>
+<td>141 GB</td>
+<td>141 GB</td>
+<td>H200 PRO</td>
+</tr>
+<tr>
+<td>180 GB</td>
+<td>180 GB</td>
+<td>B200</td>
+</tr>
+</tbody>
+</table>
+<p>CPU-only workers are also available if your application does
+not require a GPU.</p>
+<h4 id="active-provisioned-workers">Active (Provisioned) Workers</h4>
+<p>Active workers run 24/7 and allow your Serverless endpoint to respond
+much faster by eliminating cold start time.  Runpod offers up to
+a 30% discount on Active workers compared to on-demand pricing, but
+I still don't recommend setting any Active workers unless you have
+consistent traffic that justifies the cost of keeping them
 running constantly.</p>
 <h4 id="max-workers">Max Workers</h4>
 <p>The Max Workers are the maximum number of servers that run your
 application so that your application can be scaled up automatically
 across multiple servers to meet demand.  The default of 3 is usually
 sufficient for development and testing purposes.  If you set this to
-a value of 2 to 5, RunPod will provide you with additional workers
+a value of 2 to 5, Runpod will provide you with additional workers
 (up to a maximum of 5) to help prevent your workers from being
 throttled.  I don't recommend setting this to a value of 1, because
 there is a very high chance that your worker will become throttled,
 and your requests will sit in the queue for a long time before being
 processed.</p>
 <h4 id="gpusworker">GPUs/Worker</h4>
-<p>If you select the 48GB GPU tier, you will be able to assign more
-than one GPU per worker.  This is only available to the 48GB tier
-and not any of the other GPU tiers.</p>
+<p>You can assign more than one GPU per worker for GPU tiers
+that support multi-GPU configurations.</p>
 <h4 id="idle-timeout">Idle Timeout</h4>
 <p>Idle Timeout is the amount of time in seconds that your idle
 workers will remain running and waiting to accept new requests.
 You are charged for the timeout, so the default should be fine
 for most cases.</p>
 <h4 id="flashboot">FlashBoot</h4>
-<p>FlashBoot is disabled by default, but you can enable it to reduce
-the majority of cold-starts down to 2 seconds, even for LLMs.</p>
+<p>FlashBoot is now enabled by default and delivers sub-second cold
+starts at no additional cost.</p>
 <h4 id="data-centers-advanced-setting">Data Centers (Advanced Setting)</h4>
 <p>By default, your application will by deployed in all data centers.
 If you have strict compliance requirements such as GDPR for example,
@@ -450,40 +511,60 @@ The default is 4 requests.</p>
 You can use a Network Volume for all your workers to be able to
 access the same files, for example if you have multiple different
 models that you want to use with your endpoint.  You don't need
-a Network Volume to use RunPod Serverless, you can still deploy
+a Network Volume to use Runpod Serverless, you can still deploy
 an application without using a Network Volume, but they are
 useful for certain use cases.</p>
 <p>Network Volumes need to be added within the GPU Cloud section of
-the RunPod console, and are only currently available in these data
-centers:</p>
+the Runpod console.  Runpod has significantly expanded their data
+center presence and now has GPUs across 31+ global regions,
+including locations in the United States, Canada, Europe, and
+Asia-Pacific (including Japan and Australia).</p>
+<p>You can attach multiple Network Volumes from different data
+centers to a single endpoint for improved resilience and GPU
+availability.  Check the Runpod console for the current list
+of data centers that support Network Volumes, as this list
+is frequently updated.</p>
+<h3 id="worker-types">Worker Types</h3>
+<p>Runpod Serverless has two worker types:</p>
 <ul>
-<li>CA-MTL-1 (Canada)</li>
-<li>CA-MTL-3 (Canada)</li>
-<li>EU-CZ-1 (Europe)</li>
-<li>EU-RO-1 (Europe)</li>
-<li>EU-SE-1 (Europe)</li>
-<li>EUR-IS-1 (Europe)</li>
-<li>US-GA-2 (United States)</li>
-<li>US-KS-1 (United States)</li>
-<li>US-KS-2 (United States)</li>
-<li>US-OR-1 (United States)</li>
-<li>US-TX-1 (United States)</li>
+<li><strong>Flex Workers</strong> scale from zero to your configured max workers
+  based on demand.  You only pay for the time your workers are
+  actively processing requests.  This is the default and recommended
+  type for most use cases.</li>
+<li><strong>Active Workers</strong> run 24/7 and eliminate cold start time entirely.
+  They are best suited for applications with consistent, predictable
+  traffic.  Runpod offers up to a 30% discount on Active workers.</li>
 </ul>
-<p>Unfortunately this also means that the GPU availability for
-your Serverless application will be pretty low due to the limited
-amount of data centers in which the Network Volumes are available
-and could lead to your requests waiting in the queue for extended
-periods of time if you use a region with low GPU availability for
-the particular GPU type you require.   At the time of writing, the
-highest GPU availability is for <code>RTX 4090</code> in <code>EU-RO-1</code>.  If
-you place your Network Volume in any other data center, you could
-experience high delays in your requests being picked up from the
-queue.</p>
+<h3 id="advanced-handler-features">Advanced Handler Features</h3>
+<p>Since the initial release of the Runpod SDK, several new handler
+types have been added:</p>
+<ul>
+<li><strong>Streaming Handlers</strong> use <code>yield</code> to return results incrementally,
+  which is useful for LLMs and other applications that produce output
+  progressively.  Streaming results can be consumed via the <code>/stream</code>
+  endpoint.</li>
+<li><strong>Async Handlers</strong> support <code>async</code>/<code>await</code> for concurrent I/O
+  operations.</li>
+<li><strong>Concurrent Handlers</strong> allow a single worker to process multiple
+  requests simultaneously, which is useful for lightweight operations.</li>
+</ul>
+<p>Additional SDK features include:</p>
+<ul>
+<li><strong>Progress Updates</strong> via <code>runpod.serverless.progress_update()</code> to
+  report progress back to the caller during long-running jobs.</li>
+<li><strong>Worker Refresh</strong> by returning <code>{"refresh_worker": True}</code> in your
+  handler response to reset worker state between jobs.</li>
+<li><strong>Local API Server</strong> by passing <code>--rp_serve_api</code> when running your
+  handler locally, which starts a local FastAPI server that mimics
+  the production endpoint for more realistic testing.</li>
+</ul>
 <h2 id="resources">Resources</h2>
 <ul>
+<li><a href="https://docs.runpod.io/serverless/overview">Runpod Serverless Documentation</a></li>
+<li><a href="https://github.com/runpod/runpod-python">Runpod Python SDK on GitHub</a></li>
+<li><a href="https://github.com/runpod/containers">Runpod Official Base Docker Images</a></li>
 <li><a href="https://www.youtube.com/@generativelabs/videos">YouTube Tutorials by Generative Labs</a></li>
-<li><a href="https://blog.runpod.io/serverless-create-a-basic-api/">RunPod's Blog Post on Creating a Custom Basic API Endpoint</a></li>
-<li><a href="https://github.com/runpod-workers">Source Code to RunPod's Own Endpoints</a></li>
+<li><a href="https://github.com/runpod-workers">Source Code to Runpod's Own Endpoints</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-inswapper">Source Code to My Face Swap Endpoint</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan">Source Code to My Upscaling Endpoint</a></li>
 <li><a href="https://github.com/ashleykleynhans/runpod-worker-llava">Source Code to My LLaVA Endpoint</a></li>
@@ -534,7 +615,7 @@ queue.</p>
 
 <footer>
 <p>
-  &copy; 2025  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; 2026  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
