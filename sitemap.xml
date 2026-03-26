@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/</loc>
-<lastmod>2026-03-26T21:14:49-00:00</lastmod>
+<lastmod>2026-03-26T21:30:47-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/tags.html</loc>
-<lastmod>2026-03-26T21:14:49-00:00</lastmod>
+<lastmod>2026-03-26T21:30:47-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/categories.html</loc>
-<lastmod>2026-03-26T21:14:49-00:00</lastmod>
+<lastmod>2026-03-26T21:30:47-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/authors.html</loc>
-<lastmod>2026-03-26T21:14:49-00:00</lastmod>
+<lastmod>2026-03-26T21:30:47-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/archives.html</loc>
-<lastmod>2026-03-26T21:14:49-00:00</lastmod>
+<lastmod>2026-03-26T21:30:47-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2026-03-26T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/</loc>
+<lastmod>2026-03-26T00:00:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -109,6 +116,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://trapdoor.cloud/category/ai.html</loc>
+<lastmod>2026-03-26T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
 <loc>https://trapdoor.cloud/category/devops.html</loc>
 <lastmod>2026-03-26T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
@@ -123,6 +137,34 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://trapdoor.cloud/tag/ai.html</loc>
+<lastmod>2026-03-26T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/claude.html</loc>
+<lastmod>2026-03-26T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/pelican.html</loc>
+<lastmod>2026-03-26T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/devops.html</loc>
+<lastmod>2026-03-26T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
 <loc>https://trapdoor.cloud/tag/elastic.html</loc>
 <lastmod>2026-03-26T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
@@ -131,13 +173,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/tag/ubuntu.html</loc>
-<lastmod>2026-03-26T00:00:00+01:52</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.6</priority>
-</url>
-
-<url>
-<loc>https://trapdoor.cloud/tag/devops.html</loc>
 <lastmod>2026-03-26T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
@@ -215,13 +250,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/tag/serverless.html</loc>
-<lastmod>2026-03-19T00:00:00+01:52</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.6</priority>
-</url>
-
-<url>
-<loc>https://trapdoor.cloud/tag/ai.html</loc>
 <lastmod>2026-03-19T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
