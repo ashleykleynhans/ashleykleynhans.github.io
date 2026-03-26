@@ -12,18 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet/less" type="text/css" href="https://trapdoor.cloud/theme/stylesheet/style.less">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/4.2.0/less.min.js" type="text/javascript"></script>
 
-    <link id="dark-theme-style" rel="stylesheet" type="text/css"
-          media="(prefers-color-scheme: dark)"
-    href="https://trapdoor.cloud/theme/stylesheet/dark-theme.min.css">
 
-    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
-              media="(prefers-color-scheme: dark)"
-          href="https://trapdoor.cloud/theme/pygments/monokai.min.css">
-    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
-              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-          href="https://trapdoor.cloud/theme/pygments/github.min.css">
 
 
 
@@ -63,7 +54,6 @@
 
 
 
- 
 
 <meta name="author" content="Ashley Kleynhans" />
 <meta name="description" content="This post walks you through the process of compiling and installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you can benefit from the filter-AAAA feature that was introduced in dnsmasq version 2.87 in order to resolve issues with nginx servers that only have IPv4 addresses attached to them getting network unreachable errors when resolving upstream DNS entries to IPv6 addresses." />
@@ -92,93 +82,54 @@
 </head>
 <body >
 
-<aside>
-  <div>
-    <a href="https://trapdoor.cloud/">
-      <img src="/images/profile.jpeg" alt="Ashley Kleynhans" title="Ashley Kleynhans">
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://trapdoor.cloud/">
+      <img src="/images/profile.jpeg" alt="Ashley Kleynhans">
+      Ashley Kleynhans
     </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+          <a href="https://trapdoor.cloud/about/">About Me</a>
+        <a href="/archives">Archives</a>
+        <a href="/categories">Categories</a>
+        <a href="/tags">Tags</a>
+        <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
 
-    <h1>
-      <a href="https://trapdoor.cloud/">Ashley Kleynhans</a>
-    </h1>
+      <div class="nav-social">
+          <a              href="https://github.com/ashleykleynhans"
+             target="_blank"
+             title="Github">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a              href="https://www.linkedin.com/in/ashleykleynhans"
+             target="_blank"
+             title="Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+      </div>
 
-    <p>DevOps Engineer</p>
-
-
-    <nav>
-      <ul class="list">
-
-
-            <li>
-              <a target="_self"
-                 href="https://trapdoor.cloud/about/">
-                About Me
-              </a>
-            </li>
-
-          <li>
-            <a target="_self" href="/" >Home</a>
-          </li>
-      </ul>
-    </nav>
-
-    <ul class="social">
-      <li>
-        <a class="sc-github"
-           href="https://github.com/ashleykleynhans"
-           target="_blank">
-          <i class="fa-brands fa-github"></i>
-        </a>
-      </li>
-      <li>
-        <a class="sc-stack-overflow"
-           href="https://stackoverflow.com/users/817324/ashley-kleynhans"
-           target="_blank">
-          <i class="fa-brands fa-stack-overflow"></i>
-        </a>
-      </li>
-      <li>
-        <a class="sc-linkedin"
-           href="https://www.linkedin.com/in/ashleykleynhans"
-           target="_blank">
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
-      </li>
-    </ul>
-    <div style="margin-top: 100px;">
-      <a href="https://www.abuseipdb.com/user/155510" title="AbuseIPDB is an IP address blacklist for webmasters and sysadmins to report IP addresses engaging in abusive behavior on their networks">
-        <img src="https://www.abuseipdb.com/contributor/155510.svg" alt="AbuseIPDB Contributor Badge" style="width: 100%;background: #35c246 linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.3) 50%, rgba(0,0,0,.2) 51%, rgba(0,0,0,0));padding: 5px; border-radius: unset;">
-      </a>
+      <button class="theme-toggle" onclick="theme.switch(document.body.classList.contains('dark-theme') ? 'light' : 'dark')" title="Toggle theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+  <div class="site-content">
+<article>
+  <div class="article-header">
+    <h1 class="article-title">Compiling and Installing dnsmasq from Source on Ubuntu 22.04</h1>
+    <div class="article-meta">
+      <a class="post-category" href="https://trapdoor.cloud/category/devops.html">DevOps</a>
+      <span>Thu 19 January 2023</span>
+        <span class="post-dot">&middot;</span>
+        <span>2 min read</span>
+      <span class="post-dot">&middot;</span>
+      <span>Ashley Kleynhans</span>
     </div>
   </div>
 
-</aside>
-  <main>
-
-<nav>
-  <a href="https://trapdoor.cloud/">Home</a>
-
-  <a href="/archives">Archives</a>
-  <a href="/categories">Categories</a>
-  <a href="/tags">Tags</a>
-
-  <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
-
-</nav>
-
-<article class="single">
-  <header>
-      
-    <h1 id="compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204">Compiling and Installing dnsmasq from Source on Ubuntu 22.04</h1>
-    <p>
-      Posted on Thu 19 January 2023 in <a href="https://trapdoor.cloud/category/devops.html">DevOps</a>
-
-        &#8226; 2 min read
-    </p>
-  </header>
-
-
-  <div>
+  <div class="article-content">
     <h2 id="background">Background</h2>
 <p>I was monitoring my nginx logs, when I stumbled across a
 peculiar error where nginx was trying to connect to a
@@ -197,9 +148,9 @@ referrer: "https://example.com/worker.js"
 have any IPv6 addresses attached to them, but discovered that
 the DNS lookup for my Firebase application was returning the
 same IPv6 address that I noticed in my nginx log file.</p>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #6e7681"> </span>host<span style="color: #6e7681"> </span>example-app.firebaseapp.com
-example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span><span style="color: #a5d6ff">192</span>.168.1.1
-example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>IPv6<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span>fe80::cf4d:cab8:b943
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.1.1
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>IPv6<span class="w"> </span>address<span class="w"> </span>fe80::cf4d:cab8:b943
 </code></pre></div>
 
 <p>I then determined that the best way to solve this problem would
@@ -216,125 +167,124 @@ supports the <code>filter-AAAA</code> feature, so I decided to compile
 and install dnsmasq from the <a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz">source used by Ubuntu 23.04</a>.</p>
 <h2 id="download-compile-and-install-dnsmasq-from-source">Download, Compile and Install dnsmasq from Source</h2>
 <h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site">Download source for dnsmasq version 2.88 from Ubuntu Launchpad site</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">cd</span><span style="color: #6e7681"> </span>/tmp
-wget<span style="color: #6e7681"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
 </code></pre></div>
 
 <h3 id="extract-dnsmasq-288-source">Extract dnsmasq 2.88 source</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>tar<span style="color: #6e7681"> </span>zxvf<span style="color: #6e7681"> </span>dnsmasq_2.88.orig.tar.gz
+<div class="highlight"><pre><span></span><code>tar<span class="w"> </span>zxvf<span class="w"> </span>dnsmasq_2.88.orig.tar.gz
 </code></pre></div>
 
 <h3 id="install-dependency-packages">Install dependency packages</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>update
-sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>dnsmasq<span style="color: #6e7681"> </span>gettext
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>dnsmasq<span class="w"> </span>gettext
 </code></pre></div>
 
 <h3 id="compile-dnsmasq">Compile dnsmasq</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">cd</span><span style="color: #6e7681"> </span>dnsmasq-2.88.orig
-make<span style="color: #6e7681"> </span>all-i18n
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>dnsmasq-2.88.orig
+make<span class="w"> </span>all-i18n
 </code></pre></div>
 
 <h3 id="confirm-the-version-of-the-compiled-dnsmasq-binary">Confirm the version of the compiled dnsmasq binary</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>src/dnsmasq<span style="color: #6e7681"> </span>-v
+<div class="highlight"><pre><span></span><code>src/dnsmasq<span class="w"> </span>-v
 </code></pre></div>
 
 <h3 id="stop-the-dnsmasq-service">Stop the dnsmasq service</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>dnsmasq
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>dnsmasq
 </code></pre></div>
 
 <h3 id="copy-the-newly-compiled-binary-over-the-old-one">Copy the newly compiled binary over the old one</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>cp<span style="color: #6e7681"> </span>src/dnsmasq<span style="color: #6e7681"> </span>/usr/sbin/dnsmasq
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cp<span class="w"> </span>src/dnsmasq<span class="w"> </span>/usr/sbin/dnsmasq
 </code></pre></div>
 
 <h3 id="remove-file-that-is-no-longer-supported-by-the-new-binary">Remove file that is no longer supported by the new binary</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>rm<span style="color: #6e7681"> </span>/usr/share/dns/root.ds
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>rm<span class="w"> </span>/usr/share/dns/root.ds
 </code></pre></div>
 
 <h3 id="edit-the-dnsmasq-config-file-and-configure-it-to-exclude-ipv6-lookups">Edit the dnsmasq config file and configure it to exclude IPv6 lookups</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/dnsmasq.conf
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/dnsmasq.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">listen</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">address</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">127.0</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #a5d6ff">0.53</span>
-<span style="color: #e6edf3">port</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">53</span>
-<span style="color: #e6edf3">bind</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">interfaces</span>
-<span style="color: #e6edf3">user</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #e6edf3">dnsmasq</span>
-<span style="color: #e6edf3">group</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #e6edf3">nogroup</span>
-<span style="color: #e6edf3">pid</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">file</span><span style="color: #ff7b72; font-weight: bold">=/</span><span style="color: #ff7b72">var</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">run</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">dnsmasq</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">dnsmasq</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">pid</span>
+<div class="highlight"><pre><span></span><code><span class="n">listen</span><span class="o">-</span><span class="n">address</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.53</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">53</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">interfaces</span>
+<span class="n">user</span><span class="o">=</span><span class="n">dnsmasq</span>
+<span class="n">group</span><span class="o">=</span><span class="n">nogroup</span>
+<span class="n">pid</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">dnsmasq</span><span class="o">/</span><span class="n">dnsmasq</span><span class="o">.</span><span class="n">pid</span>
 
-<span style="color: #8b949e; font-style: italic"># Name resolution options</span>
-<span style="color: #e6edf3">resolv</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">file</span><span style="color: #ff7b72; font-weight: bold">=/</span><span style="color: #e6edf3">etc</span><span style="color: #ff7b72; font-weight: bold">/</span><span style="color: #e6edf3">resolv</span><span style="color: #ff7b72; font-weight: bold">.</span><span style="color: #e6edf3">dnsmasq</span>
-<span style="color: #e6edf3">cache</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">size</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">500</span>
-<span style="color: #e6edf3">neg</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">ttl</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">60</span>
-<span style="color: #e6edf3">domain</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">needed</span>
-<span style="color: #e6edf3">bogus</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">priv</span>
-<span style="color: #e6edf3">filter</span><span style="color: #ff7b72; font-weight: bold">-</span><span style="color: #e6edf3">AAAA</span>
+<span class="c1"># Name resolution options</span>
+<span class="n">resolv</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="o">.</span><span class="n">dnsmasq</span>
+<span class="n">cache</span><span class="o">-</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span>
+<span class="n">neg</span><span class="o">-</span><span class="n">ttl</span><span class="o">=</span><span class="mi">60</span>
+<span class="n">domain</span><span class="o">-</span><span class="n">needed</span>
+<span class="n">bogus</span><span class="o">-</span><span class="n">priv</span>
+<span class="n">filter</span><span class="o">-</span><span class="n">AAAA</span>
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="configure-the-dns-resolver-for-the-dnsmasq-service">Configure the DNS resolver for the dnsmasq service</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>bash<span style="color: #6e7681"> </span>-c<span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;echo &#39;nameserver 1.1.1.1&#39; &gt; /etc/resolv.dnsmasq&quot;</span>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;nameserver 1.1.1.1&#39; &gt; /etc/resolv.dnsmasq&quot;</span>
 </code></pre></div>
 
 <h3 id="configure-dns-resolver-for-consul-optional">Configure DNS resolver for Consul (OPTIONAL)</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/dnsmasq.d/10-consul
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/dnsmasq.d/10-consul
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>server=/consul/127.0.0.1#8600
+<div class="highlight"><pre><span></span><code>server=/consul/127.0.0.1#8600
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="disable-systemd-resolved">Disable systemd resolved</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/systemd/resolved.conf.d/noresolved.conf
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/systemd/resolved.conf.d/noresolved.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #ff7b72">[Resolve]</span>
-<span style="color: #e6edf3">DNSStubListener</span><span style="color: #ff7b72; font-weight: bold">=</span><span style="color: #a5d6ff">no</span>
+<div class="highlight"><pre><span></span><code><span class="k">[Resolve]</span>
+<span class="na">DNSStubListener</span><span class="o">=</span><span class="s">no</span>
 </code></pre></div>
 
 <p>And save the file.</p>
 <h3 id="restart-the-systemd-resolved-and-dnsmasq-services">Restart the systemd-resolved and dnsmasq services</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>restart<span style="color: #6e7681"> </span>systemd-resolved
-sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>restart<span style="color: #6e7681"> </span>dnsmasq.service
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>systemd-resolved
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>dnsmasq.service
 </code></pre></div>
 
 <h3 id="edit-etcresolvconf-to-use-dnsmasq-as-the-dns-resolver">Edit /etc/resolv.conf to use dnsmasq as the DNS resolver</h3>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>vim<span style="color: #6e7681"> </span>/etc/resolv.conf
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/resolv.conf
 </code></pre></div>
 
 <p>Paste the following content:</p>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>nameserver 127.0.0.53
+<div class="highlight"><pre><span></span><code>nameserver 127.0.0.53
 </code></pre></div>
 
 <p>And save the file.</p>
 <h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore">Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore</h2>
-<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #6e7681"> </span>host<span style="color: #6e7681"> </span>example-app.firebaseapp.com
-example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="color: #6e7681"> </span>address<span style="color: #6e7681"> </span><span style="color: #a5d6ff">192</span>.168.1.1
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.1.1
 </code></pre></div>
   </div>
+
   <div class="tag-cloud">
     <p>
-      <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
-      <a href="https://trapdoor.cloud/tag/dns.html">dns</a>
-      <a href="https://trapdoor.cloud/tag/dnsmasq.html">dnsmasq</a>
-      <a href="https://trapdoor.cloud/tag/nginx.html">nginx</a>
+        <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+        <a href="https://trapdoor.cloud/tag/dns.html">dns</a>
+        <a href="https://trapdoor.cloud/tag/dnsmasq.html">dnsmasq</a>
+        <a href="https://trapdoor.cloud/tag/nginx.html">nginx</a>
     </p>
   </div>
 
-
-
-  <div class="neighbors">
-    <a class="btn float-left" href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/" title="Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime">
-      <i class="fa fa-angle-left"></i> Previous Post
+<div class="article-nav">
+    <a href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/">
+      <div class="nav-label">&larr; Previous</div>
+      <div class="nav-title">Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</div>
     </a>
-    <a class="btn float-right" href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" title="Installing CheckMK Agent on macOS">
-      Next Post <i class="fa fa-angle-right"></i>
+    <a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" class="next">
+      <div class="nav-label">Next &rarr;</div>
+      <div class="nav-title">Installing CheckMK Agent on macOS</div>
     </a>
-  </div>
-
-
+</div>
 
 
 <!-- Disqus -->
@@ -352,34 +302,25 @@ example-app.firebaseapp.com<span style="color: #6e7681"> </span>has<span style="
 </noscript>
 <!-- End Disqus -->
 </article>
+  </div>
 
-<footer>
-<p>
-  &copy; 2026  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>
-</p>
-<p>
-Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
-  <span class="footer-separator">|</span>
-  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
-  <script id="dark-theme-script"
-          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.min.js"
-          data-enable-auto-detect-theme="True"
-          data-default-theme="light"
-          type="text/javascript">
-  </script>
-</p><p>
-  <a rel="license"
-     href="http://creativecommons.org/licenses/by-sa/4.0/"
-     target="_blank">
-    <img alt="Creative Commons License"
-         title="Creative Commons License"
-         style="border-width:0"
-           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
-         width="80"
-         height="15"/>
-  </a>
-</p></footer>  </main>
-
+<footer class="site-footer">
+  <div>
+    <div>&copy; 2026 Ashley Kleynhans</div>
+    <div style="margin-top: 4px;">
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> &middot;
+      Powered by <a href="https://getpelican.com/" target="_blank">Pelican</a>
+    </div>
+  </div>
+  <div class="footer-social">
+      <a href="https://github.com/ashleykleynhans" target="_blank" title="Github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/ashleykleynhans" target="_blank" title="Linkedin">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+  </div>
+</footer>
 <script type="application/ld+json">
 {
   "@context" : "http://schema.org",
@@ -407,6 +348,33 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
         </path>
     </svg>
 </a>
+
+  <script id="dark-theme-script"
+          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.js"
+          data-default-theme="dark"
+          data-enable-auto-detect-theme="true">
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var svgCopy = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    var svgCheck = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    document.querySelectorAll('.highlight, .article-content > pre').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = svgCopy;
+      btn.addEventListener('click', function() {
+        var code = block.querySelector('code') || block.querySelector('pre') || block;
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          btn.innerHTML = svgCheck;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  });
+  </script>
 
 </body>
 </html>

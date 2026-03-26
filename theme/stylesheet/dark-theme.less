@@ -1,170 +1,99 @@
-//
-// Dark Theme CSS styles.
-//
-
-@import "variables.less";
+@import 'variables.less';
 
 body {
-  background-color: @body-bg-dark-theme;
-  color: @text-color-dark-theme;
+  background: @light-bg-primary;
+  color: @light-text-primary;
 }
 
-hr {
-  background-color: @solid-dark-grey;
-  color: @solid-dark-grey;
+.top-nav {
+  background: @light-bg-nav;
+  border-bottom-color: @light-border-primary;
 }
 
-aside {
-  background-color: @sidebar-bg-dark-theme;
-  color: @sidebar-text-color;
+.nav-logo { color: @light-text-heading; }
+.nav-links a { color: @light-text-muted; &:hover { color: @light-text-heading; } }
+.nav-social { border-left-color: @light-border-primary; }
+.nav-social a { color: @light-text-muted; &:hover { color: @light-text-heading; } }
 
-  form.navbar-search input#tipue_search_input {
-    background-color: @very-dark-grey;
-    color: @light-grey;
+.theme-toggle {
+  border-color: @light-border-secondary;
+  background: @light-bg-secondary;
+  color: @light-text-muted;
+  &:hover { border-color: @light-accent; color: @light-accent; }
+}
+
+a { color: @light-accent; }
+
+.page-title { color: @light-text-heading; }
+.page-subtitle { color: @light-text-dimmed; }
+
+.post-item {
+  border-color: @light-border-primary;
+  &:hover { background: @light-bg-hover; .post-item-title { color: @light-accent; } }
+}
+.post-item-title { color: @light-text-heading; }
+.post-item-summary { color: @light-text-muted; }
+.post-meta { color: @light-text-dimmed; }
+.post-category { background: @light-accent-bg; color: @light-accent; }
+.post-dot { color: @light-border-secondary; }
+
+.article-header { border-color: @light-border-primary; }
+.article-title { color: @light-text-heading; }
+.article-meta { color: @light-text-dimmed; }
+
+.article-content {
+  h1, h2, h3, h4, h5, h6 { color: @light-text-heading; }
+  h2 { border-bottom-color: @light-border-primary; }
+  blockquote { background: @light-bg-secondary; color: @light-text-muted; border-left-color: @light-accent; }
+  table {
+    th, td { border-color: @light-border-primary; }
+    th { background: @light-bg-secondary; color: @light-text-heading; }
   }
 }
 
-main {
-  nav {
-    border-bottom-color: @nav-border-color-dark-theme;
-  }
-
-  nav, .translations {
-    a {
-      border-color: @nav-border-color-dark-theme;
-    }
-  }
-
-  article {
-    kbd {
-      background-color: #080808;
-      color: @light-grey;
-    }
-
-    blockquote, pre {
-      border-left: 8px solid #ffffff33;
-    }
-
-    *:not(pre) > code {
-      background-color: #080808;
-      border-color: #000;
-    }
-
-    div#tipue_search_content .tipue_search_result {
-      span.tipue_search_content_bold {
-        color: white;
-      }
-    }
-
-    section#isso-thread {
-      div.textarea,
-      .auth-section p.input-wrapper input,
-      .notification-section input {
-        background: @very-dark-grey;
-        color: @light-grey;
-      }
-
-      >h4 {
-        color: @light-grey;
-      }
-
-      .isso-postbox > .form-wrapper .preview {
-        background: repeating-linear-gradient(
-          -45deg,
-          @solid-dark-grey, @solid-dark-grey 10px,
-          @very-dark-grey 10px, @very-dark-grey 20px
-        );
-      }
-
-      .isso-comment > div.text-wrapper {
-        > .isso-comment-header {
-          .author {
-            color: @light-grey;
-          }
-
-          .spacer, a.permalink, .note, a.parent {
-            color: @med-grey;
-
-            &:hover {
-              color: @light-grey;
-            }
-          }
-        }
-
-        > .isso-comment-footer a:hover {
-          // Unfortunately, Isso uses a lot of !important in its styles, so I
-          // have to override that.
-          text-shadow: @dark-grey 0 0 1px !important;
-        }
-      }
-    }
-  }
-
-  footer {
-    border-top-color: @footer-border-color-dark-theme;
-  }
+.highlight {
+  background: @light-bg-secondary;
+  border-color: @light-border-secondary;
 }
 
-div.related-posts {
-  border-color: @rel-post-border-color-dark-theme;
+code {
+  background: rgba(175, 184, 193, 0.2);
+  color: @light-text-heading;
 }
 
-// Admonition
-div.admonition {
-  color: @admonition-generic-color-dark-theme;
-  background-color: @admonition-generic-bg-color-dark-theme;
+.tag-cloud a {
+  background: rgba(175, 184, 193, 0.12);
+  color: @light-text-muted;
+  border-color: @light-border-primary;
+  &:hover { border-color: @light-accent; color: @light-accent; }
 }
 
-div.admonition.attention {
-  color: @admonition-attention-color-dark-theme;
-  background-color: @admonition-attention-bg-color-dark-theme;
+.article-nav {
+  border-top-color: @light-border-primary;
+  a { background: @light-bg-secondary; border-color: @light-border-secondary; &:hover { border-color: @light-accent; } }
+  .nav-label { color: @light-text-dimmed; }
+  .nav-title { color: @light-accent; }
 }
 
-div.admonition.caution {
-  color: @admonition-caution-color-dark-theme;
-  background-color: @admonition-caution-bg-color-dark-theme;
+.pagination {
+  border-top-color: @light-border-primary;
+  a { color: @light-accent; border-color: @light-border-secondary; background: @light-bg-secondary; &:hover { border-color: @light-accent; } }
 }
 
-div.admonition.danger {
-  color: @admonition-danger-color-dark-theme;
-  background-color: @admonition-danger-bg-color-dark-theme;
+.abuseipdb-badge { border-top-color: @light-border-primary; }
+
+.site-footer {
+  border-top-color: @light-border-primary;
+  color: @light-text-dimmed;
+  a { color: @light-text-dimmed; &:hover { color: @light-text-muted; } }
 }
 
-div.admonition.error {
-  color: @admonition-error-color-dark-theme;
-  background-color: @admonition-error-bg-color-dark-theme;
-}
+.footer-social a { color: @light-text-dimmed; &:hover { color: @light-text-muted; } }
 
-div.admonition.hint {
-  color: @admonition-hint-color-dark-theme;
-  background-color: @admonition-hint-bg-color-dark-theme;
-}
-
-div.admonition.important {
-  color: @admonition-important-color-dark-theme;
-  background-color: @admonition-important-bg-color-dark-theme;
-}
-
-div.admonition.note {
-  color: @admonition-note-color-dark-theme;
-  background-color: @admonition-note-bg-color-dark-theme;
-}
-
-div.admonition.tip {
-  color: @admonition-tip-color-dark-theme;
-  background-color: @admonition-tip-bg-color-dark-theme;
-}
-
-div.admonition.warning {
-  color: @admonition-warning-color-dark-theme;
-  background-color: @admonition-warning-bg-color-dark-theme;
-}
-
-figure,
-div.figure {
-  color: @figure-color-dark-theme;
-
-  figcaption {
-    color: @text-color-dark-theme;
-  }
+.list-page {
+  h1 { color: @light-text-heading; }
+  dl dt { color: @light-text-dimmed; border-top-color: @light-border-primary; }
+  dl dd a { color: @light-text-heading; &:hover { color: @light-accent; } }
+  ul.list li { border-bottom-color: @light-border-primary; }
+  ul.list li a { color: @light-text-heading; &:hover { color: @light-accent; } }
 }
