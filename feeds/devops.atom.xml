@@ -25,6 +25,24 @@ curl&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;lo
 &lt;h2 id="step-4-upgrade-kibana"&gt;Step 4: Upgrade Kibana&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;stop&lt;span class="w"&gt; &lt;/span&gt;kibana
 sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--only-upgrade&lt;span class="w"&gt; &lt;/span&gt;kibana
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="fix-missing-encryption-key"&gt;Fix Missing Encryption Key&lt;/h3&gt;
+&lt;p&gt;!!! danger
+    Kibana 9.x requires encryption keys to be set. Without them Kibana
+    will return &lt;strong&gt;500 errors&lt;/strong&gt; on startup.&lt;/p&gt;
+&lt;p&gt;Generate the keys:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;/usr/share/kibana/bin/kibana-encryption-keys&lt;span class="w"&gt; &lt;/span&gt;generate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Add the three generated lines to the bottom of &lt;code&gt;/etc/kibana/kibana.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;xpack.encryptedSavedObjects.encryptionKey&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;your-generated-key-here&amp;quot;&lt;/span&gt;
+&lt;span class="nt"&gt;xpack.reporting.encryptionKey&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;your-generated-key-here&amp;quot;&lt;/span&gt;
+&lt;span class="nt"&gt;xpack.security.encryptionKey&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;your-generated-key-here&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then start Kibana:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;daemon-reload
 sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;kibana
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -39,6 +57,7 @@ sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/spa
 &lt;h3 id="filebeat"&gt;Filebeat&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;stop&lt;span class="w"&gt; &lt;/span&gt;filebeat
 sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--only-upgrade&lt;span class="w"&gt; &lt;/span&gt;filebeat
+sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;daemon-reload
 sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;filebeat
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 

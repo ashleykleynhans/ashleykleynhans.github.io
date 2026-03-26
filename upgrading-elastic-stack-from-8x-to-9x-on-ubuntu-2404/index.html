@@ -155,6 +155,24 @@ curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class=
 <h2 id="step-4-upgrade-kibana">Step 4: Upgrade Kibana</h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>kibana
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>kibana
+</code></pre></div>
+
+<h3 id="fix-missing-encryption-key">Fix Missing Encryption Key</h3>
+<p>!!! danger
+    Kibana 9.x requires encryption keys to be set. Without them Kibana
+    will return <strong>500 errors</strong> on startup.</p>
+<p>Generate the keys:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>/usr/share/kibana/bin/kibana-encryption-keys<span class="w"> </span>generate
+</code></pre></div>
+
+<p>Add the three generated lines to the bottom of <code>/etc/kibana/kibana.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">xpack.encryptedSavedObjects.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+<span class="nt">xpack.reporting.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+<span class="nt">xpack.security.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+</code></pre></div>
+
+<p>Then start Kibana:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>kibana
 </code></pre></div>
 
@@ -169,6 +187,7 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w
 <h3 id="filebeat">Filebeat</h3>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>filebeat
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>filebeat
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>filebeat
 </code></pre></div>
 
