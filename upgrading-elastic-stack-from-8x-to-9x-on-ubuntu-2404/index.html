@@ -65,17 +65,27 @@
 
  
 
-    <meta name="author" content="Ashley Kleynhans" />
-    <meta name="description" content="" />
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS." />
+<meta name="keywords" content="elastic, ubuntu, devops">
+
+
   <meta property="og:site_name" content="Ashley's Blog"/>
-  <meta property="og:type" content="blog"/>
-  <meta property="og:title" content="Ashley's Blog"/>
-  <meta property="og:description" content=""/>
+  <meta property="og:title" content="Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04"/>
+  <meta property="og:description" content="In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:url" content="https://trapdoor.cloud"/>
+  <meta property="og:url" content="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2026-03-26 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-03-26 00:00:00+02:00"/>
+  <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
+  <meta property="article:section" content="DevOps"/>
+  <meta property="article:tag" content="elastic"/>
+  <meta property="article:tag" content="ubuntu"/>
+  <meta property="article:tag" content="devops"/>
   <meta property="og:image" content="/images/profile.jpeg">
 
-  <title>Ashley's Blog &ndash; Authors</title>
+  <title>Ashley's Blog &ndash; Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title>
 
 
 </head>
@@ -157,13 +167,97 @@
 
 <article class="single">
   <header>
-    <h1 id="authors">Authors</h1>
+      
+    <h1 id="upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404">Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</h1>
+    <p>
+      Posted on Thu 26 March 2026 in <a href="https://trapdoor.cloud/category/devops.html">DevOps</a>
+
+        &#8226; 1 min read
+    </p>
   </header>
+
+
   <div>
-    <ul class="list">
-      <li><a href="https://trapdoor.cloud/author/ashley-kleynhans.html">Ashley Kleynhans</a> (9)</li>
-    </ul>
+    <h2 id="step-1-fix-gpg-key">Step 1: Fix GPG Key</h2>
+<p>The 9.x packages use an updated GPG key. Re-import it in the dearmored
+keyring format:</p>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>wget<span style="color: #6e7681"> </span>-qO<span style="color: #6e7681"> </span>-<span style="color: #6e7681"> </span>https://artifacts.elastic.co/GPG-KEY-elasticsearch<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span><span style="color: #79c0ff">\</span>
+<span style="color: #6e7681">  </span>sudo<span style="color: #6e7681"> </span>gpg<span style="color: #6e7681"> </span>--dearmor<span style="color: #6e7681"> </span>-o<span style="color: #6e7681"> </span>/usr/share/keyrings/elasticsearch-keyring.gpg
+</code></pre></div>
+
+<h2 id="step-2-switch-repo-to-9x">Step 2: Switch Repo to 9.x</h2>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code><span style="color: #e6edf3">echo</span><span style="color: #6e7681"> </span><span style="color: #a5d6ff">&quot;deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] \</span>
+<span style="color: #a5d6ff">https://artifacts.elastic.co/packages/9.x/apt stable main&quot;</span><span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span><span style="color: #79c0ff">\</span>
+sudo<span style="color: #6e7681"> </span>tee<span style="color: #6e7681"> </span>/etc/apt/sources.list.d/elastic.list
+
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>update
+</code></pre></div>
+
+<h2 id="step-3-upgrade-elasticsearch">Step 3: Upgrade Elasticsearch</h2>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>elasticsearch
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>--only-upgrade<span style="color: #6e7681"> </span>elasticsearch
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>start<span style="color: #6e7681"> </span>elasticsearch
+curl<span style="color: #6e7681"> </span>-s<span style="color: #6e7681"> </span>localhost:9200<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>grep<span style="color: #6e7681"> </span>number
+</code></pre></div>
+
+<h2 id="step-4-upgrade-kibana">Step 4: Upgrade Kibana</h2>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>kibana
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>--only-upgrade<span style="color: #6e7681"> </span>kibana
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>start<span style="color: #6e7681"> </span>kibana
+</code></pre></div>
+
+<h2 id="step-5-upgrade-logstash">Step 5: Upgrade Logstash</h2>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>logstash
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>--only-upgrade<span style="color: #6e7681"> </span>logstash
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>daemon-reload
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>start<span style="color: #6e7681"> </span>logstash
+</code></pre></div>
+
+<h2 id="step-6-upgrade-other-components-if-installed">Step 6: Upgrade Other Components (if installed)</h2>
+<h3 id="filebeat">Filebeat</h3>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>stop<span style="color: #6e7681"> </span>filebeat
+sudo<span style="color: #6e7681"> </span>apt<span style="color: #6e7681"> </span>install<span style="color: #6e7681"> </span>--only-upgrade<span style="color: #6e7681"> </span>filebeat
+sudo<span style="color: #6e7681"> </span>systemctl<span style="color: #6e7681"> </span>start<span style="color: #6e7681"> </span>filebeat
+</code></pre></div>
+
+<h2 id="step-7-verify">Step 7: Verify</h2>
+<div class="highlight" style="background: #0d1117"><pre style="line-height: 125%;"><span></span><code>curl<span style="color: #6e7681"> </span>-s<span style="color: #6e7681"> </span>localhost:9200<span style="color: #6e7681"> </span><span style="color: #e6edf3">|</span><span style="color: #6e7681"> </span>grep<span style="color: #6e7681"> </span>number
+curl<span style="color: #6e7681"> </span>-s<span style="color: #6e7681"> </span>localhost:9200/_cluster/health?pretty
+</code></pre></div>
   </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://trapdoor.cloud/tag/elastic.html">elastic</a>
+      <a href="https://trapdoor.cloud/tag/ubuntu.html">ubuntu</a>
+      <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+    </p>
+  </div>
+
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" title="Resolving macOS Kernel panic issues with Vagrant and Parallels">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
 <footer>

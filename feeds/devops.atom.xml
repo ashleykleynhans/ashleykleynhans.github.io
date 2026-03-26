@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-19T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"/><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-26T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-26T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="step-1-fix-gpg-key"&gt;Step 1: Fix GPG Key&lt;/h2&gt;
+&lt;p&gt;The 9.x packages use an updated GPG key. Re-import it in the dearmored
+keyring format:&lt;/p&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wget&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-qO&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-&lt;span style="color: #6e7681"&gt; &lt;/span&gt;https://artifacts.elastic.co/GPG-KEY-elasticsearch&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #79c0ff"&gt;\&lt;/span&gt;
+&lt;span style="color: #6e7681"&gt;  &lt;/span&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;gpg&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--dearmor&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-o&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/usr/share/keyrings/elasticsearch-keyring.gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-2-switch-repo-to-9x"&gt;Step 2: Switch Repo to 9.x&lt;/h2&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span style="color: #e6edf3"&gt;echo&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #a5d6ff"&gt;&amp;quot;deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] \&lt;/span&gt;
+&lt;span style="color: #a5d6ff"&gt;https://artifacts.elastic.co/packages/9.x/apt stable main&amp;quot;&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #79c0ff"&gt;\&lt;/span&gt;
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;tee&lt;span style="color: #6e7681"&gt; &lt;/span&gt;/etc/apt/sources.list.d/elastic.list
+
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-3-upgrade-elasticsearch"&gt;Step 3: Upgrade Elasticsearch&lt;/h2&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;stop&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;start&lt;span style="color: #6e7681"&gt; &lt;/span&gt;elasticsearch
+curl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-s&lt;span style="color: #6e7681"&gt; &lt;/span&gt;localhost:9200&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;grep&lt;span style="color: #6e7681"&gt; &lt;/span&gt;number
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-4-upgrade-kibana"&gt;Step 4: Upgrade Kibana&lt;/h2&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;stop&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;start&lt;span style="color: #6e7681"&gt; &lt;/span&gt;kibana
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-5-upgrade-logstash"&gt;Step 5: Upgrade Logstash&lt;/h2&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;stop&lt;span style="color: #6e7681"&gt; &lt;/span&gt;logstash
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #6e7681"&gt; &lt;/span&gt;logstash
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;daemon-reload
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;start&lt;span style="color: #6e7681"&gt; &lt;/span&gt;logstash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-6-upgrade-other-components-if-installed"&gt;Step 6: Upgrade Other Components (if installed)&lt;/h2&gt;
+&lt;h3 id="filebeat"&gt;Filebeat&lt;/h3&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;stop&lt;span style="color: #6e7681"&gt; &lt;/span&gt;filebeat
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;apt&lt;span style="color: #6e7681"&gt; &lt;/span&gt;install&lt;span style="color: #6e7681"&gt; &lt;/span&gt;--only-upgrade&lt;span style="color: #6e7681"&gt; &lt;/span&gt;filebeat
+sudo&lt;span style="color: #6e7681"&gt; &lt;/span&gt;systemctl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;start&lt;span style="color: #6e7681"&gt; &lt;/span&gt;filebeat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="step-7-verify"&gt;Step 7: Verify&lt;/h2&gt;
+&lt;div class="highlight" style="background: #0d1117"&gt;&lt;pre style="line-height: 125%;"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-s&lt;span style="color: #6e7681"&gt; &lt;/span&gt;localhost:9200&lt;span style="color: #6e7681"&gt; &lt;/span&gt;&lt;span style="color: #e6edf3"&gt;|&lt;/span&gt;&lt;span style="color: #6e7681"&gt; &lt;/span&gt;grep&lt;span style="color: #6e7681"&gt; &lt;/span&gt;number
+curl&lt;span style="color: #6e7681"&gt; &lt;/span&gt;-s&lt;span style="color: #6e7681"&gt; &lt;/span&gt;localhost:9200/_cluster/health?pretty
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"/><category term="elastic"/><category term="ubuntu"/><category term="devops"/></entry><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"/><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
 when running Vagrant and Parallels with NFS synced folders.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;I am running an Apple MacBook Pro with an Apple M1 Max chipset.
 The Apple Silicon chipsets use &lt;code&gt;arm64&lt;/code&gt; architecture, but when
