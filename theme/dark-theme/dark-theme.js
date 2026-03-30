@@ -25,6 +25,10 @@ function ThemeManager(options) {
   this.switch = function(themeOverride) {
     localStorage.setItem('themeOverride', themeOverride);
     applyTheme();
+    // Reload Disqus to pick up new theme
+    if (typeof DISQUS !== 'undefined') {
+      DISQUS.reset({ reload: true });
+    }
   };
 
   applyTheme();
