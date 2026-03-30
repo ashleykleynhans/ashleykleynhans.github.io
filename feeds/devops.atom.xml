@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-26T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-26T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="step-1-fix-gpg-key"&gt;Step 1: Fix GPG Key&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - DevOps</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/devops.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-30T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-30T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;Before upgrading to 9.x, you need to be running &lt;strong&gt;8.19.x&lt;/strong&gt;. See the
+&lt;a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster/upgrade-717" target="_blank"&gt;official upgrade path&lt;/a&gt;
+for details.&lt;/p&gt;
+&lt;p&gt;Check your current version:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;localhost:9200&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;number
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you are not on 8.19.x, upgrade within the 8.x repo first before
+switching to 9.x.&lt;/p&gt;
+&lt;h2 id="step-1-fix-gpg-key"&gt;Step 1: Fix GPG Key&lt;/h2&gt;
 &lt;p&gt;The 9.x packages use an updated GPG key. Re-import it in the dearmored
 keyring format:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wget&lt;span class="w"&gt; &lt;/span&gt;-qO&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;https://artifacts.elastic.co/GPG-KEY-elasticsearch&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
@@ -64,7 +74,17 @@ sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/spa
 &lt;h2 id="step-7-verify"&gt;Step 7: Verify&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;localhost:9200&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;number
 curl&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;localhost:9200/_cluster/health?pretty
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="DevOps"/><category term="elastic"/><category term="ubuntu"/><category term="devops"/></entry><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"/><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/es-release-notes.html" target="_blank"&gt;Elasticsearch Release Notes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster" target="_blank"&gt;Upgrade your deployment or cluster&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/logstash/current/upgrading-logstash.html" target="_blank"&gt;Upgrading Logstash&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/beats/libbeat/current/upgrading.html" target="_blank"&gt;Upgrading Filebeat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/kibana/current/kibana-encryption-keys.html" target="_blank"&gt;Kibana Encryption Keys&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank"&gt;Elastic APT Repository&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="DevOps"/><category term="elastic"/><category term="ubuntu"/><category term="devops"/></entry><entry><title>Resolving macOS Kernel panic issues with Vagrant and Parallels</title><link href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/" rel="alternate"/><published>2025-05-14T00:00:00+02:00</published><updated>2025-05-14T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2025-05-14:/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/</id><summary type="html">&lt;p&gt;This post helps you to resolve macOS kernel panic issues
 when running Vagrant and Parallels with NFS synced folders.&lt;/p&gt;</summary><content type="html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;I am running an Apple MacBook Pro with an Apple M1 Max chipset.
 The Apple Silicon chipsets use &lt;code&gt;arm64&lt;/code&gt; architecture, but when

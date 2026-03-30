@@ -67,7 +67,7 @@
   <meta property="og:url" content="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/"/>
   <meta property="og:type" content="article"/>
   <meta property="article:published_time" content="2026-03-26 00:00:00+02:00"/>
-  <meta property="article:modified_time" content="2026-03-26 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-03-30 00:00:00+02:00"/>
   <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
   <meta property="article:section" content="DevOps"/>
   <meta property="article:tag" content="elastic"/>
@@ -122,14 +122,24 @@
       <a class="post-category" href="https://trapdoor.cloud/category/devops.html">DevOps</a>
       <span>Thu 26 March 2026</span>
         <span class="post-dot">&middot;</span>
-        <span>1 min read</span>
+        <span>2 min read</span>
       <span class="post-dot">&middot;</span>
       <span>Ashley Kleynhans</span>
     </div>
   </div>
 
   <div class="article-content">
-    <h2 id="step-1-fix-gpg-key">Step 1: Fix GPG Key</h2>
+    <h2 id="prerequisites">Prerequisites</h2>
+<p>Before upgrading to 9.x, you need to be running <strong>8.19.x</strong>. See the
+<a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster/upgrade-717" target="_blank">official upgrade path</a>
+for details.</p>
+<p>Check your current version:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>number
+</code></pre></div>
+
+<p>If you are not on 8.19.x, upgrade within the 8.x repo first before
+switching to 9.x.</p>
+<h2 id="step-1-fix-gpg-key">Step 1: Fix GPG Key</h2>
 <p>The 9.x packages use an updated GPG key. Re-import it in the dearmored
 keyring format:</p>
 <div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-qO<span class="w"> </span>-<span class="w"> </span>https://artifacts.elastic.co/GPG-KEY-elasticsearch<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
@@ -195,6 +205,16 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>number
 curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200/_cluster/health?pretty
 </code></pre></div>
+
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/es-release-notes.html" target="_blank">Elasticsearch Release Notes</a></li>
+<li><a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster" target="_blank">Upgrade your deployment or cluster</a></li>
+<li><a href="https://www.elastic.co/guide/en/logstash/current/upgrading-logstash.html" target="_blank">Upgrading Logstash</a></li>
+<li><a href="https://www.elastic.co/guide/en/beats/libbeat/current/upgrading.html" target="_blank">Upgrading Filebeat</a></li>
+<li><a href="https://www.elastic.co/guide/en/kibana/current/kibana-encryption-keys.html" target="_blank">Kibana Encryption Keys</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank">Elastic APT Repository</a></li>
+</ul>
   </div>
 
   <div class="tag-cloud">
