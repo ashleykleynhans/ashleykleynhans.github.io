@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-03-30T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Redesigning My Blog with Claude Code and the Superpowers Skill</title><link href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-26T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/</id><summary type="html">&lt;p&gt;I used Claude Code with the Superpowers skill to completely redesign my Pelican blog theme in a single session.&lt;/p&gt;</summary><content type="html">&lt;h2 id="before"&gt;Before&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/all.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-04-13T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Redesigning My Blog with Claude Code and the Superpowers Skill</title><link href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-26T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/</id><summary type="html">&lt;p&gt;I used Claude Code with the Superpowers skill to completely redesign my Pelican blog theme in a single session.&lt;/p&gt;</summary><content type="html">&lt;h2 id="before"&gt;Before&lt;/h2&gt;
 &lt;p&gt;&lt;img alt="Old Flex theme with sidebar layout" src="https://trapdoor.cloud/images/blog-before.png"&gt;&lt;/p&gt;
 &lt;h2 id="after"&gt;After&lt;/h2&gt;
 &lt;p&gt;&lt;img alt="New dark technical design with top navigation" src="https://trapdoor.cloud/images/blog-after.png"&gt;&lt;/p&gt;
@@ -96,7 +96,7 @@ small sizes, I just removed it.&lt;/p&gt;
 in a single Claude Code session. The blog went from a generic
 Flex theme to a custom design that actually looks good. The
 Superpowers skill kept things structured even when I was giving
-some pretty aggressive feedback along the way.&lt;/p&gt;</content><category term="AI"/><category term="ai"/><category term="claude"/><category term="pelican"/><category term="devops"/></entry><entry><title>Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-03-30T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+some pretty aggressive feedback along the way.&lt;/p&gt;</content><category term="AI"/><category term="ai"/><category term="claude"/><category term="pelican"/><category term="devops"/></entry><entry><title>Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title><link href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/" rel="alternate"/><published>2026-03-26T00:00:00+02:00</published><updated>2026-04-13T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-03-26:/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/</id><summary type="html">&lt;p&gt;In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS.&lt;/p&gt;</summary><content type="html">&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
 &lt;p&gt;Before upgrading to 9.x, you need to be running &lt;strong&gt;8.19.x&lt;/strong&gt;. See the
 &lt;a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster/upgrade-717" target="_blank"&gt;official upgrade path&lt;/a&gt;
 for details.&lt;/p&gt;
@@ -166,6 +166,36 @@ sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/spa
 sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--only-upgrade&lt;span class="w"&gt; &lt;/span&gt;filebeat
 sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;daemon-reload
 sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;filebeat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id="unique-id-required-for-every-filestream-input"&gt;Unique &lt;code&gt;id&lt;/code&gt; Required for Every &lt;code&gt;filestream&lt;/code&gt; Input&lt;/h4&gt;
+&lt;p&gt;From Filebeat 9.x onwards, &lt;strong&gt;every &lt;code&gt;filestream&lt;/code&gt; input must have a
+unique &lt;code&gt;id&lt;/code&gt;&lt;/strong&gt;. If two or more &lt;code&gt;filestream&lt;/code&gt; inputs share the same
+&lt;code&gt;id&lt;/code&gt; (or any of them omits &lt;code&gt;id&lt;/code&gt; entirely), Filebeat will refuse to
+start and log an error similar to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;filestream input with ID &amp;#39;my-id&amp;#39; already exists, this will
+lead to data duplication, please use a different ID
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Review &lt;code&gt;/etc/filebeat/filebeat.yml&lt;/code&gt; and every file under
+&lt;code&gt;/etc/filebeat/inputs.d/&lt;/code&gt; (or whichever
+&lt;code&gt;filebeat.config.inputs.path&lt;/code&gt; points at) and make sure each
+&lt;code&gt;- type: filestream&lt;/code&gt; block has its own distinct &lt;code&gt;id&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;filebeat.inputs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;filestream&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;nginx-access&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;paths&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;/var/log/nginx/access.log&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;filestream&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;nginx-error&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;paths&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;/var/log/nginx/error.log&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After fixing the IDs, restart Filebeat and confirm it is running:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;restart&lt;span class="w"&gt; &lt;/span&gt;filebeat
+sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;status&lt;span class="w"&gt; &lt;/span&gt;filebeat
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="step-7-verify"&gt;Step 7: Verify&lt;/h2&gt;
