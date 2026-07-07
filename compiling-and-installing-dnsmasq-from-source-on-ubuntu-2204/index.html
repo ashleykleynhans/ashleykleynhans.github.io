@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/stylesheet/style.min.css">
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/solid.css">
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/static/custom.css">
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://trapdoor.cloud/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ashley's Blog Atom">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDEVPJLBFC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DDEVPJLBFC');
+</script>
+
+
+
+
+
+
+
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="This post walks you through the process of compiling and installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you can benefit from the filter-AAAA feature that was introduced in dnsmasq version 2.87 in order to resolve issues with nginx servers that only have IPv4 addresses attached to them getting network unreachable errors when resolving upstream DNS entries to IPv6 addresses." />
+<meta name="keywords" content="devops, dns, dnsmasq, nginx">
+
+
+  <meta property="og:site_name" content="Ashley's Blog"/>
+  <meta property="og:title" content="Compiling and Installing dnsmasq from Source on Ubuntu 22.04"/>
+  <meta property="og:description" content="This post walks you through the process of compiling and installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you can benefit from the filter-AAAA feature that was introduced in dnsmasq version 2.87 in order to resolve issues with nginx servers that only have IPv4 addresses attached to them getting network unreachable errors when resolving upstream DNS entries to IPv6 addresses."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-01-19 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2023-01-19 00:00:00+02:00"/>
+  <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
+  <meta property="article:section" content="DevOps"/>
+  <meta property="article:tag" content="devops"/>
+  <meta property="article:tag" content="dns"/>
+  <meta property="article:tag" content="dnsmasq"/>
+  <meta property="article:tag" content="nginx"/>
+  <meta property="og:image" content="https://trapdoor.cloud/images/covers/compile-and-install-dnsmas-from-source.png">
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Compiling and Installing dnsmasq from Source on Ubuntu 22.04"/>
+<meta name="twitter:description" content="This post walks you through the process of compiling and installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you can benefit from the filter-AAAA feature that was introduced in dnsmasq version 2.87 in order to resolve issues with nginx servers that only have IPv4 addresses attached to them getting network unreachable errors when resolving upstream DNS entries to IPv6 addresses."/>
+<meta name="twitter:image" content="https://trapdoor.cloud/images/covers/compile-and-install-dnsmas-from-source.png"/>
+
+  <title>Ashley's Blog &ndash; Compiling and Installing dnsmasq from Source on Ubuntu 22.04</title>
+
+
+</head>
+<body >
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://trapdoor.cloud/">
+      <img src="/images/profile.jpeg" alt="Ashley Kleynhans">
+      Ashley Kleynhans
+    </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+          <a href="https://trapdoor.cloud/about/">About Me</a>
+        <a href="/archives">Archives</a>
+        <a href="/categories">Categories</a>
+        <a href="/tags">Tags</a>
+        <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
+
+      <div class="nav-social">
+          <a              href="https://github.com/ashleykleynhans"
+             target="_blank"
+             title="Github">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a              href="https://www.linkedin.com/in/ashleykleynhans"
+             target="_blank"
+             title="Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+      </div>
+
+      <button class="theme-toggle" onclick="theme.switch(document.body.classList.contains('dark-theme') ? 'light' : 'dark')" title="Toggle theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+  <div class="site-content">
+<article>
+  <div class="article-header">
+    <h1 class="article-title">Compiling and Installing dnsmasq from Source on Ubuntu 22.04</h1>
+    <div class="article-meta">
+      <a class="post-category" href="https://trapdoor.cloud/category/devops.html">DevOps</a>
+      <span>Thu 19 January 2023</span>
+        <span class="post-dot">&middot;</span>
+        <span>2 min read</span>
+      <span class="post-dot">&middot;</span>
+      <span>Ashley Kleynhans</span>
+    </div>
+  </div>
+
+  <div class="article-content">
+    <h2 id="background">Background</h2>
+<p>I was monitoring my nginx logs, when I stumbled across a
+peculiar error where nginx was trying to connect to a
+Firebase backend with a DNS entry that resolves to an
+IPv6 address.</p>
+<pre>
+[nginx][] 2023/01/06 07:32:38 [error] 61125#61125: *4683 connect() to
+[fe80::cf4d:cab8:b943]:443 failed (101: Network is unreachable) while
+connecting to upstream, client: 1.1.1.1, server: , request: 
+"GET /file.json?v=3 HTTP/2.0", upstream: 
+"https://[fe80::cf4d:cab8:b943]:443/file.json?v=3", host: "example.com", 
+referrer: "https://example.com/worker.js"
+</pre>
+
+<p>This was rather perplexing, since none of my nginx servers
+have any IPv6 addresses attached to them, but discovered that
+the DNS lookup for my Firebase application was returning the
+same IPv6 address that I noticed in my nginx log file.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.1.1
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>IPv6<span class="w"> </span>address<span class="w"> </span>fe80::cf4d:cab8:b943
+</code></pre></div>
+
+<p>I then determined that the best way to solve this problem would
+be to set up dnsmasq as a DNS cache, and use the <code>filter-AAAA</code>
+option to prevent it from performing IPv6 lookups.</p>
+<p>The problem with this, however, is that the latest version of
+the dnsmasq package in the Ubuntu 22.04 repositories is
+version <strong>2.86</strong> and the <code>filter-AAAA</code> feature was only
+introduced in dnsmasq version <strong>2.87</strong>.</p>
+<p><a href="https://launchpad.net/ubuntu/lunar/+source/dnsmasq">Ubuntu 23.04 (Lunar Lobster)</a>,
+which is currently under active  development at the time of writing,
+is the only Ubuntu version that has a version of dnsmasq that
+supports the <code>filter-AAAA</code> feature, so I decided to compile
+and install dnsmasq from the <a href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz">source used by Ubuntu 23.04</a>.</p>
+<h2 id="download-compile-and-install-dnsmasq-from-source">Download, Compile and Install dnsmasq from Source</h2>
+<h3 id="download-source-for-dnsmasq-version-288-from-ubuntu-launchpad-site">Download source for dnsmasq version 2.88 from Ubuntu Launchpad site</h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dnsmasq/2.88-1/dnsmasq_2.88.orig.tar.gz
+</code></pre></div>
+
+<h3 id="extract-dnsmasq-288-source">Extract dnsmasq 2.88 source</h3>
+<div class="highlight"><pre><span></span><code>tar<span class="w"> </span>zxvf<span class="w"> </span>dnsmasq_2.88.orig.tar.gz
+</code></pre></div>
+
+<h3 id="install-dependency-packages">Install dependency packages</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>dnsmasq<span class="w"> </span>gettext
+</code></pre></div>
+
+<h3 id="compile-dnsmasq">Compile dnsmasq</h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>dnsmasq-2.88.orig
+make<span class="w"> </span>all-i18n
+</code></pre></div>
+
+<h3 id="confirm-the-version-of-the-compiled-dnsmasq-binary">Confirm the version of the compiled dnsmasq binary</h3>
+<div class="highlight"><pre><span></span><code>src/dnsmasq<span class="w"> </span>-v
+</code></pre></div>
+
+<h3 id="stop-the-dnsmasq-service">Stop the dnsmasq service</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>dnsmasq
+</code></pre></div>
+
+<h3 id="copy-the-newly-compiled-binary-over-the-old-one">Copy the newly compiled binary over the old one</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cp<span class="w"> </span>src/dnsmasq<span class="w"> </span>/usr/sbin/dnsmasq
+</code></pre></div>
+
+<h3 id="remove-file-that-is-no-longer-supported-by-the-new-binary">Remove file that is no longer supported by the new binary</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>rm<span class="w"> </span>/usr/share/dns/root.ds
+</code></pre></div>
+
+<h3 id="edit-the-dnsmasq-config-file-and-configure-it-to-exclude-ipv6-lookups">Edit the dnsmasq config file and configure it to exclude IPv6 lookups</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/dnsmasq.conf
+</code></pre></div>
+
+<p>Paste the following content:</p>
+<div class="highlight"><pre><span></span><code><span class="n">listen</span><span class="o">-</span><span class="n">address</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.53</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">53</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">interfaces</span>
+<span class="n">user</span><span class="o">=</span><span class="n">dnsmasq</span>
+<span class="n">group</span><span class="o">=</span><span class="n">nogroup</span>
+<span class="n">pid</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">dnsmasq</span><span class="o">/</span><span class="n">dnsmasq</span><span class="o">.</span><span class="n">pid</span>
+
+<span class="c1"># Name resolution options</span>
+<span class="n">resolv</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="o">.</span><span class="n">dnsmasq</span>
+<span class="n">cache</span><span class="o">-</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span>
+<span class="n">neg</span><span class="o">-</span><span class="n">ttl</span><span class="o">=</span><span class="mi">60</span>
+<span class="n">domain</span><span class="o">-</span><span class="n">needed</span>
+<span class="n">bogus</span><span class="o">-</span><span class="n">priv</span>
+<span class="n">filter</span><span class="o">-</span><span class="n">AAAA</span>
+</code></pre></div>
+
+<p>And save the file.</p>
+<h3 id="configure-the-dns-resolver-for-the-dnsmasq-service">Configure the DNS resolver for the dnsmasq service</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo &#39;nameserver 1.1.1.1&#39; &gt; /etc/resolv.dnsmasq&quot;</span>
+</code></pre></div>
+
+<h3 id="configure-dns-resolver-for-consul-optional">Configure DNS resolver for Consul (OPTIONAL)</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/dnsmasq.d/10-consul
+</code></pre></div>
+
+<p>Paste the following content:</p>
+<div class="highlight"><pre><span></span><code>server=/consul/127.0.0.1#8600
+</code></pre></div>
+
+<p>And save the file.</p>
+<h3 id="disable-systemd-resolved">Disable systemd resolved</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/systemd/resolved.conf.d/noresolved.conf
+</code></pre></div>
+
+<p>Paste the following content:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Resolve]</span>
+<span class="na">DNSStubListener</span><span class="o">=</span><span class="s">no</span>
+</code></pre></div>
+
+<p>And save the file.</p>
+<h3 id="restart-the-systemd-resolved-and-dnsmasq-services">Restart the systemd-resolved and dnsmasq services</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>systemd-resolved
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>dnsmasq.service
+</code></pre></div>
+
+<h3 id="edit-etcresolvconf-to-use-dnsmasq-as-the-dns-resolver">Edit /etc/resolv.conf to use dnsmasq as the DNS resolver</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vim<span class="w"> </span>/etc/resolv.conf
+</code></pre></div>
+
+<p>Paste the following content:</p>
+<div class="highlight"><pre><span></span><code>nameserver 127.0.0.53
+</code></pre></div>
+
+<p>And save the file.</p>
+<h2 id="verify-that-the-dns-is-now-only-resolving-to-ipv4-addresses-and-not-ipv6-anymore">Verify that the DNS is now only resolving to IPv4 addresses and not IPv6 anymore</h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example-app.firebaseapp.com
+example-app.firebaseapp.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.1.1
+</code></pre></div>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+        <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+        <a href="https://trapdoor.cloud/tag/dns.html">dns</a>
+        <a href="https://trapdoor.cloud/tag/dnsmasq.html">dnsmasq</a>
+        <a href="https://trapdoor.cloud/tag/nginx.html">nginx</a>
+    </p>
+  </div>
+
+<div class="article-nav">
+    <a href="https://trapdoor.cloud/upgrading-rds-aurora-mysql-db-engine-version-with-minimal-downtime/">
+      <div class="nav-label">&larr; Previous</div>
+      <div class="nav-title">Upgrading RDS Aurora MySQL DB Engine Version with Minimal Downtime</div>
+    </a>
+    <a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/" class="next">
+      <div class="nav-label">Next &rarr;</div>
+      <div class="nav-title">Installing CheckMK Agent on macOS</div>
+    </a>
+</div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul>
+      <li><a href="https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/">Using Alternate Models with Claude Code via Claude Code Router</a></li>
+      <li><a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/">Redesigning My Blog with Claude Code and the Superpowers Skill</a></li>
+      <li><a href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/">Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</a></li>
+      <li><a href="https://trapdoor.cloud/getting-started-with-runpod-serverless/">Getting Started with Runpod Serverless</a></li>
+      <li><a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/">Installing CheckMK Agent on macOS</a></li>
+    </ul>
+  </div>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    var disqus_config = function () {
+        this.page.url = 'https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/';
+        this.page.identifier = 'compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204';
+    };
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+  </div>
+
+<footer class="site-footer">
+  <div>
+    <div>&copy; 2026 Ashley Kleynhans</div>
+    <div style="margin-top: 4px;">
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> &middot;
+      Powered by <a href="https://getpelican.com/" target="_blank">Pelican</a>
+    </div>
+  </div>
+  <div class="footer-social">
+      <a href="https://github.com/ashleykleynhans" target="_blank" title="Github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/ashleykleynhans" target="_blank" title="Linkedin">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+  </div>
+</footer>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "name": "Compiling and Installing dnsmasq from Source on Ubuntu 22.04",
+    "headline": "Compiling and Installing dnsmasq from Source on Ubuntu 22.04",
+    "datePublished": "2023-01-19 00:00:00+02:00",
+    "dateModified": "2023-01-19 00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Ashley Kleynhans",
+      "url": "https://trapdoor.cloud/author/ashley-kleynhans.html"
+    },
+    "image": "https://trapdoor.cloud/images/covers/compile-and-install-dnsmas-from-source.png",
+    "url": "https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/",
+    "description": "This post walks you through the process of compiling and installing dnsmasq 2.88 from source in Ubuntu 22.04, so that you can benefit from the filter-AAAA feature that was introduced in dnsmasq version 2.87 in order to resolve issues with nginx servers that only have IPv4 addresses attached to them getting network unreachable errors when resolving upstream DNS entries to IPv6 addresses."
+  }
+  </script>
+<a href="https://github.com/ashleykleynhans/pelican" target="_blank" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+
+  <script id="dark-theme-script"
+          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.min.js"
+          data-default-theme="dark"
+          data-enable-auto-detect-theme="true">
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var svgCopy = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    var svgCheck = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    document.querySelectorAll('.highlight, .article-content > pre').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = svgCopy;
+      btn.addEventListener('click', function() {
+        var code = block.querySelector('code') || block.querySelector('pre') || block;
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          btn.innerHTML = svgCheck;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  });
+  </script>
+
+</body>
+</html>

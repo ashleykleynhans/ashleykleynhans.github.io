@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/stylesheet/style.min.css">
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/solid.css">
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/static/custom.css">
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://trapdoor.cloud/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ashley's Blog Atom">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDEVPJLBFC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DDEVPJLBFC');
+</script>
+
+
+
+
+
+
+
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS." />
+<meta name="keywords" content="elastic, ubuntu, devops">
+
+
+  <meta property="og:site_name" content="Ashley's Blog"/>
+  <meta property="og:title" content="Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04"/>
+  <meta property="og:description" content="In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2026-03-26 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-04-13 00:00:00+02:00"/>
+  <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
+  <meta property="article:section" content="DevOps"/>
+  <meta property="article:tag" content="elastic"/>
+  <meta property="article:tag" content="ubuntu"/>
+  <meta property="article:tag" content="devops"/>
+  <meta property="og:image" content="https://trapdoor.cloud/images/covers/upgrading-elastic-from-8.x-to-9.x.png">
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04"/>
+<meta name="twitter:description" content="In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS."/>
+<meta name="twitter:image" content="https://trapdoor.cloud/images/covers/upgrading-elastic-from-8.x-to-9.x.png"/>
+
+  <title>Ashley's Blog &ndash; Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</title>
+
+
+</head>
+<body >
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://trapdoor.cloud/">
+      <img src="/images/profile.jpeg" alt="Ashley Kleynhans">
+      Ashley Kleynhans
+    </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+          <a href="https://trapdoor.cloud/about/">About Me</a>
+        <a href="/archives">Archives</a>
+        <a href="/categories">Categories</a>
+        <a href="/tags">Tags</a>
+        <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
+
+      <div class="nav-social">
+          <a              href="https://github.com/ashleykleynhans"
+             target="_blank"
+             title="Github">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a              href="https://www.linkedin.com/in/ashleykleynhans"
+             target="_blank"
+             title="Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+      </div>
+
+      <button class="theme-toggle" onclick="theme.switch(document.body.classList.contains('dark-theme') ? 'light' : 'dark')" title="Toggle theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+  <div class="site-content">
+<article>
+  <div class="article-header">
+    <h1 class="article-title">Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</h1>
+    <div class="article-meta">
+      <a class="post-category" href="https://trapdoor.cloud/category/devops.html">DevOps</a>
+      <span>Thu 26 March 2026</span>
+        <span class="post-dot">&middot;</span>
+        <span>2 min read</span>
+      <span class="post-dot">&middot;</span>
+      <span>Ashley Kleynhans</span>
+    </div>
+  </div>
+
+  <div class="article-content">
+    <h2 id="prerequisites">Prerequisites</h2>
+<p>Before upgrading to 9.x, you need to be running <strong>8.19.x</strong>. See the
+<a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster/upgrade-717" target="_blank">official upgrade path</a>
+for details.</p>
+<p>Check your current version:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>number
+</code></pre></div>
+
+<p>If you are not on 8.19.x, upgrade within the 8.x repo first before
+switching to 9.x.</p>
+<h2 id="step-1-fix-gpg-key">Step 1: Fix GPG Key</h2>
+<p>The 9.x packages use an updated GPG key. Re-import it in the dearmored
+keyring format:</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-qO<span class="w"> </span>-<span class="w"> </span>https://artifacts.elastic.co/GPG-KEY-elasticsearch<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/elasticsearch-keyring.gpg
+</code></pre></div>
+
+<h2 id="step-2-switch-repo-to-9x">Step 2: Switch Repo to 9.x</h2>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] \</span>
+<span class="s2">https://artifacts.elastic.co/packages/9.x/apt stable main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/elastic.list
+
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+</code></pre></div>
+
+<h2 id="step-3-upgrade-elasticsearch">Step 3: Upgrade Elasticsearch</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>elasticsearch
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>elasticsearch
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>elasticsearch
+curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>number
+</code></pre></div>
+
+<h2 id="step-4-upgrade-kibana">Step 4: Upgrade Kibana</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>kibana
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>kibana
+</code></pre></div>
+
+<h3 id="fix-missing-encryption-key">Fix Missing Encryption Key</h3>
+<p>!!! danger
+    Kibana 9.x requires encryption keys to be set. Without them Kibana
+    will return <strong>500 errors</strong> on startup.</p>
+<p>Generate the keys:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>/usr/share/kibana/bin/kibana-encryption-keys<span class="w"> </span>generate
+</code></pre></div>
+
+<p>Add the three generated lines to the bottom of <code>/etc/kibana/kibana.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">xpack.encryptedSavedObjects.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+<span class="nt">xpack.reporting.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+<span class="nt">xpack.security.encryptionKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your-generated-key-here&quot;</span>
+</code></pre></div>
+
+<p>Then start Kibana:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>kibana
+</code></pre></div>
+
+<h2 id="step-5-upgrade-logstash">Step 5: Upgrade Logstash</h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>logstash
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>logstash
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>logstash
+</code></pre></div>
+
+<h2 id="step-6-upgrade-other-components-if-installed">Step 6: Upgrade Other Components (if installed)</h2>
+<h3 id="filebeat">Filebeat</h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>filebeat
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--only-upgrade<span class="w"> </span>filebeat
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>filebeat
+</code></pre></div>
+
+<h4 id="unique-id-required-for-every-filestream-input">Unique <code>id</code> Required for Every <code>filestream</code> Input</h4>
+<p>From Filebeat 9.x onwards, <strong>every <code>filestream</code> input must have a
+unique <code>id</code></strong>. If two or more <code>filestream</code> inputs share the same
+<code>id</code> (or any of them omits <code>id</code> entirely), Filebeat will refuse to
+start and log an error similar to:</p>
+<div class="highlight"><pre><span></span><code>filestream input with ID &#39;my-id&#39; already exists, this will
+lead to data duplication, please use a different ID
+</code></pre></div>
+
+<p>Review <code>/etc/filebeat/filebeat.yml</code> and every file under
+<code>/etc/filebeat/inputs.d/</code> (or whichever
+<code>filebeat.config.inputs.path</code> points at) and make sure each
+<code>- type: filestream</code> block has its own distinct <code>id</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">filebeat.inputs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">filestream</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-access</span>
+<span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/nginx/access.log</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">filestream</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-error</span>
+<span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/nginx/error.log</span>
+</code></pre></div>
+
+<p>After fixing the IDs, restart Filebeat and confirm it is running:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>filebeat
+sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>filebeat
+</code></pre></div>
+
+<h2 id="step-7-verify">Step 7: Verify</h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>number
+curl<span class="w"> </span>-s<span class="w"> </span>localhost:9200/_cluster/health?pretty
+</code></pre></div>
+
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/es-release-notes.html" target="_blank">Elasticsearch Release Notes</a></li>
+<li><a href="https://www.elastic.co/docs/deploy-manage/upgrade/deployment-or-cluster" target="_blank">Upgrade your deployment or cluster</a></li>
+<li><a href="https://www.elastic.co/guide/en/logstash/current/upgrading-logstash.html" target="_blank">Upgrading Logstash</a></li>
+<li><a href="https://www.elastic.co/guide/en/beats/libbeat/current/upgrading.html" target="_blank">Upgrading Filebeat</a></li>
+<li><a href="https://www.elastic.co/guide/en/kibana/current/kibana-encryption-keys.html" target="_blank">Kibana Encryption Keys</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank">Elastic APT Repository</a></li>
+</ul>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+        <a href="https://trapdoor.cloud/tag/elastic.html">elastic</a>
+        <a href="https://trapdoor.cloud/tag/ubuntu.html">ubuntu</a>
+        <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+    </p>
+  </div>
+
+<div class="article-nav">
+    <a href="https://trapdoor.cloud/resolving-macos-kernel-panic-issues-with-vagrant-and-parallels/">
+      <div class="nav-label">&larr; Previous</div>
+      <div class="nav-title">Resolving macOS Kernel panic issues with Vagrant and Parallels</div>
+    </a>
+    <a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/" class="next">
+      <div class="nav-label">Next &rarr;</div>
+      <div class="nav-title">Redesigning My Blog with Claude Code and the Superpowers Skill</div>
+    </a>
+</div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul>
+      <li><a href="https://trapdoor.cloud/upgrading-elastic-stack-from-7x-to-8x-on-ubuntu-2204/">Upgrading Elastic Stack From 7.x to 8.x on Ubuntu 22.04</a></li>
+      <li><a href="https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/">Using Alternate Models with Claude Code via Claude Code Router</a></li>
+      <li><a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/">Redesigning My Blog with Claude Code and the Superpowers Skill</a></li>
+      <li><a href="https://trapdoor.cloud/getting-started-with-runpod-serverless/">Getting Started with Runpod Serverless</a></li>
+      <li><a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/">Installing CheckMK Agent on macOS</a></li>
+    </ul>
+  </div>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    var disqus_config = function () {
+        this.page.url = 'https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/';
+        this.page.identifier = 'upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404';
+    };
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+  </div>
+
+<footer class="site-footer">
+  <div>
+    <div>&copy; 2026 Ashley Kleynhans</div>
+    <div style="margin-top: 4px;">
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> &middot;
+      Powered by <a href="https://getpelican.com/" target="_blank">Pelican</a>
+    </div>
+  </div>
+  <div class="footer-social">
+      <a href="https://github.com/ashleykleynhans" target="_blank" title="Github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/ashleykleynhans" target="_blank" title="Linkedin">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+  </div>
+</footer>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "name": "Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04",
+    "headline": "Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04",
+    "datePublished": "2026-03-26 00:00:00+02:00",
+    "dateModified": "2026-04-13 00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Ashley Kleynhans",
+      "url": "https://trapdoor.cloud/author/ashley-kleynhans.html"
+    },
+    "image": "https://trapdoor.cloud/images/covers/upgrading-elastic-from-8.x-to-9.x.png",
+    "url": "https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/",
+    "description": "In this post, I will walk you through the process that I followed to upgrade my Elastic Stack from version 8.x to 9.x on Ubuntu 24.04 LTS."
+  }
+  </script>
+<a href="https://github.com/ashleykleynhans/pelican" target="_blank" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+
+  <script id="dark-theme-script"
+          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.min.js"
+          data-default-theme="dark"
+          data-enable-auto-detect-theme="true">
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var svgCopy = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    var svgCheck = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    document.querySelectorAll('.highlight, .article-content > pre').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = svgCopy;
+      btn.addEventListener('click', function() {
+        var code = block.querySelector('code') || block.querySelector('pre') || block;
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          btn.innerHTML = svgCheck;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  });
+  </script>
+
+</body>
+</html>

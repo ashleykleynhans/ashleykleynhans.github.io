@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/stylesheet/style.min.css">
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/solid.css">
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/static/custom.css">
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://trapdoor.cloud/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ashley's Blog Atom">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDEVPJLBFC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DDEVPJLBFC');
+</script>
+
+
+
+
+
+
+
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud." />
+<meta name="keywords" content="devops, runpod, serverless, ai, gpu, cloud, docker">
+
+
+  <meta property="og:site_name" content="Ashley's Blog"/>
+  <meta property="og:title" content="Getting Started with Runpod Serverless"/>
+  <meta property="og:description" content="This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://trapdoor.cloud/getting-started-with-runpod-serverless/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-07-16 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-03-19 00:00:00+02:00"/>
+  <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
+  <meta property="article:section" content="DevOps"/>
+  <meta property="article:tag" content="devops"/>
+  <meta property="article:tag" content="runpod"/>
+  <meta property="article:tag" content="serverless"/>
+  <meta property="article:tag" content="ai"/>
+  <meta property="article:tag" content="gpu"/>
+  <meta property="article:tag" content="cloud"/>
+  <meta property="article:tag" content="docker"/>
+  <meta property="og:image" content="https://trapdoor.cloud/images/covers/getting-started-with-runpod-serverless.png">
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Getting Started with Runpod Serverless"/>
+<meta name="twitter:description" content="This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud."/>
+<meta name="twitter:image" content="https://trapdoor.cloud/images/covers/getting-started-with-runpod-serverless.png"/>
+
+  <title>Ashley's Blog &ndash; Getting Started with Runpod Serverless</title>
+
+
+</head>
+<body >
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://trapdoor.cloud/">
+      <img src="/images/profile.jpeg" alt="Ashley Kleynhans">
+      Ashley Kleynhans
+    </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+          <a href="https://trapdoor.cloud/about/">About Me</a>
+        <a href="/archives">Archives</a>
+        <a href="/categories">Categories</a>
+        <a href="/tags">Tags</a>
+        <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
+
+      <div class="nav-social">
+          <a              href="https://github.com/ashleykleynhans"
+             target="_blank"
+             title="Github">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a              href="https://www.linkedin.com/in/ashleykleynhans"
+             target="_blank"
+             title="Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+      </div>
+
+      <button class="theme-toggle" onclick="theme.switch(document.body.classList.contains('dark-theme') ? 'light' : 'dark')" title="Toggle theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+  <div class="site-content">
+<article>
+  <div class="article-header">
+    <h1 class="article-title">Getting Started with Runpod Serverless</h1>
+    <div class="article-meta">
+      <a class="post-category" href="https://trapdoor.cloud/category/devops.html">DevOps</a>
+      <span>Sun 16 July 2023</span>
+        <span class="post-dot">&middot;</span>
+        <span>9 min read</span>
+      <span class="post-dot">&middot;</span>
+      <span>Ashley Kleynhans</span>
+    </div>
+  </div>
+
+  <div class="article-content">
+    <h2 id="what-is-runpod">What is Runpod?</h2>
+<p><a href="https://runpod.io?ref=2xxro4sy" target="_blank">Runpod</a> is a Cloud Hosting Provider that allows
+you to rent Docker containers that are attached to various different sizes of
+GPU instances so that you can benefit from their Cloud GPU for running
+your AI tasks if you don't have a powerful enough
+GPU to run them yourself.</p>
+<p>They offer various different types of services, including:</p>
+<ul>
+<li>Dedicated and On-Demand GPU Instances.</li>
+<li>Serverless GPU and CPU Hosting.</li>
+<li>AI API Endpoints.</li>
+</ul>
+<p>This post focuses on their Serverless hosting which can be used
+to scale your application to hundreds of users.</p>
+<h2 id="serverless-key-concepts">Serverless Key Concepts</h2>
+<p>There are four main concepts:</p>
+<ul>
+<li>Serverless Handler</li>
+<li>Templates</li>
+<li>Endpoints</li>
+<li>Worker Types (Flex and Active)</li>
+</ul>
+<h3 id="serverless-handler">Serverless Handler</h3>
+<p>This is a critical component for your application to function correctly
+within Runpod Serverless.  You need to import the <code>runpod</code> Python
+module, and also ensure that you are using Python version 3.10.x because
+the latest Runpod module is not compatible with Python versions prior
+to version 3.10.x.</p>
+<p>The Serverless handler is usually implemented in a file called
+<code>rp_handler.py</code> (Runpod Handler) and looks something like the example
+code below that will take a <code>name</code> as input and then send a greeting
+back.</p>
+<p>The Serverless handler accepts a JSON payload that contains an <code>input</code>,
+and returns a response that contains an <code>output</code>.</p>
+<p>Example Serverless Handler (<code>rp_handler.py</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">runpod</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">process_input</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Execute the application code</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">greeting</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Hello </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="n">greeting</span>
+    <span class="p">}</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------- #</span>
+<span class="c1">#                                Runpod Handler                                #</span>
+<span class="c1"># ---------------------------------------------------------------------------- #</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the handler function that will be called by Runpod serverless.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">process_input</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">])</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">runpod</span><span class="o">.</span><span class="n">serverless</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s1">&#39;handler&#39;</span><span class="p">:</span> <span class="n">handler</span><span class="p">})</span>
+</code></pre></div>
+
+<h4 id="local-testing">Local Testing</h4>
+<p>It is useful to test your Serverless Handler code locally before deploying
+it to Runpod.  You can do this by creating a file called <code>test_input.json</code>
+with a body that looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ashley&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>You can then create a Python virtual environment and install the
+<code>runpod</code> module as follows:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip3<span class="w"> </span>install<span class="w"> </span>runpod
+</code></pre></div>
+
+<p>Once the <code>runpod</code> module is installed, you can test your handler
+locally as follows:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-u<span class="w"> </span>rp_handler.py
+</code></pre></div>
+
+<p>This will return an output that looks similar to the following:</p>
+<div class="highlight"><pre><span></span><code>WARN   | RUNPOD_WEBHOOK_GET_JOB not set, switching to get_local
+INFO   | local_test | Started
+WARN   | Local test job results for local_test: {&quot;output&quot;: {&quot;greeting&quot;: &quot;Hello Ashley&quot;}}
+INFO   | local_test | Finished
+INFO   | Local testing complete, exiting.
+</code></pre></div>
+
+<p>Once you are happy with the results of your local testing,
+you are ready to deploy your application to Runpod Serverless.
+This will require you to build a Docker image containing your
+application code using a Dockerfile.</p>
+<h4 id="building-a-docker-image-for-your-application">Building a Docker image for your application</h4>
+<p>First, you will need to create a <code>Dockerfile</code> that looks 
+similar to the following (Refer to the Resources link at
+the bottom of this post for more advanced usage):</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.10-slim</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>runpod
+<span class="k">COPY</span><span class="w"> </span>rp_handler.py<span class="w"> </span>/
+
+<span class="c"># Start the container</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-u&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rp_handler.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Then you will need to log into your Docker Hub account:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>login
+</code></pre></div>
+
+<p>When building your Docker image, it is best practice to
+use a version rather than <code>latest</code> as a tag, since the images
+are cached by the Runpod Serverless workers, and they will not know
+that you have made a change to your image if you keep using the
+same tag.</p>
+<p>Runpod containers run on <code>amd64</code> architecture, so if you are using
+an Apple Silicon Mac to build the Docker image, you will need to use <code>buildx</code>
+and specify the <code>platform</code>, for example:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>buildx<span class="w"> </span>build<span class="w"> </span>--push<span class="w"> </span>-t<span class="w"> </span>username/imagename:tag<span class="w"> </span>.<span class="w"> </span>--platform<span class="w"> </span>linux/amd64
+</code></pre></div>
+
+<p>If you are building the image on an <code>amd64</code> compatible
+machine, you can build and push the image as follows:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>username/imagename:tag<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>username/imagename:tag
+</code></pre></div>
+
+<p>Once your image is pushed to Docker Hub, you are ready to create
+a Serverless Template for your image.</p>
+<h3 id="templates">Templates</h3>
+<p>Navigate to your <a href="https://console.runpod.io/serverless" target="_blank">Runpod Serverless Templates</a> and click
+the <code>New Template</code> button.</p>
+<p>A template is  a specification for the <a href="https://www.docker.com/" target="_blank">Docker</a>
+containers that will run your Serverless application.</p>
+<p>The template specifies the Docker image that will be used, the container
+disk size, a Docker command (usually not required), and any environment variables.</p>
+<p>Usually <a href="https://hub.docker.com/" target="_blank">Docker Hub</a> is used to store Docker images,
+but you can also use other Docker container registries.  If you choose to
+use a private Docker registry rather than the public Docker Hub registry,
+you will also need to provide <code>Container Registry Credentials</code>.  The
+credentials are not required if you use a Public registry.</p>
+<p><img alt="Runpod Template Example" src="https://trapdoor.cloud/images/runpod-template.png"></p>
+<ol>
+<li>Enter a name for your template.</li>
+<li>Enter the Docker image name for the Docker image that you want to use
+   for your Serverless Endpoint.</li>
+<li>Leave <code>Container Registry Credentials</code> empty, unless you specifically
+   require credentials for the Docker container registry that you are using.</li>
+<li>Leave <code>Docker Command</code> empty, unless you specifically need to provide
+   a Docker command for whatever reason, but this should not usually be
+   required.</li>
+<li>Set your Container Disk size.  5GB is usually sufficient and I have
+   not yet found a specific use-case where it needs to be increased.</li>
+<li>If your application requires environment variables to be set,
+   click the dropdown arrow next to <code>Environment Variables</code> and enter
+   your environment variables as Key =&gt; Value pairs.</li>
+</ol>
+<p>Once your Serverless Template is created, you are ready to create a
+Serverless Endpoint.</p>
+<h4 id="important-note">Important Note</h4>
+<p>The key difference between a GPU cloud Docker image and a Serverless
+Docker image is that a Serverless image has a Serverless handler.
+A GPU Cloud template will not work in Serverless without the
+Serverless handler, so it is not recommended to use Docker images
+designed for GPU Cloud within Serverless.</p>
+<h3 id="endpoints">Endpoints</h3>
+<p>Navigate to your <a href="https://console.runpod.io/serverless" target="_blank">Runpod Serverless Endpoints</a> and click
+the <code>New Endpoint</code> button.</p>
+<p>An endpoint is your actual Serverless Endpoint that will provide a
+<a href="https://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a>
+API endpoint for serving your application.</p>
+<p><img alt="Runpod Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-basic.png"></p>
+<p>When adding a new Endpoint, you will need to configure a few things:</p>
+<ul>
+<li>Endpoint Name</li>
+<li>Template</li>
+<li>Max Workers</li>
+<li>GPU Types</li>
+</ul>
+<p>You can also optionally configure:</p>
+<ul>
+<li>Min Provisioned Workers</li>
+<li>Idle Timeout</li>
+<li>FlashBoot</li>
+</ul>
+<p>And additional Advanced options:</p>
+<p><img alt="Runpod Advanced Endpoint Example" src="https://trapdoor.cloud/images/runpod-endpoint-advanced.png"></p>
+<ul>
+<li>Deployment Region</li>
+<li>Scale Type</li>
+<li>Network Volume</li>
+</ul>
+<h4 id="endpoint-name">Endpoint Name</h4>
+<p>The endpoint name is a unique name for you to easily identify your
+endpoint, especially when you have multiple different endpoints.</p>
+<h4 id="template">Template</h4>
+<p>The Template is described above, and specifies the Docker image
+containing your application that should be pulled from the container
+registry (such as Docker Hub).</p>
+<h4 id="gpu-tiers">GPU Tiers</h4>
+<p>GPU tiers are the servers that will be used for the workers
+for your endpoint.  The GPU tier you choose is dependent on the
+type of application you are running.  For example, an LLM typically
+needs a lot more VRAM than running inference using Stable Diffusion.
+You can assign priorities to the various different GPU tiers.  Once
+your priorities are assigned, you are able to limit your workers
+to using specific GPU types within that GPU tier, for example, if
+you select the 24GB GPU tier, you will be able to limit your workers
+to only using the 3090 GPU type and exclude the A5000 and L4 GPU types.</p>
+<p>The available GPU tiers are:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>VRAM</th>
+<th>Example GPUs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16 GB</td>
+<td>16 GB</td>
+<td>A4000, A4500, RTX 4000</td>
+</tr>
+<tr>
+<td>24 GB</td>
+<td>24 GB</td>
+<td>L4, A5000, RTX 3090</td>
+</tr>
+<tr>
+<td>24 GB PRO</td>
+<td>24 GB</td>
+<td>RTX 4090 PRO</td>
+</tr>
+<tr>
+<td>48 GB</td>
+<td>48 GB</td>
+<td>A6000, A40</td>
+</tr>
+<tr>
+<td>48 GB PRO</td>
+<td>48 GB</td>
+<td>L40, L40S, RTX 6000 Ada PRO</td>
+</tr>
+<tr>
+<td>80 GB</td>
+<td>80 GB</td>
+<td>A100</td>
+</tr>
+<tr>
+<td>80 GB PRO</td>
+<td>80 GB</td>
+<td>H100 PRO</td>
+</tr>
+<tr>
+<td>141 GB</td>
+<td>141 GB</td>
+<td>H200 PRO</td>
+</tr>
+<tr>
+<td>180 GB</td>
+<td>180 GB</td>
+<td>B200</td>
+</tr>
+</tbody>
+</table>
+<p>CPU-only workers are also available if your application does
+not require a GPU.</p>
+<h4 id="active-provisioned-workers">Active (Provisioned) Workers</h4>
+<p>Active workers run 24/7 and allow your Serverless endpoint to respond
+much faster by eliminating cold start time.  Runpod offers up to
+a 30% discount on Active workers compared to on-demand pricing, but
+I still don't recommend setting any Active workers unless you have
+consistent traffic that justifies the cost of keeping them
+running constantly.</p>
+<h4 id="max-workers">Max Workers</h4>
+<p>The Max Workers are the maximum number of servers that run your
+application so that your application can be scaled up automatically
+across multiple servers to meet demand.  The default of 3 is usually
+sufficient for development and testing purposes.  If you set this to
+a value of 2 to 5, Runpod will provide you with additional workers
+(up to a maximum of 5) to help prevent your workers from being
+throttled.  I don't recommend setting this to a value of 1, because
+there is a very high chance that your worker will become throttled,
+and your requests will sit in the queue for a long time before being
+processed.</p>
+<h4 id="gpusworker">GPUs/Worker</h4>
+<p>You can assign more than one GPU per worker for GPU tiers
+that support multi-GPU configurations.</p>
+<h4 id="idle-timeout">Idle Timeout</h4>
+<p>Idle Timeout is the amount of time in seconds that your idle
+workers will remain running and waiting to accept new requests.
+You are charged for the timeout, so the default should be fine
+for most cases.</p>
+<h4 id="flashboot">FlashBoot</h4>
+<p>FlashBoot is now enabled by default and delivers sub-second cold
+starts at no additional cost.</p>
+<h4 id="data-centers-advanced-setting">Data Centers (Advanced Setting)</h4>
+<p>By default, your application will by deployed in all data centers.
+If you have strict compliance requirements such as GDPR for example,
+you will want to restrict the data centers to Europe only.</p>
+<p>If you are using a Network Volume, the Data Center will
+be automatically adjusted to the data center where your Network
+Volume resides.</p>
+<h4 id="scale-type-advanced-setting">Scale Type (Advanced Setting)</h4>
+<p>There are 2 different scaling Strategies:</p>
+<ul>
+<li>Queue Delay</li>
+<li>Request Count</li>
+</ul>
+<p>The Queue Delay scaling strategy adjusts the number of workers
+based on request wait times. With zero workers initially, the
+first request adds one worker.  Subsequent requests add workers
+only after waiting in the queue for the number of seconds that
+you specify for <code>Queue Delay</code>.  The default is 4 seconds.</p>
+<p>The Request Count scaling strategy adjusts the number of workers
+according to the total number if requests in the queue and in
+progress.  It automatically adds workers as the number of
+requests increases, ensuring that tasks are handled efficiently.
+The default is 4 requests.</p>
+<div class="highlight"><pre><span></span><code>Total Workers Formula: Math.ceil((requestsInQueue + requestsInProgress) / 4)
+</code></pre></div>
+
+<h4 id="network-volume-advanced-setting">Network Volume (Advanced Setting)</h4>
+<p>A Network Volume is basically Network Storage (similar to NFS).
+You can use a Network Volume for all your workers to be able to
+access the same files, for example if you have multiple different
+models that you want to use with your endpoint.  You don't need
+a Network Volume to use Runpod Serverless, you can still deploy
+an application without using a Network Volume, but they are
+useful for certain use cases.</p>
+<p>Network Volumes need to be added within the GPU Cloud section of
+the Runpod console.  Runpod has significantly expanded their data
+center presence and now has GPUs across 31+ global regions,
+including locations in the United States, Canada, Europe, and
+Asia-Pacific (including Japan and Australia).</p>
+<p>You can attach multiple Network Volumes from different data
+centers to a single endpoint for improved resilience and GPU
+availability.  Check the Runpod console for the current list
+of data centers that support Network Volumes, as this list
+is frequently updated.</p>
+<h3 id="worker-types">Worker Types</h3>
+<p>Runpod Serverless has two worker types:</p>
+<ul>
+<li><strong>Flex Workers</strong> scale from zero to your configured max workers
+  based on demand.  You only pay for the time your workers are
+  actively processing requests.  This is the default and recommended
+  type for most use cases.</li>
+<li><strong>Active Workers</strong> run 24/7 and eliminate cold start time entirely.
+  They are best suited for applications with consistent, predictable
+  traffic.  Runpod offers up to a 30% discount on Active workers.</li>
+</ul>
+<h3 id="advanced-handler-features">Advanced Handler Features</h3>
+<p>Since the initial release of the Runpod SDK, several new handler
+types have been added:</p>
+<ul>
+<li><strong>Streaming Handlers</strong> use <code>yield</code> to return results incrementally,
+  which is useful for LLMs and other applications that produce output
+  progressively.  Streaming results can be consumed via the <code>/stream</code>
+  endpoint.</li>
+<li><strong>Async Handlers</strong> support <code>async</code>/<code>await</code> for concurrent I/O
+  operations.</li>
+<li><strong>Concurrent Handlers</strong> allow a single worker to process multiple
+  requests simultaneously, which is useful for lightweight operations.</li>
+</ul>
+<p>Additional SDK features include:</p>
+<ul>
+<li><strong>Progress Updates</strong> via <code>runpod.serverless.progress_update()</code> to
+  report progress back to the caller during long-running jobs.</li>
+<li><strong>Worker Refresh</strong> by returning <code>{"refresh_worker": True}</code> in your
+  handler response to reset worker state between jobs.</li>
+<li><strong>Local API Server</strong> by passing <code>--rp_serve_api</code> when running your
+  handler locally, which starts a local FastAPI server that mimics
+  the production endpoint for more realistic testing.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://docs.runpod.io/serverless/overview" target="_blank">Runpod Serverless Documentation</a></li>
+<li><a href="https://github.com/runpod/runpod-python" target="_blank">Runpod Python SDK on GitHub</a></li>
+<li><a href="https://github.com/runpod/containers" target="_blank">Runpod Official Base Docker Images</a></li>
+<li><a href="https://www.youtube.com/@generativelabs/videos" target="_blank">YouTube Tutorials by Generative Labs</a></li>
+<li><a href="https://github.com/runpod-workers" target="_blank">Source Code to Runpod's Own Endpoints</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-inswapper" target="_blank">Source Code to My Face Swap Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-real-esrgan" target="_blank">Source Code to My Upscaling Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-llava" target="_blank">Source Code to My LLaVA Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-a1111" target="_blank">Source Code to My A1111 Stable Diffusion Endpoint</a></li>
+<li><a href="https://github.com/ashleykleynhans/runpod-worker-oobabooga" target="_blank">Source Code to My Oobabooga Text Generation Endpoint</a></li>
+</ul>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+        <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+        <a href="https://trapdoor.cloud/tag/runpod.html">runpod</a>
+        <a href="https://trapdoor.cloud/tag/serverless.html">serverless</a>
+        <a href="https://trapdoor.cloud/tag/ai.html">ai</a>
+        <a href="https://trapdoor.cloud/tag/gpu.html">gpu</a>
+        <a href="https://trapdoor.cloud/tag/cloud.html">cloud</a>
+        <a href="https://trapdoor.cloud/tag/docker.html">docker</a>
+    </p>
+  </div>
+
+<div class="article-nav">
+    <a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/">
+      <div class="nav-label">&larr; Previous</div>
+      <div class="nav-title">Installing CheckMK Agent on macOS</div>
+    </a>
+    <a href="https://trapdoor.cloud/injecting-missing-content-type-header-into-python-flask-webhooks/" class="next">
+      <div class="nav-label">Next &rarr;</div>
+      <div class="nav-title">Injecting Missing Content-Type Header into Python Flask Webhooks</div>
+    </a>
+</div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul>
+      <li><a href="https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/">Using Alternate Models with Claude Code via Claude Code Router</a></li>
+      <li><a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/">Redesigning My Blog with Claude Code and the Superpowers Skill</a></li>
+      <li><a href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/">Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</a></li>
+      <li><a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/">Installing CheckMK Agent on macOS</a></li>
+      <li><a href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/">Compiling and Installing dnsmasq from Source on Ubuntu 22.04</a></li>
+    </ul>
+  </div>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    var disqus_config = function () {
+        this.page.url = 'https://trapdoor.cloud/getting-started-with-runpod-serverless/';
+        this.page.identifier = 'getting-started-with-runpod-serverless';
+    };
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+  </div>
+
+<footer class="site-footer">
+  <div>
+    <div>&copy; 2026 Ashley Kleynhans</div>
+    <div style="margin-top: 4px;">
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> &middot;
+      Powered by <a href="https://getpelican.com/" target="_blank">Pelican</a>
+    </div>
+  </div>
+  <div class="footer-social">
+      <a href="https://github.com/ashleykleynhans" target="_blank" title="Github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/ashleykleynhans" target="_blank" title="Linkedin">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+  </div>
+</footer>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "name": "Getting Started with Runpod Serverless",
+    "headline": "Getting Started with Runpod Serverless",
+    "datePublished": "2023-07-16 00:00:00+02:00",
+    "dateModified": "2026-03-19 00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Ashley Kleynhans",
+      "url": "https://trapdoor.cloud/author/ashley-kleynhans.html"
+    },
+    "image": "https://trapdoor.cloud/images/covers/getting-started-with-runpod-serverless.png",
+    "url": "https://trapdoor.cloud/getting-started-with-runpod-serverless/",
+    "description": "This post helps you to get started with Runpod Serverless for hosting and scaling your AI applications in the cloud."
+  }
+  </script>
+<a href="https://github.com/ashleykleynhans/pelican" target="_blank" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+
+  <script id="dark-theme-script"
+          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.min.js"
+          data-default-theme="dark"
+          data-enable-auto-detect-theme="true">
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var svgCopy = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    var svgCheck = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    document.querySelectorAll('.highlight, .article-content > pre').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = svgCopy;
+      btn.addEventListener('click', function() {
+        var code = block.querySelector('code') || block.querySelector('pre') || block;
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          btn.innerHTML = svgCheck;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  });
+  </script>
+
+</body>
+</html>

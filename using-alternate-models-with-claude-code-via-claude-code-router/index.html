@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/stylesheet/style.min.css">
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/theme/font-awesome/css/solid.css">
+
+  <link rel="stylesheet" type="text/css" href="https://trapdoor.cloud/static/custom.css">
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://trapdoor.cloud/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ashley's Blog Atom">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDEVPJLBFC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DDEVPJLBFC');
+</script>
+
+
+
+
+
+
+
+<meta name="author" content="Ashley Kleynhans" />
+<meta name="description" content="How I set up Claude Code Router with the DeepSeek provider to use deepseek-v4-pro and deepseek-v4-flash models in Claude Code, and the Gemini 3.5 Flash issues I hit along the way." />
+<meta name="keywords" content="ai, claude, deepseek, devops">
+
+
+  <meta property="og:site_name" content="Ashley's Blog"/>
+  <meta property="og:title" content="Using Alternate Models with Claude Code via Claude Code Router"/>
+  <meta property="og:description" content="How I set up Claude Code Router with the DeepSeek provider to use deepseek-v4-pro and deepseek-v4-flash models in Claude Code, and the Gemini 3.5 Flash issues I hit along the way."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2026-07-07 00:00:00+02:00"/>
+  <meta property="article:modified_time" content="2026-07-07 00:00:00+02:00"/>
+  <meta property="article:author" content="https://trapdoor.cloud/author/ashley-kleynhans.html">
+  <meta property="article:section" content="AI"/>
+  <meta property="article:tag" content="ai"/>
+  <meta property="article:tag" content="claude"/>
+  <meta property="article:tag" content="deepseek"/>
+  <meta property="article:tag" content="devops"/>
+  <meta property="og:image" content="https://trapdoor.cloud/images/covers/using-alternate-models-with-claude-code-via-claude-code-router.png">
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Using Alternate Models with Claude Code via Claude Code Router"/>
+<meta name="twitter:description" content="How I set up Claude Code Router with the DeepSeek provider to use deepseek-v4-pro and deepseek-v4-flash models in Claude Code, and the Gemini 3.5 Flash issues I hit along the way."/>
+<meta name="twitter:image" content="https://trapdoor.cloud/images/covers/using-alternate-models-with-claude-code-via-claude-code-router.png"/>
+
+  <title>Ashley's Blog &ndash; Using Alternate Models with Claude Code via Claude Code Router</title>
+
+
+</head>
+<body >
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://trapdoor.cloud/">
+      <img src="/images/profile.jpeg" alt="Ashley Kleynhans">
+      Ashley Kleynhans
+    </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+          <a href="https://trapdoor.cloud/about/">About Me</a>
+        <a href="/archives">Archives</a>
+        <a href="/categories">Categories</a>
+        <a href="/tags">Tags</a>
+        <a href="https://trapdoor.cloud/feeds/all.atom.xml">Atom</a>
+
+      <div class="nav-social">
+          <a              href="https://github.com/ashleykleynhans"
+             target="_blank"
+             title="Github">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a              href="https://www.linkedin.com/in/ashleykleynhans"
+             target="_blank"
+             title="Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+      </div>
+
+      <button class="theme-toggle" onclick="theme.switch(document.body.classList.contains('dark-theme') ? 'light' : 'dark')" title="Toggle theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+  <div class="site-content">
+<article>
+  <div class="article-header">
+    <h1 class="article-title">Using Alternate Models with Claude Code via Claude Code Router</h1>
+    <div class="article-meta">
+      <a class="post-category" href="https://trapdoor.cloud/category/ai.html">AI</a>
+      <span>Tue 07 July 2026</span>
+        <span class="post-dot">&middot;</span>
+        <span>3 min read</span>
+      <span class="post-dot">&middot;</span>
+      <span>Ashley Kleynhans</span>
+    </div>
+  </div>
+
+  <div class="article-content">
+    <h2 id="why-use-alternate-models">Why Use Alternate Models?</h2>
+<p>Claude Code is fantastic, but the default models can get expensive when
+you are running long sessions. <a href="https://github.com/musistudio/claude-code-router">Claude Code Router</a>
+(CCR) is a local proxy that translates Anthropic's API protocol to other
+providers, letting you use models from Gemini, DeepSeek, OpenAI, and others
+directly inside Claude Code. You get the full Claude Code experience (slash
+commands, tools, MCP, hooks) backed by cheaper models of your choice.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="installing-ccr">Installing CCR</h3>
+<p>CCR uses SQLite for its config, which means the <code>better-sqlite3</code> native
+module needs to compile during install. You need to allow scripts for that
+package:</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>--allow-scripts<span class="o">=</span>better-sqlite3<span class="w"> </span>@musistudio/claude-code-router
+</code></pre></div>
+
+<h3 id="configuring-deepseek">Configuring DeepSeek</h3>
+<p>You will need a <a href="https://platform.deepseek.com/">DeepSeek account</a>.
+Sign up, grab your API key from the dashboard, and check out the
+<a href="https://api-docs.deepseek.com/quick_start/pricing">pricing page</a>.
+DeepSeek's API pricing is significantly cheaper than Anthropic's,
+especially for the flash model.</p>
+<p>Start CCR and open the admin UI:</p>
+<div class="highlight"><pre><span></span><code>ccr<span class="w"> </span>start
+ccr<span class="w"> </span>ui
+</code></pre></div>
+
+<p>In the UI, configure three things:</p>
+<ol>
+<li><strong>Provider</strong>: add the DeepSeek provider with your API key</li>
+<li><strong>Models</strong>: add the models you want to use
+    (<code>deepseek-v4-pro</code> for heavy lifting,
+    <code>deepseek-v4-flash</code> for the small/fast model)</li>
+<li><strong>Agent</strong>: set default models for your Claude Code agent</li>
+</ol>
+<p>CCR automatically writes the required config to
+<code>~/.claude/settings.json</code>: the <code>apiKeyHelper</code> path, model environment
+variables, and the local proxy base URL.</p>
+<p>Once configured, launch Claude Code through the router:</p>
+<div class="highlight"><pre><span></span><code>ccr<span class="w"> </span><span class="s1">&#39;Claude Code&#39;</span>
+</code></pre></div>
+
+<p>Claude Code will now use DeepSeek models through the local proxy without
+noticing anything is different.</p>
+<h2 id="the-gemini-dead-end">The Gemini Dead End</h2>
+<p>I initially tried using Gemini 3.5 Flash (<code>gemini/gemini-3.5-flash</code>) as
+my model. Single-turn requests worked perfectly:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;http://127.0.0.1:3456/v1/messages&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: ccr-profile-...&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;:&quot;gemini/gemini-3.5-flash&quot;,&quot;max_tokens&quot;:500,</span>
+<span class="s1">       &quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Who made you?&quot;}]}&#39;</span>
+</code></pre></div>
+
+<p>That returned a clean response without issues. But Claude Code broke
+immediately with an <code>API Error: 400 All target providers failed</code> on
+anything involving tool use, which is pretty much everything Claude Code
+does (skills, file reads, bash commands).</p>
+<h3 id="the-root-cause">The Root Cause</h3>
+<p>The problem is Google's Gemini 3 API requirement for a <code>thought_signature</code>
+on function call parts. When Claude Code sends a tool call, CCR translates
+it from Anthropic's <code>tool_use</code> format to Gemini's <code>functionCall</code> format.
+On the follow-up turn, when CCR sends the tool result back, Gemini rejects
+the request because the <code>thought_signature</code> is missing. Anthropic's API
+has no equivalent field, so there is nothing for CCR to pass through.</p>
+<p>I reproduced the exact failure with a minimal curl that simulated a
+tool-use conversation:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sv<span class="w"> </span>http://127.0.0.1:3456/v1/messages<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: ccr-profile-...&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anthropic-version: 2023-06-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;:&quot;gemini/gemini-3.5-flash&quot;,</span>
+<span class="s1">    &quot;max_tokens&quot;:1000,</span>
+<span class="s1">    &quot;tools&quot;:[{&quot;name&quot;:&quot;get_weather&quot;,</span>
+<span class="s1">      &quot;description&quot;:&quot;Get the weather for a location&quot;,</span>
+<span class="s1">      &quot;input_schema&quot;:{&quot;type&quot;:&quot;object&quot;,</span>
+<span class="s1">        &quot;properties&quot;:{&quot;location&quot;:{&quot;type&quot;:&quot;string&quot;}},</span>
+<span class="s1">        &quot;required&quot;:[&quot;location&quot;]}}],</span>
+<span class="s1">    &quot;messages&quot;:[</span>
+<span class="s1">      {&quot;role&quot;:&quot;user&quot;,</span>
+<span class="s1">       &quot;content&quot;:&quot;What is the weather in Paris?&quot;},</span>
+<span class="s1">      {&quot;role&quot;:&quot;assistant&quot;,</span>
+<span class="s1">       &quot;content&quot;:[{&quot;type&quot;:&quot;tool_use&quot;,&quot;id&quot;:&quot;tool_1&quot;,</span>
+<span class="s1">         &quot;name&quot;:&quot;get_weather&quot;,</span>
+<span class="s1">         &quot;input&quot;:{&quot;location&quot;:&quot;Paris&quot;}}]},</span>
+<span class="s1">      {&quot;role&quot;:&quot;user&quot;,</span>
+<span class="s1">       &quot;content&quot;:[{&quot;type&quot;:&quot;tool_result&quot;,</span>
+<span class="s1">         &quot;tool_use_id&quot;:&quot;tool_1&quot;,</span>
+<span class="s1">         &quot;content&quot;:&quot;18°C, partly cloudy&quot;}]}</span>
+<span class="s1">    ]</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+
+<p>The response confirmed it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Function</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">thought_signature</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">functionCall</span><span class="w"> </span><span class="n">parts</span><span class="o">.</span>
+<span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">tools</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">correctly</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">missing</span>
+<span class="n">thought_signature</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">degraded</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="n">performance</span><span class="o">.</span>
+</code></pre></div>
+
+<p>This is a known issue in CCR. Gemini 2.x models
+(<code>gemini/gemini-2.5-flash</code> or <code>gemini/gemini-2.5-pro</code>) do not have the
+<code>thought_signature</code> requirement and should work fine, but I wanted to
+try something different.</p>
+<h2 id="switching-to-deepseek">Switching to DeepSeek</h2>
+<p>I switched to the DeepSeek provider with two models:</p>
+<ul>
+<li><strong>deepseek-v4-pro</strong>: for the main Claude Code model, handling code
+  generation, reasoning and complex tasks</li>
+<li><strong>deepseek-v4-flash</strong>: for the small/fast model, handling quick
+  completions, light edits and background tasks</li>
+</ul>
+<p>The switch was seamless. No <code>thought_signature</code> issues, no protocol
+translation bugs, no mysterious 400 errors. Tool use works correctly
+across multi-turn conversations, which means skills, file operations,
+bash execution and MCP tools all function as expected.</p>
+<p>Pricing is also reasonable. DeepSeek charges per million tokens and
+both the flash and pro models are considerably cheaper than
+Anthropic's equivalents. For long Claude Code sessions that rack up
+hundreds of thousands of tokens, the savings add up quickly.</p>
+<h2 id="summary">Summary</h2>
+<p>Claude Code Router is a solid way to use cheaper models inside Claude
+Code. If you go the Gemini route, stick to 2.x models to avoid the
+<code>thought_signature</code> issue. I landed on DeepSeek with
+<code>deepseek-v4-pro</code> and <code>deepseek-v4-flash</code> and have been happy with
+the balance of cost and capability.</p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+        <a href="https://trapdoor.cloud/tag/ai.html">ai</a>
+        <a href="https://trapdoor.cloud/tag/claude.html">claude</a>
+        <a href="https://trapdoor.cloud/tag/deepseek.html">deepseek</a>
+        <a href="https://trapdoor.cloud/tag/devops.html">devops</a>
+    </p>
+  </div>
+
+<div class="article-nav">
+    <a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/">
+      <div class="nav-label">&larr; Previous</div>
+      <div class="nav-title">Redesigning My Blog with Claude Code and the Superpowers Skill</div>
+    </a>
+    <div></div>
+</div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul>
+      <li><a href="https://trapdoor.cloud/redesigning-my-blog-with-claude-code-and-the-superpowers-skill/">Redesigning My Blog with Claude Code and the Superpowers Skill</a></li>
+      <li><a href="https://trapdoor.cloud/getting-started-with-runpod-serverless/">Getting Started with Runpod Serverless</a></li>
+      <li><a href="https://trapdoor.cloud/upgrading-elastic-stack-from-8x-to-9x-on-ubuntu-2404/">Upgrading Elastic Stack From 8.x to 9.x on Ubuntu 24.04</a></li>
+      <li><a href="https://trapdoor.cloud/installing-checkmk-agent-on-macos/">Installing CheckMK Agent on macOS</a></li>
+      <li><a href="https://trapdoor.cloud/compiling-and-installing-dnsmasq-from-source-on-ubuntu-2204/">Compiling and Installing dnsmasq from Source on Ubuntu 22.04</a></li>
+    </ul>
+  </div>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'trapdoor-cloud';
+    var disqus_config = function () {
+        this.page.url = 'https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/';
+        this.page.identifier = 'using-alternate-models-with-claude-code-via-claude-code-router';
+    };
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+  </div>
+
+<footer class="site-footer">
+  <div>
+    <div>&copy; 2026 Ashley Kleynhans</div>
+    <div style="margin-top: 4px;">
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> &middot;
+      Powered by <a href="https://getpelican.com/" target="_blank">Pelican</a>
+    </div>
+  </div>
+  <div class="footer-social">
+      <a href="https://github.com/ashleykleynhans" target="_blank" title="Github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/ashleykleynhans" target="_blank" title="Linkedin">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+  </div>
+</footer>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "name": "Using Alternate Models with Claude Code via Claude Code Router",
+    "headline": "Using Alternate Models with Claude Code via Claude Code Router",
+    "datePublished": "2026-07-07 00:00:00+02:00",
+    "dateModified": "2026-07-07 00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Ashley Kleynhans",
+      "url": "https://trapdoor.cloud/author/ashley-kleynhans.html"
+    },
+    "image": "https://trapdoor.cloud/images/covers/using-alternate-models-with-claude-code-via-claude-code-router.png",
+    "url": "https://trapdoor.cloud/using-alternate-models-with-claude-code-via-claude-code-router/",
+    "description": "How I set up Claude Code Router with the DeepSeek provider to use deepseek-v4-pro and deepseek-v4-flash models in Claude Code, and the Gemini 3.5 Flash issues I hit along the way."
+  }
+  </script>
+<a href="https://github.com/ashleykleynhans/pelican" target="_blank" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+
+  <script id="dark-theme-script"
+          src="https://trapdoor.cloud/theme/dark-theme/dark-theme.min.js"
+          data-default-theme="dark"
+          data-enable-auto-detect-theme="true">
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var svgCopy = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    var svgCheck = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    document.querySelectorAll('.highlight, .article-content > pre').forEach(function(block) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = svgCopy;
+      btn.addEventListener('click', function() {
+        var code = block.querySelector('code') || block.querySelector('pre') || block;
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          btn.innerHTML = svgCheck;
+          btn.classList.add('copied');
+          setTimeout(function() { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+      block.appendChild(btn);
+    });
+  });
+  </script>
+
+</body>
+</html>
