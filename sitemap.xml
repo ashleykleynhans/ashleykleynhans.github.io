@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/</loc>
-<lastmod>2026-08-01T13:14:57-00:00</lastmod>
+<lastmod>2026-09-13T09:49:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/tags.html</loc>
-<lastmod>2026-08-01T13:14:57-00:00</lastmod>
+<lastmod>2026-09-13T09:49:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/categories.html</loc>
-<lastmod>2026-08-01T13:14:57-00:00</lastmod>
+<lastmod>2026-09-13T09:49:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/authors.html</loc>
-<lastmod>2026-08-01T13:14:57-00:00</lastmod>
+<lastmod>2026-09-13T09:49:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
 
 <url>
 <loc>https://trapdoor.cloud/archives.html</loc>
-<lastmod>2026-08-01T13:14:57-00:00</lastmod>
+<lastmod>2026-09-13T09:49:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2026-03-26T00:00:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/preparing-for-the-microsoft-azure-az-104-exam/</loc>
+<lastmod>2026-09-13T00:00:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -130,6 +137,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://trapdoor.cloud/category/cloud.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
 <loc>https://trapdoor.cloud/category/devops.html</loc>
 <lastmod>2026-08-01T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
@@ -139,6 +153,41 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://trapdoor.cloud/category/ecommerce.html</loc>
 <lastmod>2024-12-20T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/azure.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/az-104.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/certification.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/cloud.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.6</priority>
+</url>
+
+<url>
+<loc>https://trapdoor.cloud/tag/microsoft.html</loc>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>
@@ -277,13 +326,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://trapdoor.cloud/tag/cloud.html</loc>
-<lastmod>2026-08-01T00:00:00+01:52</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.6</priority>
-</url>
-
-<url>
 <loc>https://trapdoor.cloud/tag/docker.html</loc>
 <lastmod>2026-08-01T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
@@ -355,7 +397,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://trapdoor.cloud/author/ashley-kleynhans.html</loc>
-<lastmod>2026-08-01T00:00:00+01:52</lastmod>
+<lastmod>2026-09-13T00:00:00+01:52</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.6</priority>
 </url>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ashley's Blog - Cloud</title><link href="https://trapdoor.cloud/" rel="alternate"/><link href="https://trapdoor.cloud/feeds/cloud.atom.xml" rel="self"/><id>https://trapdoor.cloud/</id><updated>2026-09-13T00:00:00+02:00</updated><subtitle>DevOps Engineer</subtitle><entry><title>Preparing for the Microsoft Azure AZ-104 Exam</title><link href="https://trapdoor.cloud/preparing-for-the-microsoft-azure-az-104-exam/" rel="alternate"/><published>2026-09-13T00:00:00+02:00</published><updated>2026-09-13T00:00:00+02:00</updated><author><name>Ashley Kleynhans</name></author><id>tag:trapdoor.cloud,2026-09-13:/preparing-for-the-microsoft-azure-az-104-exam/</id><summary type="html">&lt;p&gt;My experience preparing for the Microsoft Azure Administrator AZ-104 exam, including which courses and practice tests I found most useful, and practical tips for exam day.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently prepared for the Microsoft Azure Administrator Associate
+&lt;a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/" target="_blank"&gt;AZ-104 exam&lt;/a&gt;.
+In this post I want to share what worked, what did not, and what I wish
+I had known before I started.&lt;/p&gt;
+&lt;h2 id="starting-with-udemy"&gt;Starting with Udemy&lt;/h2&gt;
+&lt;p&gt;I started with this Udemy course:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.udemy.com/course/70533-azure/" target="_blank"&gt;AZ-104 Microsoft Azure Administrator - Complete Exam Prep&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It did not cover sufficient detail for AZ-104. The breadth is there at a
+high level, but the depth on key exam domains like identity, governance,
+storage, compute, virtual networking and monitoring was not enough to feel
+confident for the exam.&lt;/p&gt;
+&lt;p&gt;Next I tried:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.udemy.com/course/az-104-microsoft-azure-administrator-course-with-simulations/" target="_blank"&gt;AZ-104 Microsoft Azure Administrator Course with Simulations&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The content coverage is better, but the simulations are basically clicking
+on screenshots. You are not navigating the real Azure portal or creating
+real resources, so you do not build the muscle memory you need for the
+portal-based tasks and case study style questions.&lt;/p&gt;
+&lt;h2 id="why-whizlabs-was-significantly-better"&gt;Why Whizlabs Was Significantly Better&lt;/h2&gt;
+&lt;p&gt;I then moved to the
+&lt;a href="https://www.whizlabs.com/microsoft-azure-certification-az-104/" target="_blank"&gt;Whizlabs Microsoft Azure Certification AZ-104 Training Course&lt;/a&gt;
+and it was a clear step up for two reasons: hands-on labs and better
+assessment.&lt;/p&gt;
+&lt;h3 id="hands-on-labs-in-the-real-portal"&gt;Hands-on Labs in the Real Portal&lt;/h3&gt;
+&lt;p&gt;The Whizlabs labs let you navigate the actual Azure portal and create
+actual resources, rather than clicking through static images. For AZ-104
+that matters. A lot of the exam tests whether you know where settings
+live in the portal and in what order to configure them. Building that
+familiarity in a live environment made a real difference.&lt;/p&gt;
+&lt;p&gt;Whizlabs also offer a standalone sandbox for around $20, but I did not
+find it necessary. Each lab in the training course grants sandbox access
+to complete the lab, which was sufficient for my preparation.&lt;/p&gt;
+&lt;h3 id="quizzes-and-practice-tests"&gt;Quizzes and Practice Tests&lt;/h3&gt;
+&lt;p&gt;Each section in the Whizlabs course has a quiz to test your knowledge,
+which is useful for reinforcing what you just covered and identifying
+gaps early.&lt;/p&gt;
+&lt;p&gt;For exam preparation, Whizlabs includes a free practice test, 5
+additional practice tests, and a final test. In my experience these
+tests are far more representative of the real exam than:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the set of 4 practice tests on Udemy at &lt;a href="https://www.udemy.com/course/az104-azure-practice" target="_blank"&gt;AZ-104 Azure Practice Tests&lt;/a&gt;, or&lt;/li&gt;
+&lt;li&gt;the official practice tests on Microsoft Learn at &lt;a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/practice/assessment?assessmentId=21&amp;amp;assessment-type=practice&amp;amp;practice-assessment-type=certification" target="_blank"&gt;Practice Assessment for AZ-104&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Microsoft Learn says "To be better prepared for the exam, aim to achieve
+a score of 80% or higher in multiple attempts." That is reasonable
+advice, but the Microsoft Learn practice test itself is significantly
+easier than the real exam in my experience. If you only use that as your
+benchmark you may walk in underprepared.&lt;/p&gt;
+&lt;p&gt;I found the Whizlabs tests and the
+&lt;a href="https://learning.oreilly.com/certifications/9780135397855/" target="_blank"&gt;Pearson Practice Tests via O'Reilly&lt;/a&gt;
+to be much closer to the difficulty and style of the real thing.&lt;/p&gt;
+&lt;h3 id="pearson-practice-tests-tip"&gt;Pearson Practice Tests Tip&lt;/h3&gt;
+&lt;p&gt;One important thing to be aware of for the Pearson tests: you need to
+configure each test by unchecking all of the others, otherwise you will
+keep getting the same test. The combined test seems to pull questions
+from each of the 5 practice tests and does not seem to randomise
+questions even with the randomise questions configuration set to "On".
+Select a single test at a time if you want focused, repeatable practice
+on each set.&lt;/p&gt;
+&lt;h3 id="the-cheat-sheet"&gt;The Cheat Sheet&lt;/h3&gt;
+&lt;p&gt;Whizlabs also provide a 166 page cheat sheet. It is dense, but it is
+worth going over before you sit the exam as a final review. I used it
+as a last pass to catch topics I had not revised recently.&lt;/p&gt;
+&lt;h3 id="what-i-would-skip"&gt;What I Would Skip&lt;/h3&gt;
+&lt;p&gt;I do not recommend using the practice exams on Tutorials Dojo for
+AZ-104. I found some of the material to be incorrect, which is the
+opposite of what you want when you are trying to calibrate your
+readiness.&lt;/p&gt;
+&lt;h2 id="an-extremely-valuable-microsoft-resource"&gt;An Extremely Valuable Microsoft Resource&lt;/h2&gt;
+&lt;p&gt;One resource I highly recommend before you book your exam date:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://learn.microsoft.com/en-us/credentials/support/exam-duration-exam-experience" target="_blank"&gt;Exam duration and exam experience&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It explains the exam format, timing, question types, case studies,
+and what the lab-like tasks look like. Knowing what to expect removes
+a lot of uncertainty on exam day.&lt;/p&gt;
+&lt;h2 id="exam-day-tips"&gt;Exam Day Tips&lt;/h2&gt;
+&lt;h3 id="use-an-external-mouse"&gt;Use an External Mouse&lt;/h3&gt;
+&lt;p&gt;The exam includes a whiteboard. If you are taking the exam remotely on
+a laptop, the whiteboard is not very easy to control using a trackpad.
+I recommend using an external mouse if you are sitting the exam
+remotely.&lt;/p&gt;
+&lt;h3 id="walk-in-test-centre-vs-online-proctoring"&gt;Walk-in Test Centre vs Online Proctoring&lt;/h3&gt;
+&lt;p&gt;If you live close to a walk-in test centre, I recommend taking the exam
+from the walk-in centre where possible rather than taking it online.
+For online proctored exams you need to make sure your exam environment
+meets the requirements by taking pictures and showing the proctor your
+room on your webcam. That process can lead to unnecessary stress and
+anxiety before the exam even begins. At a test centre you can just
+arrive, check in, and focus on the exam.&lt;/p&gt;
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
+&lt;p&gt;If I were starting again, I would:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Skip the screenshot-based simulations and spend that time in real
+   portal labs. The Whizlabs hands-on labs were the most effective part
+   of my preparation.&lt;/li&gt;
+&lt;li&gt;Use the section quizzes and the full practice tests from Whizlabs as
+   my primary readiness gauge, supplemented by the Pearson practice
+   tests.&lt;/li&gt;
+&lt;li&gt;Treat the Microsoft Learn practice assessment as a useful knowledge
+   check, but not as a difficulty benchmark. Aim for well above 80%
+   there and still expect the real exam to be harder.&lt;/li&gt;
+&lt;li&gt;Review the Whizlabs cheat sheet in the final days before the exam.&lt;/li&gt;
+&lt;li&gt;Read the official exam experience page so the format is not a
+   surprise.&lt;/li&gt;
+&lt;li&gt;Use an external mouse for the whiteboard and, if convenient, choose a
+   walk-in test centre over online proctoring.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Good luck if you are preparing for AZ-104. The exam is broad and
+practical, but with the right hands-on practice and realistic practice
+tests it is very manageable.&lt;/p&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.udemy.com/course/az-104-microsoft-azure-administrator-course-with-simulations/" target="_blank"&gt;AZ-104 Microsoft Azure Administrator Course with Simulations - Udemy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.whizlabs.com/microsoft-azure-certification-az-104/" target="_blank"&gt;Whizlabs Microsoft Azure Certification AZ-104 Training Course&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/practice/assessment?assessmentId=21&amp;amp;assessment-type=practice&amp;amp;practice-assessment-type=certification" target="_blank"&gt;Microsoft Learn - Practice Assessment for AZ-104&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://learning.oreilly.com/certifications/9780135397855/" target="_blank"&gt;Pearson Practice Tests - AZ-104 on O'Reilly&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://learn.microsoft.com/en-us/credentials/support/exam-duration-exam-experience" target="_blank"&gt;Exam duration and exam experience - Microsoft Learn&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Cloud"/><category term="azure"/><category term="az-104"/><category term="certification"/><category term="cloud"/><category term="microsoft"/></entry></feed>
